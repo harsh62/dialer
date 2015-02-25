@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>containingAlphabets</key>
+		<string></string>
+		<key>digit</key>
+		<string>1</string>
+	</dict>
+	<dict>
+		<key>containingAlphabets</key>
+		<string>ABC</string>
+		<key>digit</key>
+		<string>2</string>
+	</dict>
+	<dict>
+		<key>containingAlphabets</key>
+		<string>DEF</string>
+		<key>digit</key>
+		<string>3</string>
+	</dict>
+	<dict>
+		<key>containingAlphabets</key>
+		<string>GHI</string>
+		<key>digit</key>
+		<string>4</string>
+	</dict>
+	<dict>
+		<key>containingAlphabets</key>
+		<string>JKL</string>
+		<key>digit</key>
+		<string>5</string>
+	</dict>
+	<dict>
+		<key>containingAlphabets</key>
+		<string>MNO</string>
+		<key>digit</key>
+		<string>6</string>
+	</dict>
+	<dict>
+		<key>containingAlphabets</key>
+		<string>PQRS</string>
+		<key>digit</key>
+		<string>7</string>
+	</dict>
+	<dict>
+		<key>containingAlphabets</key>
+		<string>TUV</string>
+		<key>digit</key>
+		<string>8</string>
+	</dict>
+	<dict>
+		<key>containingAlphabets</key>
+		<string>WXYZ</string>
+		<key>digit</key>
+		<string>9</string>
+	</dict>
+</array>
+</plist>
