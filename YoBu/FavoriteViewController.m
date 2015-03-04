@@ -84,6 +84,11 @@
 }
 
 - (void)deleteAllButtonClicked:(id)sender {
+    while(self.arrayToPopulateTableView.count != 0){
+        [DataAccessLayer deleteModel:[self.arrayToPopulateTableView objectAtIndex:0]];
+        [self.arrayToPopulateTableView removeObjectAtIndex:0];
+        [self.tableViewForFavorites deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:self.arrayToPopulateTableView.count%2==0?UITableViewRowAnimationLeft:UITableViewRowAnimationRight];
+    }
     [self addEditAndAddButtonsToNavigationItem];
     self.tableViewForFavorites.isEditing ? [self.tableViewForFavorites setEditing:NO animated:YES] :[self.tableViewForFavorites setEditing:YES animated:YES];
 }
@@ -131,9 +136,6 @@
         cell.imageView.frame = CGRectMake(15, 5, 40, 40);
         NSLog(@"%f %f",cell.imageView.frame.size.width,cell.imageView.frame.size.height );
         cell.imageView.image = [self imageWithImage:[UIImage imageWithData:favoriteContact.image] scaledToSize:cell.imageView.frame.size];
-
-
-
         
     }
     return cell;
@@ -143,19 +145,14 @@
 }
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    [DataAccessLayer deleteModel:[self.arrayToPopulateTableView objectAtIndex:indexPath.row]];
     [self.arrayToPopulateTableView removeObjectAtIndex:indexPath.row];
     [self.tableViewForFavorites deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
 }
 
 -(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
     return @"Delete";
 }
-
-
-
-
-
 
 - (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize {
     //UIGraphicsBeginImageContext(newSize);
@@ -167,10 +164,16 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSMutableDictionary *filteredContactForTableView = [self.arrayToPopulateTableView objectAtIndex:indexPath.row];
-    NSString *phoneNumberToCallOn = [filteredContactForTableView valueForKey:@"phoneNumber"];
-    [DataAccessLayer saveDialedNumber:[filteredContactForTableView valueForKey:@"phoneNumber"] forContactName:[filteredContactForTableView valueForKey:@"name"]];
-    [self callOnNumber:phoneNumberToCallOn];
+    
+    if([self.tableViewForFavorites isEditing]){
+        
+    }
+    else{
+        NSMutableDictionary *filteredContactForTableView = [self.arrayToPopulateTableView objectAtIndex:indexPath.row];
+        NSString *phoneNumberToCallOn = [filteredContactForTableView valueForKey:@"phoneNumber"];
+        [DataAccessLayer saveDialedNumber:[filteredContactForTableView valueForKey:@"phoneNumber"] forContactName:[filteredContactForTableView valueForKey:@"name"]];
+        [self callOnNumber:phoneNumberToCallOn];
+    }
 }
 
 #pragma mark Call Phone
@@ -221,7 +224,6 @@
     [DataAccessLayer saveFavoriteContactsWithName:firstNameAndLastName andWithPhoneNumber:number andWithImageData:imageData];
     
     [self fetchAndReloadTable];
-    
 }
 
 

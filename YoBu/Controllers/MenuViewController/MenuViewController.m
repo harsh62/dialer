@@ -10,6 +10,7 @@
 @import AddressBook;
 #import "ContactsInstance.h"
 #import "DataAccessLayer.h"
+#import "ConsoleLogs.h"
 
 #define Application_ID 947452765
 #define Social_Sharing_Message @"I #UseYoBu for quickest calling on iOS. Download it:https://itunes.apple.com/in/app/yobu/id947452765?ls=1&mt=8"
@@ -127,17 +128,22 @@ UINavigationController *navigationController;
 - (void)sendFeedback {
     
     if ([MFMailComposeViewController canSendMail]) {
-        
         MFMailComposeViewController *mailViewController = [[MFMailComposeViewController alloc] init];
         mailViewController.mailComposeDelegate = self;
         [mailViewController setSubject:@"YoBu Feedback"];
         [mailViewController setToRecipients:@[@"yobu.feedback@gmail.com"]];
         [mailViewController setMessageBody:@"" isHTML:NO];
+        
+        NSData *dataLogsForApp = [NSData dataWithContentsOfFile:[[ConsoleLogs sharedInstance] returnLogFileForApp:YES]];
+        NSData *dataLogsForWidget = [NSData dataWithContentsOfFile:[[ConsoleLogs sharedInstance] returnLogFileForApp:NO]];
+
+        [mailViewController addAttachmentData:dataLogsForApp mimeType:@"text/log" fileName:@"YoBuAppLogs.log"];
+        [mailViewController addAttachmentData:dataLogsForWidget mimeType:@"text/log" fileName:@"YoBuWidgetLogs.log"];
+        
         [self presentViewController:mailViewController animated:YES completion:nil];
     }
     else {
         NSLog(@"Device is unable to send email in its current state.");
-        
     }
 }
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
@@ -281,7 +287,7 @@ UINavigationController *navigationController;
                     cell.textLabel.text = @"Rate Us";
                     break;
                 case 3:
-                    cell.textLabel.text = @"Send Fedback";
+                    cell.textLabel.text = @"Send Feedback";
                     break;
                 case 4:
                     cell.textLabel.text = @"Follow Developer on Twiiter";

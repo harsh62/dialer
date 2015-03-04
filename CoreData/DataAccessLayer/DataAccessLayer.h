@@ -26,6 +26,9 @@
 + (NSArray *)fetchAllFavoriteContacts;
 
 
++ (void)deleteModel:(id)modelToBeDeleted;
+
+
 
 
 

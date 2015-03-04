@@ -38,7 +38,7 @@
 
 static int savedStdErr = 0;
 
-- (void)turnOnLoggingToFile
+- (void)turnOnLoggingToFileForApp:(BOOL)isAppLogs
 {
     stdErrRedirected = YES;
     savedStdErr = dup(STDERR_FILENO);
@@ -47,7 +47,7 @@ static int savedStdErr = 0;
     NSString *sharedContainerPathLocation = [[[NSFileManager defaultManager]
                                               containerURLForSecurityApplicationGroupIdentifier:
                                               @"group.YoBuDefaults"] path];
-    NSString *directoryToCreate = @"Logs";
+    NSString *directoryToCreate = isAppLogs? @"YoBuAppLogs" : @"YoBuWidgetLogs";
     NSString *dirPath = [sharedContainerPathLocation stringByAppendingPathComponent:directoryToCreate];
     
     BOOL isdir;
@@ -57,29 +57,20 @@ static int savedStdErr = 0;
     
     if (![mgr fileExistsAtPath:dirPath isDirectory:&isdir]) { //create a dir only that does not exists
         if (![mgr createDirectoryAtPath:dirPath withIntermediateDirectories:YES attributes:nil error:&error]) {
-            NSLog(@"error while creating dir: %@", error.localizedDescription);
         } else {
-            NSLog(@"dir was created....");
         }
     }
     
     //write the logs to the file
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyyMMdd"];
-    NSString *logPath = [dirPath stringByAppendingPathComponent:[NSString stringWithFormat:@"ULTA-%@.log",[formatter stringFromDate:[NSDate date]]]];
+    NSString *logPath = [dirPath stringByAppendingPathComponent:[NSString stringWithFormat:@"YoBuApp-%@.log",[formatter stringFromDate:[NSDate date]]]];
     freopen([logPath cStringUsingEncoding:NSASCIIStringEncoding], "a+", stderr);
     
     
     //Clean up files
-    [self cleanUpFiles];
+    [self cleanUpFiles:isAppLogs];
 }
-
-+(void)createDirAtSharedContainerPath
-{
-
-}
-
-
 
 - (void)turnOffLoggingToFile
 {
@@ -95,13 +86,17 @@ static int savedStdErr = 0;
 }
 
 
-- (void)cleanUpFiles {
+- (void)cleanUpFiles:(BOOL)isAppLogs {
     
     @try {
-        NSString *path = [self getLogsDirectory];
         NSError *error;
-        NSArray *listOfFiles = [APP_FILE_MGR contentsOfDirectoryAtPath:path error:&error];
-        
+        NSString *sharedContainerPathLocation = [[[NSFileManager defaultManager]
+                                                  containerURLForSecurityApplicationGroupIdentifier:
+                                                  @"group.YoBuDefaults"] path];
+        NSString *directoryToCreate = isAppLogs? @"YoBuAppLogs" : @"YoBuWidgetLogs";
+        NSString *dirPath = [sharedContainerPathLocation stringByAppendingPathComponent:directoryToCreate];
+        NSFileManager *fileManager = [[NSFileManager alloc] init];;
+        NSArray *listOfFiles = [fileManager contentsOfDirectoryAtPath:dirPath error:nil];
         listOfFiles = [listOfFiles sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
             
             return [obj1 compare:obj2];
@@ -114,9 +109,9 @@ static int savedStdErr = 0;
                     
                     NSString *fileName = [listOfFiles objectAtIndex:i];
                     //Get the path of the file
-                    NSString *fullPath = [path stringByAppendingString:[NSString stringWithFormat:@"/%@",fileName]];
+                    NSString *fullPath = [dirPath stringByAppendingString:[NSString stringWithFormat:@"/%@",fileName]];
                     //Remove the item
-                    [APP_FILE_MGR removeItemAtPath:fullPath error:nil];
+                    [fileManager removeItemAtPath:fullPath error:nil];
                     
                 }
             }
@@ -132,70 +127,21 @@ static int savedStdErr = 0;
     }
 }
 
-/*
- ***********************************************
- This method is used to get the path of the log
- direcory created in caches folder
- ***********************************************
- */
--(NSString *)getLogsDirectory {
-    
-    NSString *cachesDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    cachesDirectory = [cachesDirectory stringByAppendingPathComponent:@"ULTALogs"];
-    
-    return cachesDirectory;
-    
-    
-}
-
-
-/*
- ***********************************************
- This method checks if the log level exist in
- the user slected log level or not
- ***********************************************
- */
-- (BOOL)isLogTypeEnabled:(NSString*)log {
-    
-    //Show logs if |All| level is set
-    if ([[self.logLevelsDictionary objectForKey:ALL_LOG]boolValue]) {
-        
-        return YES;
+- (NSString *)returnLogFileForApp:(BOOL)isAppLogs{
+    NSString *sharedContainerPathLocation = [[[NSFileManager defaultManager]
+                                              containerURLForSecurityApplicationGroupIdentifier:
+                                              @"group.YoBuDefaults"] path];
+    NSString *directoryToCreate = isAppLogs? @"YoBuAppLogs" : @"YoBuWidgetLogs";
+    NSString *dirPath = [sharedContainerPathLocation stringByAppendingPathComponent:directoryToCreate];
+    NSFileManager *fileManager = [[NSFileManager alloc] init];;
+    NSArray *listOfFiles = [fileManager contentsOfDirectoryAtPath:dirPath error:nil];
+    NSString *fullPath = @"";
+    NSString *fileName;
+    if(listOfFiles.count > 0){
+        fileName = [listOfFiles objectAtIndex:0];
+        fullPath = [dirPath stringByAppendingString:[NSString stringWithFormat:@"/%@",fileName]];
     }
-    
-    if ([[self.logLevelsDictionary objectForKey:log]boolValue]) {
-        
-        return YES;
-    }
-    
-    
-    
-    return NO;
-}
-
-
-/*
- ***********************************************
- This method displays the logs corresponding to
- the selected log level if user has opted for
- showing the logs.
- ***********************************************
- */
-- (void)printConsoleLogsOfType:(NSString*)logType withValue:(NSString*)value {
-    
-    @synchronized(self) {
-        if (SHOW_CONSOLE_LOGS && [self isLogTypeEnabled:logType]) {
-            if ([logType isEqualToString:DEBUG_LOG]) {
-                LogDebug(@"%@",value);
-            }
-            else if ([logType isEqualToString:INFO_LOG]) {
-                LogInfo(@"%@",value);
-            }
-            else if ([logType isEqualToString:ERROR_LOG]) {
-                LogError(@"%@",value);
-            }
-        }
-    }
+    return fullPath;
 }
 
 

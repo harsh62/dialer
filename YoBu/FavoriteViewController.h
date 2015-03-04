@@ -16,8 +16,7 @@
 //Arrays
 @property (strong,nonatomic) NSMutableArray *arrayToPopulateTableView;
 @property (strong,nonatomic) NSArray *materialDesignPalletArray;
-- (IBAction)editButtonClicked:(id)sender;
-- (IBAction)addButtonClicked:(id)sender;
+
 @property (weak, nonatomic) IBOutlet UITableView *tableViewForFavorites;
 @property (strong, nonatomic) UIBarButtonItem *editButton;
 @property (strong, nonatomic) UIBarButtonItem *addButton;

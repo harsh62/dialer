@@ -25,12 +25,11 @@
 
 + (ConsoleLogs *)sharedInstance ;
 
-- (void)printConsoleLogsOfType:(NSString*)logType withValue:(NSString*)value;
-
 @property (nonatomic, assign) BOOL stdErrRedirected;
 
-- (void)turnOnLoggingToFile;
+- (void)turnOnLoggingToFileForApp:(BOOL)isAppLogs;
 - (void)turnOffLoggingToFile;
+- (NSString *)returnLogFileForApp:(BOOL)isAppLogs;
 
 
 @end

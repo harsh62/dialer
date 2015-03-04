@@ -32,6 +32,69 @@
     [self.segmentControl addTarget:self
                          action:@selector(segmentControlIndexChanged:)
                forControlEvents:UIControlEventValueChanged];
+    [self addEditAndClearButtonsToNavigationItem];
+}
+
+
+-(void)addEditAndClearButtonsToNavigationItem{
+    //Set UIBarButtonsOnInitialLoad
+    self.editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
+                                                                    target:self
+                                                                    action:@selector(editButtonClicked:)];
+    self.recentNavigationItem.leftBarButtonItem = self.editButton;
+    self.clearButton = [[UIBarButtonItem alloc] initWithTitle:@"Clear" style:UIBarButtonItemStylePlain
+                                                       target:self
+                                                       action:@selector(clearButtonClicked:)];
+    self.recentNavigationItem.rightBarButtonItem = self.clearButton;
+}
+
+-(void)addDeleteAllAndDoneButtonToNavigationItem{
+    self.editButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain
+                                                      target:self
+                                                      action:@selector(doneButtonClicked:)];
+    self.recentNavigationItem.leftBarButtonItem = self.editButton;
+    
+    self.clearButton = [[UIBarButtonItem alloc] initWithTitle:@"Delete" style:UIBarButtonItemStylePlain
+                                                     target:self
+                                                     action:@selector(deleteSelectedButtonClicked:)];
+    self.recentNavigationItem.rightBarButtonItem = self.clearButton;
+}
+
+#pragma mark Bar Button Items Clicked
+
+- (void)editButtonClicked:(id)sender {
+    [self addDeleteAllAndDoneButtonToNavigationItem];
+    self.tableViewForRecentController.isEditing ? [self.tableViewForRecentController setEditing:NO animated:YES] :[self.tableViewForRecentController setEditing:YES animated:YES];
+    
+//    self.tableViewForRecentController 
+}
+
+- (void)doneButtonClicked:(id)sender {
+    [self addEditAndClearButtonsToNavigationItem];
+    self.tableViewForRecentController.isEditing ? [self.tableViewForRecentController setEditing:NO animated:YES] :[self.tableViewForRecentController setEditing:YES animated:YES];
+
+}
+
+- (void)clearButtonClicked:(id)sender {
+    
+    while(self.arrayToPopulateTableView.count != 0){
+        [DataAccessLayer deleteModel:[self.arrayToPopulateTableView objectAtIndex:0]];
+        [self.arrayToPopulateTableView removeObjectAtIndex:0];
+        [self.tableViewForRecentController deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:self.arrayToPopulateTableView.count%2==0?UITableViewRowAnimationLeft:UITableViewRowAnimationRight];
+    }
+}
+
+- (void)deleteSelectedButtonClicked:(id)sender {
+    [self addEditAndClearButtonsToNavigationItem];
+    while([self.tableViewForRecentController indexPathsForSelectedRows].count != 0){
+        NSIndexPath *indexPath = [[self.tableViewForRecentController indexPathsForSelectedRows] objectAtIndex:0];
+        [DataAccessLayer deleteModel:[self.arrayToPopulateTableView objectAtIndex:indexPath.row]];
+        [self.arrayToPopulateTableView removeObjectAtIndex:indexPath.row];
+        [self.tableViewForRecentController deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:[self.tableViewForRecentController indexPathsForSelectedRows].count%2==0?UITableViewRowAnimationLeft:UITableViewRowAnimationRight];
+    }
+    
+    
+    self.tableViewForRecentController.isEditing ? [self.tableViewForRecentController setEditing:NO animated:YES] :[self.tableViewForRecentController setEditing:YES animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -59,9 +122,6 @@
 - (void)segmentControlIndexChanged:(id)sender{
     [self fetchAndReloadTable];
     
-}
-
-- (IBAction)editBUttonPressed:(id)sender {
 }
 
 #pragma mark UITableView Delegates and DataSource
@@ -139,10 +199,31 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSMutableDictionary *filteredContactForTableView = [self.arrayToPopulateTableView objectAtIndex:indexPath.row];
-    NSString *phoneNumberToCallOn = [filteredContactForTableView valueForKey:@"phoneNumber"];
-    [DataAccessLayer saveDialedNumber:[filteredContactForTableView valueForKey:@"phoneNumber"] forContactName:[filteredContactForTableView valueForKey:@"name"]];
-    [self callOnNumber:phoneNumberToCallOn];
+    
+    if([self.tableViewForRecentController isEditing]){
+        
+    }
+    else{
+        NSMutableDictionary *filteredContactForTableView = [self.arrayToPopulateTableView objectAtIndex:indexPath.row];
+        NSString *phoneNumberToCallOn = [filteredContactForTableView valueForKey:@"phoneNumber"];
+        [DataAccessLayer saveDialedNumber:[filteredContactForTableView valueForKey:@"phoneNumber"] forContactName:[filteredContactForTableView valueForKey:@"name"]];
+        [self callOnNumber:phoneNumberToCallOn];
+    }
+    
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    [DataAccessLayer deleteModel:[self.arrayToPopulateTableView objectAtIndex:indexPath.row]];
+    [self.arrayToPopulateTableView removeObjectAtIndex:indexPath.row];
+    [self.tableViewForRecentController deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+}
+
+-(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return @"Delete";
 }
 
 #pragma mark Call Phone

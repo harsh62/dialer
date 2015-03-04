@@ -23,7 +23,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
 //#if !(TARGET_IPHONE_SIMULATOR)
-//    [[ConsoleLogs sharedInstance] turnOnLoggingToFile];
+//    [[ConsoleLogs sharedInstance] turnOnLoggingToFileForApp:YES];
 //#endif
     LogTrace(@"");
 

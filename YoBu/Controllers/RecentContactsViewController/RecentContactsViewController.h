@@ -17,6 +17,10 @@
 @property (strong,nonatomic) NSMutableArray *arrayToPopulateTableView;
 @property (strong,nonatomic) NSArray *materialDesignPalletArray;
 
+@property (strong, nonatomic) UIBarButtonItem *editButton;
+@property (strong, nonatomic) UIBarButtonItem *clearButton;
+@property (weak, nonatomic) IBOutlet UINavigationItem *recentNavigationItem;
+
 -(void) fetchAndReloadTable;
 
 

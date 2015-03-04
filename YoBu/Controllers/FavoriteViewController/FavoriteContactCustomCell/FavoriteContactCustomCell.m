@@ -15,7 +15,12 @@
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    
+    UIColor *color = self.labelImageTitle.backgroundColor;
+    
     [super setSelected:selected animated:animated];
+    
+    self.labelImageTitle.backgroundColor = color;
 
     // Configure the view for the selected state
 }

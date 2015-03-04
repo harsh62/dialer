@@ -72,6 +72,9 @@ UINavigationController *navigationController;
     [recognizer setDirection:(UISwipeGestureRecognizerDirectionDown)];
     [self.dialerView addGestureRecognizer:recognizer];
     
+    
+//    self.tableViewForContactsSearched 
+    
 }
 
 -(void) makeRandomContacts{
@@ -699,6 +702,28 @@ UINavigationController *navigationController;
     if(self.imageViewRedCircle.isHidden)
         [self downSwipeOnDialerView];
 }
+
+#pragma Mark TouchesBegins 
+
+- (void) touchesBegan:(NSSet *)touches
+            withEvent:(UIEvent *)event {
+    
+
+} 
+
+
+
+
+- (void) touchesMoved:(NSSet *)touches
+            withEvent:(UIEvent *)event {
+   
+}
+
+
+
+- (void) touchesEnded:(NSSet *)touches
+            withEvent:(UIEvent *)event {
+   }
 
 
 

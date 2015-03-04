@@ -13,6 +13,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "UIColor+HexColor.h"
 #import "DataAccessLayer.h"
+#import "ConsoleLogs.h"
 
 #define FONT_SIZE 24
 
@@ -48,6 +49,9 @@
 
 
 - (void)viewDidLoad {
+#if !(TARGET_IPHONE_SIMULATOR)
+    [[ConsoleLogs sharedInstance] turnOnLoggingToFileForApp:NO];
+#endif
     
     [super viewDidLoad];
     [self designLabel];
@@ -83,7 +87,7 @@
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator{
 //    animateAlongsideTransition:completion:
-//    NSLog(@"%f",size.height);
+    NSLog(@"%f",size.height);
 
 //        self.preferredContentSize = CGSizeMake(320, self.containerView.frame.size.height+2);
 }
@@ -330,9 +334,9 @@
 
 - (void)listPeopleInAddressBook:(ABAddressBookRef)addressBook
 {
-//    NSInteger numberOfPeopleTest = ABAddressBookGetPersonCount(addressBook);
-//    
-//    NSLog(@"Number of Contacts OLD Approach----->%ld",(long)numberOfPeopleTest);
+    NSInteger numberOfPeopleTest = ABAddressBookGetPersonCount(addressBook);
+//
+    NSLog(@"Number of Contacts OLD Approach----->%ld",(long)numberOfPeopleTest);
 //    NSArray *allPeople = CFBridgingRelease(ABAddressBookCopyArrayOfAllPeople(addressBook));
     
 ////////New Approach to Fetch Contacts where it was crashing in certain locations

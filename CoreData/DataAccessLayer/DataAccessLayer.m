@@ -284,5 +284,10 @@
     }
 }
 
++ (void)deleteModel:(id)modelToBeDeleted{
+    NSManagedObjectContext *managedObjectContext = [[DataManager sharedInstance] managedObjectContext];
+    [managedObjectContext deleteObject:modelToBeDeleted];
+}
+
 @end
 
