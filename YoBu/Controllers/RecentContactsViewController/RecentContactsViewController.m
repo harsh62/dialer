@@ -127,11 +127,11 @@
         [cell.labelImageTitle setText:[cell.name.text substringToIndex:1].uppercaseString];
         [cell.labelImageTitle.layer setMasksToBounds:YES];
         
-        randomNumber = arc4random()%[self.materialDesignPalletArray count];
-        cell.labelCallCount.backgroundColor = [UIColor colorWithHexString:[self.materialDesignPalletArray objectAtIndex:randomNumber]];
-        cell.labelCallCount.layer.cornerRadius = cell.labelImageTitle.bounds.size.width/2.0;
+//        randomNumber = arc4random()%[self.materialDesignPalletArray count];
+//        cell.labelCallCount.backgroundColor = [UIColor colorWithHexString:[self.materialDesignPalletArray objectAtIndex:randomNumber]];
+//        cell.labelCallCount.layer.cornerRadius = cell.labelImageTitle.bounds.size.width/2.0;
         [cell.labelCallCount setText:dialedNumber.counter];
-        [cell.labelCallCount.layer setMasksToBounds:YES];
+//        [cell.labelCallCount.layer setMasksToBounds:YES];
         
         
         return cell;

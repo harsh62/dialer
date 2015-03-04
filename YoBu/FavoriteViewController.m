@@ -23,6 +23,35 @@
     // Do any additional setup after loading the view, typically from a nib.
     NSString *path = [[NSBundle mainBundle] pathForResource:@"MaterialDesignColors" ofType:@"plist"];
     self.materialDesignPalletArray = [[NSArray alloc] initWithContentsOfFile:path];
+    
+    [self addEditAndAddButtonsToNavigationItem];
+    
+
+    
+}
+
+-(void)addEditAndAddButtonsToNavigationItem{
+    //Set UIBarButtonsOnInitialLoad
+    self.editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
+                                                                    target:self
+                                                                    action:@selector(editButtonClicked:)];
+    self.favoritesNavigationItem.leftBarButtonItem = self.editButton;
+    self.addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                                                   target:self
+                                                                   action:@selector(addButtonClicked:)];
+    self.favoritesNavigationItem.rightBarButtonItem = self.addButton;
+}
+
+-(void)addDeleteAllAndDoneButtonToNavigationItem{
+    self.editButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain
+                                                      target:self
+                                                      action:@selector(doneButtonClicked:)];
+    self.favoritesNavigationItem.leftBarButtonItem = self.editButton;
+    
+    self.addButton = [[UIBarButtonItem alloc] initWithTitle:@"Delete All" style:UIBarButtonItemStylePlain
+                                                     target:self
+                                                     action:@selector(deleteAllButtonClicked:)];
+    self.favoritesNavigationItem.rightBarButtonItem = self.addButton;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -38,17 +67,25 @@
     [self.tableViewForFavorites reloadData];
 }
 
-- (IBAction)editButtonClicked:(id)sender {
-    [self.editButton setTitle:@"Done"];
-    self.tableViewForFavorites.isEditing?   [self.tableViewForFavorites setEditing:NO animated:YES] :[self.tableViewForFavorites setEditing:YES animated:YES];
+- (void)editButtonClicked:(id)sender {
+    [self addDeleteAllAndDoneButtonToNavigationItem];
+    self.tableViewForFavorites.isEditing ? [self.tableViewForFavorites setEditing:NO animated:YES] :[self.tableViewForFavorites setEditing:YES animated:YES];
 }
 
-- (IBAction)addButtonClicked:(id)sender {
-    
+- (void)addButtonClicked:(id)sender {
     ABPeoplePickerNavigationController* picker = [[ABPeoplePickerNavigationController alloc] init];
     picker.peoplePickerDelegate = self;
     [self presentViewController:picker animated:YES completion:nil];
-    
+}
+
+- (void)doneButtonClicked:(id)sender {
+    [self addEditAndAddButtonsToNavigationItem];
+    self.tableViewForFavorites.isEditing ? [self.tableViewForFavorites setEditing:NO animated:YES] :[self.tableViewForFavorites setEditing:YES animated:YES];
+}
+
+- (void)deleteAllButtonClicked:(id)sender {
+    [self addEditAndAddButtonsToNavigationItem];
+    self.tableViewForFavorites.isEditing ? [self.tableViewForFavorites setEditing:NO animated:YES] :[self.tableViewForFavorites setEditing:YES animated:YES];
 }
 
 
@@ -101,6 +138,24 @@
     }
     return cell;
 }
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+        return YES;
+}
+
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self.arrayToPopulateTableView removeObjectAtIndex:indexPath.row];
+    [self.tableViewForFavorites deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+}
+
+-(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    return @"Delete";
+}
+
+
+
+
+
 
 - (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize {
     //UIGraphicsBeginImageContext(newSize);

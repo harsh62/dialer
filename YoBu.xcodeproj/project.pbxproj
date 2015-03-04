@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3AE306721AA6C22100875340 /* UIColor+HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE306711AA6C22100875340 /* UIColor+HexColor.m */; };
+		3AE306731AA6C22100875340 /* UIColor+HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE306711AA6C22100875340 /* UIColor+HexColor.m */; };
+		3AE306791AA6C2B300875340 /* ConsoleLogs.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE306771AA6C2B300875340 /* ConsoleLogs.m */; };
+		3AE3067A1AA6C2B300875340 /* ConsoleLogs.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE306771AA6C2B300875340 /* ConsoleLogs.m */; };
 		983DF8B61A98F97B0099B43D /* RecentContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 983DF8B51A98F97B0099B43D /* RecentContactsViewController.m */; };
 		983DF8BA1A9909720099B43D /* RecentContactsCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 983DF8B91A9909720099B43D /* RecentContactsCustomCell.m */; };
 		983DF8BE1A990B740099B43D /* FrequentCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 983DF8BD1A990B740099B43D /* FrequentCustomCell.m */; };
@@ -25,7 +29,6 @@
 		988048051A77EB38003E3E39 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 988048041A77EB38003E3E39 /* TodayViewController.m */; };
 		988048071A77EB38003E3E39 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 988048061A77EB38003E3E39 /* MainInterface.storyboard */; };
 		9880480A1A77EB38003E3E39 /* YoBuWidget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 988047FC1A77EB38003E3E39 /* YoBuWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		988048441A77EF81003E3E39 /* UIColor+HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 988048131A77EF81003E3E39 /* UIColor+HexColor.m */; };
 		988048451A77EF81003E3E39 /* CustomSearchAlphabets.m in Sources */ = {isa = PBXBuildFile; fileRef = 988048171A77EF81003E3E39 /* CustomSearchAlphabets.m */; };
 		988048461A77EF81003E3E39 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 988048191A77EF81003E3E39 /* DataManager.m */; };
 		988048471A77EF81003E3E39 /* DialedNumbers.m in Sources */ = {isa = PBXBuildFile; fileRef = 9880481B1A77EF81003E3E39 /* DialedNumbers.m */; };
@@ -59,7 +62,6 @@
 		988048641A77EF81003E3E39 /* MaterialDesignColors.plist in Resources */ = {isa = PBXBuildFile; fileRef = 988048401A77EF81003E3E39 /* MaterialDesignColors.plist */; };
 		988048651A77EF81003E3E39 /* ContactsInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = 988048431A77EF81003E3E39 /* ContactsInstance.m */; };
 		988048691A77EFE1003E3E39 /* CustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 988048681A77EFE1003E3E39 /* CustomCell.m */; };
-		9880486A1A77F03B003E3E39 /* UIColor+HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 988048131A77EF81003E3E39 /* UIColor+HexColor.m */; };
 		9880486B1A77F048003E3E39 /* CustomSearchAlphabets.m in Sources */ = {isa = PBXBuildFile; fileRef = 988048171A77EF81003E3E39 /* CustomSearchAlphabets.m */; };
 		9880486C1A77F04D003E3E39 /* DataAccessLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 988048221A77EF81003E3E39 /* DataAccessLayer.m */; };
 		9880486D1A77F050003E3E39 /* FrequentContacts.m in Sources */ = {isa = PBXBuildFile; fileRef = 9880481F1A77EF81003E3E39 /* FrequentContacts.m */; };
@@ -178,6 +180,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3AE306701AA6C22100875340 /* UIColor+HexColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+HexColor.h"; sourceTree = "<group>"; };
+		3AE306711AA6C22100875340 /* UIColor+HexColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HexColor.m"; sourceTree = "<group>"; };
+		3AE306761AA6C2B300875340 /* ConsoleLogs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleLogs.h; sourceTree = "<group>"; };
+		3AE306771AA6C2B300875340 /* ConsoleLogs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConsoleLogs.m; sourceTree = "<group>"; };
+		3AE306781AA6C2B300875340 /* Logging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logging.h; sourceTree = "<group>"; };
+		3AE3067B1AA6DD8000875340 /* YoBu-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YoBu-Prefix.pch"; sourceTree = "<group>"; };
 		983DF8B41A98F97B0099B43D /* RecentContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecentContactsViewController.h; path = RecentContactsViewController/RecentContactsViewController.h; sourceTree = "<group>"; };
 		983DF8B51A98F97B0099B43D /* RecentContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecentContactsViewController.m; path = RecentContactsViewController/RecentContactsViewController.m; sourceTree = "<group>"; };
 		983DF8B81A9909720099B43D /* RecentContactsCustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecentContactsCustomCell.h; path = RecentContactsViewController/RecentContactsCustomCell/RecentContactsCustomCell.h; sourceTree = "<group>"; };
@@ -211,8 +219,6 @@
 		988048061A77EB38003E3E39 /* MainInterface.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainInterface.storyboard; sourceTree = "<group>"; };
 		9880480F1A77EB86003E3E39 /* YoBu.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = YoBu.entitlements; sourceTree = "<group>"; };
 		988048101A77EBB7003E3E39 /* YoBuWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = YoBuWidget.entitlements; sourceTree = "<group>"; };
-		988048121A77EF81003E3E39 /* UIColor+HexColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+HexColor.h"; sourceTree = "<group>"; };
-		988048131A77EF81003E3E39 /* UIColor+HexColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HexColor.m"; sourceTree = "<group>"; };
 		988048161A77EF81003E3E39 /* CustomSearchAlphabets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomSearchAlphabets.h; sourceTree = "<group>"; };
 		988048171A77EF81003E3E39 /* CustomSearchAlphabets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomSearchAlphabets.m; sourceTree = "<group>"; };
 		988048181A77EF81003E3E39 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
@@ -325,6 +331,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3AE3066E1AA6C22100875340 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				3AE306751AA6C2B300875340 /* Logger */,
+				3AE3066F1AA6C22100875340 /* Categories */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		3AE3066F1AA6C22100875340 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				3AE306701AA6C22100875340 /* UIColor+HexColor.h */,
+				3AE306711AA6C22100875340 /* UIColor+HexColor.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		3AE306751AA6C2B300875340 /* Logger */ = {
+			isa = PBXGroup;
+			children = (
+				3AE306761AA6C2B300875340 /* ConsoleLogs.h */,
+				3AE306771AA6C2B300875340 /* ConsoleLogs.m */,
+				3AE306781AA6C2B300875340 /* Logging.h */,
+			);
+			path = Logger;
+			sourceTree = "<group>";
+		};
 		983DF8B21A98F8D90099B43D /* FavoriteViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -376,7 +410,7 @@
 		988047C31A77EAA2003E3E39 = {
 			isa = PBXGroup;
 			children = (
-				988048111A77EF81003E3E39 /* Categories */,
+				3AE3066E1AA6C22100875340 /* Common */,
 				988048141A77EF81003E3E39 /* CoreData */,
 				988048231A77EF81003E3E39 /* Media */,
 				9880483E1A77EF81003E3E39 /* PlistFiles */,
@@ -420,6 +454,7 @@
 			children = (
 				988047D01A77EAA2003E3E39 /* Info.plist */,
 				988047D11A77EAA2003E3E39 /* main.m */,
+				3AE3067B1AA6DD8000875340 /* YoBu-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -475,15 +510,6 @@
 				988048021A77EB38003E3E39 /* Info.plist */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		988048111A77EF81003E3E39 /* Categories */ = {
-			isa = PBXGroup;
-			children = (
-				988048121A77EF81003E3E39 /* UIColor+HexColor.h */,
-				988048131A77EF81003E3E39 /* UIColor+HexColor.m */,
-			);
-			path = Categories;
 			sourceTree = "<group>";
 		};
 		988048141A77EF81003E3E39 /* CoreData */ = {
@@ -945,12 +971,13 @@
 				988048451A77EF81003E3E39 /* CustomSearchAlphabets.m in Sources */,
 				983DF8C21A991F2A0099B43D /* FavoriteContactCustomCell.m in Sources */,
 				983DF8C51A9929300099B43D /* FavoriteContacts.m in Sources */,
+				3AE306791AA6C2B300875340 /* ConsoleLogs.m in Sources */,
 				983DF8BE1A990B740099B43D /* FrequentCustomCell.m in Sources */,
 				988048461A77EF81003E3E39 /* DataManager.m in Sources */,
 				988048651A77EF81003E3E39 /* ContactsInstance.m in Sources */,
 				988047D51A77EAA2003E3E39 /* AppDelegate.m in Sources */,
+				3AE306721AA6C22100875340 /* UIColor+HexColor.m in Sources */,
 				988048A91A77F4C2003E3E39 /* HomeViewController.m in Sources */,
-				988048441A77EF81003E3E39 /* UIColor+HexColor.m in Sources */,
 				988048A81A77F4C2003E3E39 /* CustomAlphabetSettingViewController.m in Sources */,
 				9880484A1A77EF81003E3E39 /* DataAccessLayer.m in Sources */,
 				988047DB1A77EAA2003E3E39 /* FavoriteViewController.m in Sources */,
@@ -977,10 +1004,11 @@
 				9880486F1A77F057003E3E39 /* DialedNumbers.m in Sources */,
 				988048051A77EB38003E3E39 /* TodayViewController.m in Sources */,
 				9880486D1A77F050003E3E39 /* FrequentContacts.m in Sources */,
-				9880486A1A77F03B003E3E39 /* UIColor+HexColor.m in Sources */,
 				9880486B1A77F048003E3E39 /* CustomSearchAlphabets.m in Sources */,
+				3AE306731AA6C22100875340 /* UIColor+HexColor.m in Sources */,
 				988048701A77F05A003E3E39 /* DataManager.m in Sources */,
 				9880486C1A77F04D003E3E39 /* DataAccessLayer.m in Sources */,
+				3AE3067A1AA6C2B300875340 /* ConsoleLogs.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1102,6 +1130,7 @@
 				CODE_SIGN_ENTITLEMENTS = YoBu/YoBu.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PREFIX_HEADER = "YoBu/YoBu-Prefix.pch";
 				INFOPLIST_FILE = YoBu/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1117,6 +1146,7 @@
 				CODE_SIGN_ENTITLEMENTS = YoBu/YoBu.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PREFIX_HEADER = "YoBu/YoBu-Prefix.pch";
 				INFOPLIST_FILE = YoBu/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

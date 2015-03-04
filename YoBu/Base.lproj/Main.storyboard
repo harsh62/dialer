@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="uj0-PM-Mu6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="uj0-PM-Mu6">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -836,7 +836,6 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="M" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PXz-0J-nQ5" userLabel="imageLabel">
                                                     <rect key="frame" x="251" y="10" width="40" height="40"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -884,21 +883,10 @@
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PHm-2c-7uL">
                                 <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                                 <items>
-                                    <navigationItem title="Favorites" id="h8i-3O-fse">
-                                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="2Mw-hc-hRb">
-                                            <connections>
-                                                <action selector="editButtonClicked:" destination="dTH-GZ-O0Z" id="2pG-j2-70k"/>
-                                            </connections>
-                                        </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="FNE-cY-sJ0">
-                                            <connections>
-                                                <action selector="addButtonClicked:" destination="dTH-GZ-O0Z" id="8Xw-bd-6RZ"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
+                                    <navigationItem title="Favorites" id="h8i-3O-fse"/>
                                 </items>
                             </navigationBar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="4Bp-md-qmY">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="4Bp-md-qmY">
                                 <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -949,8 +937,8 @@
                     </view>
                     <tabBarItem key="tabBarItem" systemItem="favorites" id="pos-RW-fyA"/>
                     <connections>
-                        <outlet property="addButton" destination="FNE-cY-sJ0" id="Zuv-P0-ygc"/>
-                        <outlet property="editButton" destination="2Mw-hc-hRb" id="Gmh-E5-ofw"/>
+                        <outlet property="favoritesNavigationItem" destination="h8i-3O-fse" id="Xdl-oP-YBi"/>
+                        <outlet property="navigationBar" destination="PHm-2c-7uL" id="GCZ-5C-zrN"/>
                         <outlet property="tableViewForFavorites" destination="4Bp-md-qmY" id="50U-Bk-97C"/>
                     </connections>
                 </viewController>

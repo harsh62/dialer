@@ -10,6 +10,7 @@
 #import "MenuViewController.h"
 #import "HomeViewController.h"
 #import "RecentContactsViewController.h"
+#import "ConsoleLogs.h"
 
 
 @interface AppDelegate ()
@@ -20,6 +21,13 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+//#if !(TARGET_IPHONE_SIMULATOR)
+//    [[ConsoleLogs sharedInstance] turnOnLoggingToFile];
+//#endif
+    LogTrace(@"");
+
+    
     // Override point for customization after application launch.
     return YES;
 }

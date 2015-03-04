@@ -19,8 +19,10 @@
 - (IBAction)editButtonClicked:(id)sender;
 - (IBAction)addButtonClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UITableView *tableViewForFavorites;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *editButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *addButton;
+@property (strong, nonatomic) UIBarButtonItem *editButton;
+@property (strong, nonatomic) UIBarButtonItem *addButton;
+@property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
+@property (weak, nonatomic) IBOutlet UINavigationItem *favoritesNavigationItem;
 
 @end
 
