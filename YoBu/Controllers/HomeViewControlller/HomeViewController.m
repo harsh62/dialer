@@ -435,12 +435,12 @@ UINavigationController *navigationController;
         
         NSString *firstName = CFBridgingRelease(ABRecordCopyValue(person, kABPersonFirstNameProperty));
         NSString *lastName  = CFBridgingRelease(ABRecordCopyValue(person, kABPersonLastNameProperty));
-        NSString *firstNameAndLastName;
+        NSString *firstNameAndLastName = @"";
         if(firstName != nil && ![firstName isEqualToString:@""] && ![firstName isEqualToString:@"(null)"]){
             firstNameAndLastName = firstName;
         }
         if(lastName != nil && ![lastName isEqualToString:@""] && ![lastName isEqualToString:@"(null)"]){
-            firstNameAndLastName = [firstNameAndLastName stringByAppendingString:[NSString stringWithFormat:@" %@",lastName]];;
+            firstNameAndLastName = [firstNameAndLastName stringByAppendingString:firstName.length>0?[NSString stringWithFormat:@" %@",lastName]:lastName];;
         }
         ////        CFDataRef imageData = ABPersonCopyImageData(person);
         ////        UIImage *image = [UIImage imageWithData:(__bridge_transfer NSData *)imageData];
@@ -464,9 +464,9 @@ UINavigationController *navigationController;
                 NSString *phoneNumber = CFBridgingRelease(ABMultiValueCopyValueAtIndex(phoneNumbers, i));
                 
                 //Remove Special Characters
-                NSArray *arrayOfSpecialCharacters = @[@"(",@")",@"-",@" "];
-                for(NSString *character in arrayOfSpecialCharacters)
-                    phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:character withString:@""];
+                NSCharacterSet *characterSet = [[NSCharacterSet characterSetWithCharactersInString:@"+1234567890"] invertedSet];
+                phoneNumber = [[phoneNumber componentsSeparatedByCharactersInSet:characterSet] componentsJoinedByString:@""];
+                
                 //Add Dictionary into the array
                 NSMutableDictionary *contactDictionary = [[NSMutableDictionary alloc] init];
                 [contactDictionary setValue:firstNameAndLastName forKey:@"name"];

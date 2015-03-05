@@ -334,9 +334,9 @@
 
 - (void)listPeopleInAddressBook:(ABAddressBookRef)addressBook
 {
-    NSInteger numberOfPeopleTest = ABAddressBookGetPersonCount(addressBook);
+//    NSInteger numberOfPeopleTest = ABAddressBookGetPersonCount(addressBook);
 //
-    NSLog(@"Number of Contacts OLD Approach----->%ld",(long)numberOfPeopleTest);
+//    NSLog(@"Number of Contacts OLD Approach----->%ld",(long)numberOfPeopleTest);
 //    NSArray *allPeople = CFBridgingRelease(ABAddressBookCopyArrayOfAllPeople(addressBook));
     
 ////////New Approach to Fetch Contacts where it was crashing in certain locations
@@ -351,13 +351,24 @@
         
         NSString *firstName = CFBridgingRelease(ABRecordCopyValue(person, kABPersonFirstNameProperty));
         NSString *lastName  = CFBridgingRelease(ABRecordCopyValue(person, kABPersonLastNameProperty));
+        NSString *middleName  = CFBridgingRelease(ABRecordCopyValue(person, kABPersonMiddleNameProperty));
+        NSString *nickName  = CFBridgingRelease(ABRecordCopyValue(person, kABPersonNicknameProperty));
+        NSString *organizationName = CFBridgingRelease(ABRecordCopyValue(person, kABPersonOrganizationProperty));
+        NSString *jobTitle = CFBridgingRelease(ABRecordCopyValue(person, kABPersonJobTitleProperty));
+        NSString *departmentName = CFBridgingRelease(ABRecordCopyValue(person, kABPersonDepartmentProperty));
+        NSString *email = CFBridgingRelease(ABRecordCopyValue(person, kABPersonEmailProperty));
+
         NSString *firstNameAndLastName;
+        
         if(firstName != nil && ![firstName isEqualToString:@""] && ![firstName isEqualToString:@"(null)"]){
             firstNameAndLastName = firstName;
         }
         if(lastName != nil && ![lastName isEqualToString:@""] && ![lastName isEqualToString:@"(null)"]){
-            firstNameAndLastName = [firstNameAndLastName stringByAppendingString:[NSString stringWithFormat:@" %@",lastName]];;
+            firstNameAndLastName = [firstNameAndLastName stringByAppendingString:firstName.length>0?[NSString stringWithFormat:@" %@",lastName]:lastName];;
         }
+        
+        
+        
 ////        CFDataRef imageData = ABPersonCopyImageData(person);
 ////        UIImage *image = [UIImage imageWithData:(__bridge_transfer NSData *)imageData];
 //////        CFRelease(imageData);
@@ -380,9 +391,9 @@
                 NSString *phoneNumber = CFBridgingRelease(ABMultiValueCopyValueAtIndex(phoneNumbers, i));
                 
                 //Remove Special Characters
-                NSArray *arrayOfSpecialCharacters = @[@"(",@")",@"-",@" "];
-                for(NSString *character in arrayOfSpecialCharacters)
-                    phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:character withString:@""];
+                NSCharacterSet *characterSet = [[NSCharacterSet characterSetWithCharactersInString:@"+1234567890"] invertedSet];
+                phoneNumber = [[phoneNumber componentsSeparatedByCharactersInSet:characterSet] componentsJoinedByString:@""];
+                
                 //Add Dictionary into the array
                 NSMutableDictionary *contactDictionary = [[NSMutableDictionary alloc] init];
                 [contactDictionary setValue:firstNameAndLastName forKey:@"name"];

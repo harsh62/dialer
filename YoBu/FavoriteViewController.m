@@ -196,7 +196,7 @@
         firstNameAndLastName = firstName;
     }
     if(lastName != nil && ![lastName isEqualToString:@""] && ![lastName isEqualToString:@"(null)"]){
-        firstNameAndLastName = [firstNameAndLastName stringByAppendingString:[NSString stringWithFormat:@" %@",lastName]];;
+        firstNameAndLastName = [firstNameAndLastName stringByAppendingString:firstName.length>0?[NSString stringWithFormat:@" %@",lastName]:lastName];;
     }
    
     NSData *imageData = nil;
@@ -217,9 +217,9 @@
     // Copy the number value into a string.
     NSString *number = (__bridge NSString *)ABMultiValueCopyValueAtIndex(multivalue, index);
     
-    NSArray *arrayOfSpecialCharacters = @[@"(",@")",@"-",@" "];
-    for(NSString *character in arrayOfSpecialCharacters)
-        number = [number stringByReplacingOccurrencesOfString:character withString:@""];
+    //Remove Special Characters
+    NSCharacterSet *characterSet = [[NSCharacterSet characterSetWithCharactersInString:@"+1234567890"] invertedSet];
+    number = [[number componentsSeparatedByCharactersInSet:characterSet] componentsJoinedByString:@""];
     
     [DataAccessLayer saveFavoriteContactsWithName:firstNameAndLastName andWithPhoneNumber:number andWithImageData:imageData];
     
