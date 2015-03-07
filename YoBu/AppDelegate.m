@@ -25,6 +25,11 @@
 //#if !(TARGET_IPHONE_SIMULATOR)
 //    [[ConsoleLogs sharedInstance] turnOnLoggingToFileForApp:YES];
 //#endif
+    
+    //set contacts as an initial controller
+    UITabBarController *rootController=(UITabBarController *)((AppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController;
+    
+    rootController.selectedIndex = 2;
     LogTrace(@"");
 
     

@@ -12,6 +12,8 @@
 
 + (void)saveDialedNumber:(NSString*)phoneNumber forContactName:(NSString*)contactName;
 + (void)saveFavoriteContactsWithName:(NSString*)name andWithPhoneNumber:(NSString*)phoneNumber andWithImageData:(NSData *) imageData;
++ (void)saveContactWithName:(NSString*)name andPhoneNumber:(NSString*)phoneNumber havingRecordIdAs:(NSString *)recordId;
+
 + (NSMutableArray *)fetchFrequentContacts;
 
 + (void)saveCustomSearchForDigit:(NSString*)digit withAlphabets:(NSString*)alphabets;
@@ -24,6 +26,8 @@
 + (NSArray *)fetchRecentlyDialedContacts;
 + (NSArray *)fetchAllFrequentContacts;
 + (NSArray *)fetchAllFavoriteContacts;
++ (NSMutableArray *)fetchAllContacts;
+
 
 
 + (void)deleteModel:(id)modelToBeDeleted;

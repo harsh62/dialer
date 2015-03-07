@@ -27,9 +27,5 @@
 @property (nonatomic, retain) NSString* phoneNumber;
 
 
-- (void) openAddContactController;
-
-
-
 @end
 

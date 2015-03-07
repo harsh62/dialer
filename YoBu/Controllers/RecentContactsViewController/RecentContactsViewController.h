@@ -10,7 +10,6 @@
 
 @interface RecentContactsViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableViewForRecentController;
-- (IBAction)editBUttonPressed:(id)sender;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentControl;
 
 //Arrays

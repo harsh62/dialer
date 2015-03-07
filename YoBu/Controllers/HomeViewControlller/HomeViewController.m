@@ -48,6 +48,10 @@ UINavigationController *navigationController;
         [self requestContacts];
     });
     
+    [DataAccessLayer checkAndUpdateTabelWithDefaultAlphabets];
+
+
+    
 //    [self makeRandomContacts];
     
 //    [self setAttributedTextWithString:@"1\n " onButton:self.buttonOne];
@@ -124,6 +128,9 @@ UINavigationController *navigationController;
 }
 
 -(void)viewDidAppear:(BOOL)animated{
+    
+    [self setCustomAlphabetsToUserInterfaceToAllTheLabels];
+
     
     rectImageViewBlueCircle = self.imageViewForCircle.frame;
     rectImageViewCall = self.imageViewCall.frame;
@@ -431,17 +438,43 @@ UINavigationController *navigationController;
     
     for (NSInteger i = 0; i < numberOfPeople; i++) {
         ABRecordRef person = CFArrayGetValueAtIndex(allPeople, i);
-        //        ABRecordRef person = (__bridge ABRecordRef)allPeople[i];
+        
+        NSString *recordId = [NSString stringWithFormat:@"%d",ABRecordGetRecordID(person)];
         
         NSString *firstName = CFBridgingRelease(ABRecordCopyValue(person, kABPersonFirstNameProperty));
         NSString *lastName  = CFBridgingRelease(ABRecordCopyValue(person, kABPersonLastNameProperty));
+        NSString *middleName  = CFBridgingRelease(ABRecordCopyValue(person, kABPersonMiddleNameProperty));
+        NSString *nickName  = CFBridgingRelease(ABRecordCopyValue(person, kABPersonNicknameProperty));
+        NSString *organizationName = CFBridgingRelease(ABRecordCopyValue(person, kABPersonOrganizationProperty));
+        NSString *jobTitle = CFBridgingRelease(ABRecordCopyValue(person, kABPersonJobTitleProperty));
+        NSString *departmentName = CFBridgingRelease(ABRecordCopyValue(person, kABPersonDepartmentProperty));
+        
         NSString *firstNameAndLastName = @"";
+        
         if(firstName != nil && ![firstName isEqualToString:@""] && ![firstName isEqualToString:@"(null)"]){
             firstNameAndLastName = firstName;
         }
-        if(lastName != nil && ![lastName isEqualToString:@""] && ![lastName isEqualToString:@"(null)"]){
-            firstNameAndLastName = [firstNameAndLastName stringByAppendingString:firstName.length>0?[NSString stringWithFormat:@" %@",lastName]:lastName];;
+        
+        if(middleName != nil && ![middleName isEqualToString:@""] && ![middleName isEqualToString:@"(null)"]){
+            firstNameAndLastName = [firstNameAndLastName stringByAppendingString:firstNameAndLastName.length>0?[NSString stringWithFormat:@" %@",middleName]:middleName];;
         }
+        
+        if(lastName != nil && ![lastName isEqualToString:@""] && ![lastName isEqualToString:@"(null)"]){
+            firstNameAndLastName = [firstNameAndLastName stringByAppendingString:firstNameAndLastName.length>0?[NSString stringWithFormat:@" %@",lastName]:lastName];;
+        }
+        if(firstNameAndLastName.length == 0 && nickName != nil && ![nickName isEqualToString:@""] && ![nickName isEqualToString:@"(null)"]){
+            firstNameAndLastName = [firstNameAndLastName stringByAppendingString:nickName];
+        }
+        if(firstNameAndLastName.length == 0 && organizationName != nil && ![organizationName isEqualToString:@""] && ![organizationName isEqualToString:@"(null)"]){
+            firstNameAndLastName = [firstNameAndLastName stringByAppendingString:organizationName];
+        }
+        if(firstNameAndLastName.length == 0 && departmentName != nil && ![departmentName isEqualToString:@""] && ![departmentName isEqualToString:@"(null)"]){
+            firstNameAndLastName = [firstNameAndLastName stringByAppendingString:departmentName];
+        }
+        if(firstNameAndLastName.length == 0 && jobTitle != nil && ![jobTitle isEqualToString:@""] && ![jobTitle isEqualToString:@"(null)"]){
+            firstNameAndLastName = [firstNameAndLastName stringByAppendingString:jobTitle];
+        }
+        
         ////        CFDataRef imageData = ABPersonCopyImageData(person);
         ////        UIImage *image = [UIImage imageWithData:(__bridge_transfer NSData *)imageData];
         //////        CFRelease(imageData);
@@ -477,10 +510,10 @@ UINavigationController *navigationController;
                 }
                 else{
                     [contactDictionary setValue:@"NO" forKey:@"hasProfilePicture"];
-                    
                 }
-                
                 [self.listOfAllContactsInWidget addObject:contactDictionary];
+                
+                [DataAccessLayer saveContactWithName:firstNameAndLastName andPhoneNumber:phoneNumber havingRecordIdAs:recordId];
             }
             CFRelease(phoneNumbers);
         }
@@ -701,6 +734,20 @@ UINavigationController *navigationController;
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
     if(self.imageViewRedCircle.isHidden)
         [self downSwipeOnDialerView];
+}
+
+#pragma mark Custom Alphabet Setting
+
+- (void) setCustomAlphabetsToUserInterfaceToAllTheLabels{
+    self.labelOneAlphabets.text = [DataAccessLayer fetchCustomAlphabetsForDigit:@"1"];
+    self.labelTwoAlphabets.text = [DataAccessLayer fetchCustomAlphabetsForDigit:@"2"];
+    self.labelThreeAlphabets.text = [DataAccessLayer fetchCustomAlphabetsForDigit:@"3"];
+    self.labelFourAlphabets.text = [DataAccessLayer fetchCustomAlphabetsForDigit:@"4"];
+    self.labelFiveAlphabets.text = [DataAccessLayer fetchCustomAlphabetsForDigit:@"5"];
+    self.labelSixAlphabets.text = [DataAccessLayer fetchCustomAlphabetsForDigit:@"6"];
+    self.labelSevenAlphabets.text = [DataAccessLayer fetchCustomAlphabetsForDigit:@"7"];
+    self.labelEightAlphabets.text = [DataAccessLayer fetchCustomAlphabetsForDigit:@"8"];
+    self.labelNineAlphabets.text = [DataAccessLayer fetchCustomAlphabetsForDigit:@"9"];
 }
 
 #pragma Mark TouchesBegins 

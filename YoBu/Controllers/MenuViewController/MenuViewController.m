@@ -11,17 +11,19 @@
 #import "ContactsInstance.h"
 #import "DataAccessLayer.h"
 #import "ConsoleLogs.h"
+#import "CustomAlphabetSettingViewController.h"
 
 #define Application_ID 947452765
 #define Social_Sharing_Message @"I #UseYoBu for quickest calling on iOS. Download it:https://itunes.apple.com/in/app/yobu/id947452765?ls=1&mt=8"
 
 //NUMBER OF SECTIONS
-#define NUMBER_OF_SECTIONS  3
+#define NUMBER_OF_SECTIONS  4
 
 //SECTION POSITIONS
-#define SECTION_SHARING     0
-#define SECTION_TUTORIALS   1
-#define SECTION_VERSION     2
+#define SECTION_CUSTOM_SEARCH       0
+#define SECTION_SHARING             1
+#define SECTION_TUTORIALS           2
+#define SECTION_VERSION             3
 
 
 @interface MenuViewController ()
@@ -37,20 +39,12 @@ UINavigationController *navigationController;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
-    
-//    [[ContactsInstance sharedInstance] requestContacts];
     [DataAccessLayer checkAndUpdateTabelWithDefaultAlphabets];
 
 
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    if(self.isCallFromWidget){
-        [self openAddContactController];
-    }
-    
-    self.isApplicationAlreadyOpen = YES;
 }
 
 
@@ -202,43 +196,6 @@ UINavigationController *navigationController;
     
 }
 
-- (void) openAddContactController{
-    ABNewPersonViewController *picker = [[ABNewPersonViewController alloc] init];
-    picker.newPersonViewDelegate = self;
-    
-    ABRecordRef record = ABPersonCreate();
-    
-    ABMutableMultiValueRef multi = ABMultiValueCreateMutable(kABStringPropertyType);
-    
-    // add the home email
-    ABRecordSetValue(record, kABPersonEmailProperty, multi, NULL);
-    
-    ABMutableMultiValueRef phoneNumbers = ABMultiValueCreateMutable(kABMultiStringPropertyType);
-    
-    
-    NSString *petPhoneNumber = self.phoneNumber;
-    
-    ABMultiValueAddValueAndLabel(phoneNumbers, (__bridge CFStringRef)petPhoneNumber, kABPersonPhoneMainLabel, NULL);
-    
-    ABRecordSetValue(record, kABPersonPhoneProperty, phoneNumbers, nil);
-    
-    // add the record
-    picker.displayedPerson = record;
-    //    picker.navigationItem.title=@"edit contact";
-    [picker.navigationController.navigationBar setHidden:NO];
-    
-    picker.displayedPerson = record;
-    //    picker.navigationItem.title=@"edit contact";
-    [picker.navigationController.navigationBar setHidden:NO];
-    
-    
-    navigationController = [[UINavigationController alloc] initWithRootViewController:picker];
-    [self presentViewController:navigationController animated:YES completion:nil];
-    self.isCallFromWidget = NO;
-    //    [self.navigationController pushViewController:picker animated:YES];
-}
-
-
 #pragma mark UITableView DataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     switch (section) {
@@ -251,8 +208,11 @@ UINavigationController *navigationController;
         case SECTION_VERSION:
             return 1;
             break;
+        case SECTION_CUSTOM_SEARCH:
+            return 1;
+            break;
         default:
-            return 2;
+            return 1;
             break;
     }
 }
@@ -312,6 +272,10 @@ UINavigationController *navigationController;
             cell.detailTextLabel.text = @"1.4";
 
             break;
+        case SECTION_CUSTOM_SEARCH:
+            cell.textLabel.text = @"Add Custom alphabets for T9 search!";
+            
+            break;
         default:
             cell.textLabel.text = @"Testing the table view grouped cell";
             break;
@@ -336,7 +300,9 @@ UINavigationController *navigationController;
         case SECTION_VERSION:
             return @"";
             break;
-
+        case SECTION_CUSTOM_SEARCH:
+            return @"Custom Search Settings";
+            break;
         default:
             return @"Default";
             break;
@@ -387,6 +353,11 @@ UINavigationController *navigationController;
             break;
         case SECTION_TUTORIALS:
             [self tutorialGroupClickedOnRow:indexPath.row];
+            break;
+        case SECTION_CUSTOM_SEARCH:
+            [self openCustomAlphabetSettingViewController];
+            break;
+            
     }
     
 }
@@ -409,6 +380,15 @@ UINavigationController *navigationController;
             break;
     }
 }
+
+#pragma mark Open Custom View Controller
+
+- (void) openCustomAlphabetSettingViewController{
+    CustomAlphabetSettingViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"CustomAlphabetSettingViewController"];
+    [self presentViewController:controller animated:YES completion:nil];
+}
+
+
 
 
 

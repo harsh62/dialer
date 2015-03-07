@@ -67,4 +67,17 @@
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBarOnTableForContacts;
 
+
+
+//custom alphabets
+@property (weak, nonatomic) IBOutlet UILabel *labelOneAlphabets;
+@property (weak, nonatomic) IBOutlet UILabel *labelTwoAlphabets;
+@property (weak, nonatomic) IBOutlet UILabel *labelThreeAlphabets;
+@property (weak, nonatomic) IBOutlet UILabel *labelFourAlphabets;
+@property (weak, nonatomic) IBOutlet UILabel *labelFiveAlphabets;
+@property (weak, nonatomic) IBOutlet UILabel *labelSixAlphabets;
+@property (weak, nonatomic) IBOutlet UILabel *labelSevenAlphabets;
+@property (weak, nonatomic) IBOutlet UILabel *labelEightAlphabets;
+@property (weak, nonatomic) IBOutlet UILabel *labelNineAlphabets;
+
 @end
