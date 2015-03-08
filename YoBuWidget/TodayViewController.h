@@ -16,7 +16,7 @@ typedef NS_ENUM(NSInteger, InterfaceOrientationType) {
 };
 
 
-@property (strong,atomic)       NSMutableArray *listOfAllContactsInWidget;
+@property (strong,atomic)       NSArray *listOfAllContactsInWidget;
 @property (strong,nonatomic)    NSMutableArray *filteredContacts;
 @property (strong,nonatomic)    NSMutableArray *arrayOfSearchCombinationsFormed;
 @property (strong,nonatomic)    NSMutableDictionary *dictionaryOfCombination;

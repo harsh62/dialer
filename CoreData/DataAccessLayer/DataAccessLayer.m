@@ -316,7 +316,7 @@
     }
 }
 
-+ (NSMutableArray *)fetchAllContacts{
++ (NSArray *)fetchAllContacts{
     NSManagedObjectContext *managedObjectContext = [[DataManager sharedInstance] managedObjectContext];
     NSError *error;
     @try {
@@ -325,7 +325,7 @@
         NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITY_ADDRESS_BOOK
                                                   inManagedObjectContext:managedObjectContext];
         [fetchRequest setEntity:entity];
-        return [NSMutableArray arrayWithArray:[managedObjectContext executeFetchRequest:fetchRequest error:&error]];
+        return [managedObjectContext executeFetchRequest:fetchRequest error:&error];
     }
     @catch (NSException *exception) {
         NSLog(@"Exception Name: %@ ---> Reason of exception:%@",exception.name,exception.reason);

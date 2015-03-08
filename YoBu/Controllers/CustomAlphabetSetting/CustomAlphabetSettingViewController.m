@@ -30,7 +30,6 @@
 }
 
 - (IBAction)saveButtonPressed:(id)sender {
-    
     [DataAccessLayer saveCustomSearchForDigit:@"1" withAlphabets:self.textFieldOne.text];
     [DataAccessLayer saveCustomSearchForDigit:@"2" withAlphabets:self.textFieldTwo.text];
     [DataAccessLayer saveCustomSearchForDigit:@"3" withAlphabets:self.textFieldThree.text];
@@ -42,13 +41,10 @@
     [DataAccessLayer saveCustomSearchForDigit:@"9" withAlphabets:self.textFieldNine.text];
     [self dismissViewControllerAnimated:YES completion:nil];
     
-    
-    
 }
 
 
 - (IBAction)cancelButtonPressed:(id)sender {
-    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

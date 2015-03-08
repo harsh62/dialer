@@ -26,7 +26,7 @@
 + (NSArray *)fetchRecentlyDialedContacts;
 + (NSArray *)fetchAllFrequentContacts;
 + (NSArray *)fetchAllFavoriteContacts;
-+ (NSMutableArray *)fetchAllContacts;
++ (NSArray *)fetchAllContacts;
 
 
 

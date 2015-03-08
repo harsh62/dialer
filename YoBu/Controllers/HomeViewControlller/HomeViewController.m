@@ -76,8 +76,7 @@ UINavigationController *navigationController;
     [recognizer setDirection:(UISwipeGestureRecognizerDirectionDown)];
     [self.dialerView addGestureRecognizer:recognizer];
     
-    
-//    self.tableViewForContactsSearched 
+    [self initializeDragAndDrop];
     
 }
 
@@ -127,7 +126,7 @@ UINavigationController *navigationController;
     CFRelease(addressBookRef);
 }
 
--(void)viewDidAppear:(BOOL)animated{
+-(void)viewWillAppear:(BOOL)animated{
     
     [self setCustomAlphabetsToUserInterfaceToAllTheLabels];
 
@@ -577,6 +576,9 @@ UINavigationController *navigationController;
     } completion:^(BOOL finished){
     }];
     [self callButtonAppearAnimation];
+    
+    rectImageViewRedCircle =self.imageViewRedCircle.frame;
+    rectImageViewDialPad =self.imageViewDialPad.frame;
 
 }
 
@@ -771,6 +773,49 @@ UINavigationController *navigationController;
 - (void) touchesEnded:(NSSet *)touches
             withEvent:(UIEvent *)event {
    }
+
+CGPoint originalCenter;
+-(void) initializeDragAndDrop{
+    UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self
+                                                                                 action:@selector(dragGesture:)];
+    [self.dialPadMenuButton addGestureRecognizer:panGesture];
+    [self.imageViewRedCircle setUserInteractionEnabled:YES];
+    originalCenter = self.dialPadMenuButton.center;
+}
+
+
+- (void) dragGesture:(UIPanGestureRecognizer *) panGesture{
+    CGPoint translation = [panGesture translationInView:self.view];
+    
+    switch (panGesture.state) {
+        case UIGestureRecognizerStateBegan:{
+            originalCenter = self.dialPadMenuButton.center;
+        }
+            break;
+        case UIGestureRecognizerStateChanged:{
+            self.imageViewRedCircle.center = CGPointMake(self.imageViewRedCircle.center.x + translation.x,
+                                           self.imageViewRedCircle.center.y + translation.y);
+            self.dialPadMenuButton.center = CGPointMake(self.dialPadMenuButton.center.x + translation.x,
+                                                         self.dialPadMenuButton.center.y + translation.y);
+            self.imageViewDialPad.center = CGPointMake(self.imageViewDialPad.center.x + translation.x,
+                                                        self.imageViewDialPad.center.y + translation.y);
+            
+        }
+            break;
+        case UIGestureRecognizerStateEnded:{
+            [UIView animateWithDuration:1.0
+                             animations:^{
+                             }
+                             completion:^(BOOL finished){
+                             }];
+        }
+            break;
+        default:
+            break;
+    }
+    
+    [panGesture setTranslation:CGPointZero inView:self.view];
+}
 
 
 

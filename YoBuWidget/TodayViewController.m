@@ -49,9 +49,9 @@
 
 
 - (void)viewDidLoad {
-#if !(TARGET_IPHONE_SIMULATOR)
-    [[ConsoleLogs sharedInstance] turnOnLoggingToFileForApp:NO];
-#endif
+//#if !(TARGET_IPHONE_SIMULATOR)
+//    [[ConsoleLogs sharedInstance] turnOnLoggingToFileForApp:NO];
+//#endif
     
     [super viewDidLoad];
     [self designLabel];
@@ -126,7 +126,8 @@
         [self.arrayOfSearchCombinationsFormed removeAllObjects];
         self.arrayOfSearchCombinationsFormed = nil;
     }
-    [self searchContact];
+        [self searchContact];
+
 }
 
 #pragma mark Search Logic
@@ -145,9 +146,6 @@
     for(NSString *combination in arrayToTraversed){
         NSPredicate *predicateInsideLoop = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", combination];
         NSArray *filteredContactByName = [notArray filteredArrayUsingPredicate:predicateInsideLoop];
-        
-        notArray = nil;
-        
         if([filteredContactByName count]>0){
             [self.filteredContacts addObjectsFromArray:filteredContactByName];
         }
@@ -156,6 +154,7 @@
         }
         filteredContactByName = nil;
     }
+    notArray = nil;
     arrayToTraversed = nil;
     
     
@@ -376,7 +375,7 @@
             [contactDictionary setValue:firstNameAndLastName forKey:@"name"];
             [contactDictionary setValue:phoneNumber forKey:@"phoneNumber"];
             [contactDictionary setValue:@"NO" forKey:@"hasProfilePicture"];
-            [self.listOfAllContactsInWidget addObject:contactDictionary];
+//            [self.listOfAllContactsInWidget addObject:contactDictionary];
         }
         CFRelease(phoneNumbers);
     }

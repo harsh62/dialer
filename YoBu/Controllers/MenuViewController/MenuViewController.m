@@ -273,7 +273,7 @@ UINavigationController *navigationController;
 
             break;
         case SECTION_CUSTOM_SEARCH:
-            cell.textLabel.text = @"Add Custom alphabets for T9 search!";
+            cell.textLabel.text = @"Customize Search!";
             
             break;
         default:
