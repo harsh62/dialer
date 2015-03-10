@@ -13,9 +13,10 @@
 #import <MessageUI/MFMailComposeViewController.h>
 #import <MediaPlayer/MediaPlayer.h>
 #import <AddressBookUI/AddressBookUI.h>
+#import <StoreKit/StoreKit.h>
 
 
-@interface MenuViewController : UIViewController<MFMailComposeViewControllerDelegate,UIActionSheetDelegate,ABNewPersonViewControllerDelegate, UITableViewDataSource,UITableViewDelegate>{
+@interface MenuViewController : UIViewController<MFMailComposeViewControllerDelegate,UIActionSheetDelegate,ABNewPersonViewControllerDelegate, UITableViewDataSource,UITableViewDelegate,SKProductsRequestDelegate,SKPaymentTransactionObserver>{
 
     SLComposeViewController *mySLComposerSheet;
     MPMoviePlayerViewController * theMoviPlayer;
@@ -25,6 +26,13 @@
 @property (nonatomic, assign) BOOL isCallFromWidget;
 @property (nonatomic, assign) BOOL isApplicationAlreadyOpen;
 @property (nonatomic, retain) NSString* phoneNumber;
+
+
+//In App Purchase
+
+- (void) completeTransaction: (SKPaymentTransaction *)transaction;
+- (void) restoreTransaction: (SKPaymentTransaction *)transaction;
+- (void) failedTransaction: (SKPaymentTransaction *)transaction;
 
 
 @end

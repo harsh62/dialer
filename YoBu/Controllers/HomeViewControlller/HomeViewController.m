@@ -78,6 +78,8 @@ UINavigationController *navigationController;
     
     [self initializeDragAndDrop];
     
+    [self checkInAppPurchase];
+    
 }
 
 -(void) makeRandomContacts{
@@ -815,6 +817,52 @@ CGPoint originalCenter;
     }
     
     [panGesture setTranslation:CGPointZero inView:self.view];
+}
+
+
+#pragma mark In App Purchase
+
+-(void) checkInAppPurchase{
+    
+    if(YES){
+        UIView *translucentView = [[UIView alloc] initWithFrame:self.view.frame];
+//        translucentView.opaque = YES;
+        translucentView.alpha = 0.9;
+        [translucentView setBackgroundColor:[UIColor darkGrayColor]];
+        
+        //Add buy button to on the view        
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [button addTarget:self
+                   action:@selector(buyButtonClicked:)
+         forControlEvents:UIControlEventTouchUpInside];
+        
+        [button setTitle:@"Buy In App Dialer" forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        
+        button.frame = CGRectMake(self.view.frame.size.width/2-100, self.view.frame.size.height/2-100, 200, 200);
+        
+        button.layer.cornerRadius = button.bounds.size.width/2.0;
+        button.layer.borderWidth = 2.0;
+        button.layer.borderColor = [UIColor whiteColor].CGColor;
+        [button.layer setMasksToBounds:YES];
+
+        [self.view addSubview:button];
+        
+        
+        [self.view addSubview:translucentView];
+        [self.view addSubview:button];
+        
+    }
+    else{
+        
+    }
+    
+    
+    
+}
+
+-(void)buyButtonClicked:(UIButton *)button{
+    
 }
 
 

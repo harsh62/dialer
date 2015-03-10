@@ -384,9 +384,95 @@ UINavigationController *navigationController;
 #pragma mark Open Custom View Controller
 
 - (void) openCustomAlphabetSettingViewController{
+    
+    SKProductsRequest *request= [[SKProductsRequest alloc]
+                                 initWithProductIdentifiers: [NSSet setWithObject: @"Hachi.YoBu.InAppDialerPurchase"]];
+    request.delegate = self;
+    [request start];
+    /*
     CustomAlphabetSettingViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"CustomAlphabetSettingViewController"];
     [self presentViewController:controller animated:YES completion:nil];
+     */
 }
+
+#pragma mark In App Purchase Delegates
+///////////IN APP PURCHASE DELEGATES
+- (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response
+{
+    [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
+    
+    NSArray *myProduct = response.products;
+    NSLog(@"%@",[[myProduct objectAtIndex:0] productIdentifier]);
+    
+    //Since only one product, we do not need to choose from the array. Proceed directly to payment.
+    
+    SKPayment *newPayment = [SKPayment paymentWithProduct:[myProduct objectAtIndex:0]];
+    [[SKPaymentQueue defaultQueue] addPayment:newPayment];    
+}
+
+- (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions
+{
+    for (SKPaymentTransaction *transaction in transactions)
+    {
+        switch (transaction.transactionState)
+        {
+            case SKPaymentTransactionStatePurchased:
+                [self completeTransaction:transaction];
+                break;
+            case SKPaymentTransactionStateFailed:
+                [self failedTransaction:transaction];
+                break;
+            case SKPaymentTransactionStateRestored:
+                [self restoreTransaction:transaction];
+            default:
+                break;
+        }
+    }
+}
+
+- (void) completeTransaction: (SKPaymentTransaction *)transaction
+{
+    NSLog(@"Transaction Completed");
+    // You can create a method to record the transaction.
+    // [self recordTransaction: transaction];
+    
+    // You should make the update to your app based on what was purchased and inform user.
+    // [self provideContent: transaction.payment.productIdentifier];
+    
+    // Finally, remove the transaction from the payment queue.
+    [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+}
+
+- (void) restoreTransaction: (SKPaymentTransaction *)transaction
+{
+    NSLog(@"Transaction Restored");
+    // You can create a method to record the transaction.
+    // [self recordTransaction: transaction];
+    
+    // You should make the update to your app based on what was purchased and inform user.
+    // [self provideContent: transaction.payment.productIdentifier];
+    
+    // Finally, remove the transaction from the payment queue.
+    [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+}
+
+- (void) failedTransaction: (SKPaymentTransaction *)transaction
+{
+    if (transaction.error.code != SKErrorPaymentCancelled)
+    {
+        // Display an error here.
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Purchase Unsuccessful"
+                                                        message:@"Your purchase failed. Please try again."
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+    
+    // Finally, remove the transaction from the payment queue.
+    [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+}
+
 
 
 
