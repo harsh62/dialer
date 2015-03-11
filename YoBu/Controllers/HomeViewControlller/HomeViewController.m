@@ -52,7 +52,7 @@ UINavigationController *navigationController;
 
 
     
-//    [self makeRandomContacts];
+    [self makeRandomContacts];
     
 //    [self setAttributedTextWithString:@"1\n " onButton:self.buttonOne];
 //    [self setAttributedTextWithString:@"2\nABC" onButton:self.buttonTwo];
@@ -96,8 +96,8 @@ UINavigationController *navigationController;
         NSString *email = [NSString stringWithFormat:@"%i@%ifoo.com", i, i];
         ABMultiValueAddValueAndLabel(multi, (__bridge CFTypeRef)(email), kABHomeLabel, NULL);
         
-        NSString *fname = [NSString stringWithFormat:@"Name %i", i];
-        NSString *lname = [NSString stringWithFormat:@"Last %i", i];
+        NSString *fname = [self randomStringWithLength];
+        NSString *lname = [self randomStringWithLength];
         
         // add the first name
         ABRecordSetValue(record, kABPersonFirstNameProperty, (__bridge CFTypeRef)(fname), NULL);
@@ -126,6 +126,21 @@ UINavigationController *navigationController;
     
     // release
     CFRelease(addressBookRef);
+}
+
+
+-(NSString *) randomStringWithLength {
+    
+    NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    int len = arc4random_uniform(7);
+    
+    NSMutableString *randomString = [NSMutableString stringWithCapacity: len];
+
+    for (int i=0; i<len; i++) {
+        [randomString appendFormat: @"%C", [letters characterAtIndex: arc4random_uniform([letters length])]];
+    }
+    
+    return randomString;
 }
 
 -(void)viewWillAppear:(BOOL)animated{

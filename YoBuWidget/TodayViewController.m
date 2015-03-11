@@ -141,21 +141,20 @@
     NSPredicate *notPredicate = [NSPredicate predicateWithFormat:@"NOT (phoneNumber CONTAINS[cd] %@)", self.callLabel.text];
     NSArray *notArray = [self.listOfAllContactsInWidget filteredArrayUsingPredicate:notPredicate];
     
-    
-    NSArray *arrayToTraversed = [[NSArray alloc] initWithArray:self.arrayOfSearchCombinationsFormed];
-    for(NSString *combination in arrayToTraversed){
+    NSMutableArray *combinationsToBeRemoved = [[NSMutableArray alloc] init];
+    [self.arrayOfSearchCombinationsFormed enumerateObjectsUsingBlock:^(NSString *combination, NSUInteger idx, BOOL *stop) {
         NSPredicate *predicateInsideLoop = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", combination];
         NSArray *filteredContactByName = [notArray filteredArrayUsingPredicate:predicateInsideLoop];
         if([filteredContactByName count]>0){
             [self.filteredContacts addObjectsFromArray:filteredContactByName];
         }
         else{
-            [self.arrayOfSearchCombinationsFormed removeObject:combination];
+            [combinationsToBeRemoved addObject:combination];
         }
-        filteredContactByName = nil;
-    }
-    notArray = nil;
-    arrayToTraversed = nil;
+    }];
+    
+    [self.arrayOfSearchCombinationsFormed removeObjectsInArray:combinationsToBeRemoved];
+    combinationsToBeRemoved = nil;
     
     
     //filling the dictionary for further reference when the user clicks on the backspace
