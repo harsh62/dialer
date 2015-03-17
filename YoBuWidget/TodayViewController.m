@@ -14,6 +14,7 @@
 #import "UIColor+HexColor.h"
 #import "DataAccessLayer.h"
 #import "ConsoleLogs.h"
+#import "AddressBook.h"
 
 #define FONT_SIZE 24
 
@@ -49,9 +50,9 @@
 
 
 - (void)viewDidLoad {
-//#if !(TARGET_IPHONE_SIMULATOR)
-//    [[ConsoleLogs sharedInstance] turnOnLoggingToFileForApp:NO];
-//#endif
+#if !(TARGET_IPHONE_SIMULATOR)
+    [[ConsoleLogs sharedInstance] turnOnLoggingToFileForApp:NO];
+#endif
     
     [super viewDidLoad];
     [self designLabel];
@@ -79,6 +80,8 @@
     
     //Add LongPress Gesture on backspace
     [self addGestureToBackSpaceForLongPress];
+    
+    NSLog(@"App Has started");
 }
 
 
@@ -86,6 +89,8 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+    
+    NSLog(@"*********************MEMORY WARNING*************");
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator{
@@ -132,29 +137,31 @@
 
 #pragma mark Search Logic
 - (void) searchContact{
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"phoneNumber CONTAINS[cd] %@", self.callLabel.text];
-    
-    self.filteredContacts = nil;
-    
-    self.filteredContacts = [[NSMutableArray alloc] initWithArray:[self.listOfAllContactsInWidget filteredArrayUsingPredicate:predicate]];
-    
-    NSPredicate *notPredicate = [NSPredicate predicateWithFormat:@"NOT (phoneNumber CONTAINS[cd] %@)", self.callLabel.text];
-    NSArray *notArray = [self.listOfAllContactsInWidget filteredArrayUsingPredicate:notPredicate];
-    
-    NSMutableArray *combinationsToBeRemoved = [[NSMutableArray alloc] init];
-    [self.arrayOfSearchCombinationsFormed enumerateObjectsUsingBlock:^(NSString *combination, NSUInteger idx, BOOL *stop) {
-        NSPredicate *predicateInsideLoop = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", combination];
-        NSArray *filteredContactByName = [notArray filteredArrayUsingPredicate:predicateInsideLoop];
-        if([filteredContactByName count]>0){
-            [self.filteredContacts addObjectsFromArray:filteredContactByName];
+    NSMutableSet *keySet = [NSMutableSet set];
+    NSPredicate *intersectPredicate = [NSPredicate predicateWithBlock:^BOOL(AddressBook *evaluatedObject, NSDictionary *bindings) {
+        
+        NSRange phoneRange = [evaluatedObject.phoneNumber rangeOfString:self.callLabel.text options:NSCaseInsensitiveSearch];
+        if (phoneRange.location != NSNotFound) {
+            return true;
         }
-        else{
-            [combinationsToBeRemoved addObject:combination];
+        
+        for (NSString *str in self.arrayOfSearchCombinationsFormed) {
+            NSRange r = [evaluatedObject.name rangeOfString:str options:NSCaseInsensitiveSearch];
+            if (r.location != NSNotFound) {
+                [keySet addObject:str];
+                return true;
+            }
+
         }
+        return false;
     }];
+
+    NSArray *intersect = [self.listOfAllContactsInWidget filteredArrayUsingPredicate:intersectPredicate];
+    self.filteredContacts = [[NSMutableArray alloc] initWithArray:intersect];
+
     
-    [self.arrayOfSearchCombinationsFormed removeObjectsInArray:combinationsToBeRemoved];
-    combinationsToBeRemoved = nil;
+    self.arrayOfSearchCombinationsFormed = [NSMutableArray arrayWithArray:[keySet allObjects]];
+
     
     
     //filling the dictionary for further reference when the user clicks on the backspace

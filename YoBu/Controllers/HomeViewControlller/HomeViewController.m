@@ -13,6 +13,7 @@
 #import "UIColor+HexColor.h"
 @import AddressBook;
 #import "DataAccessLayer.h"
+#import "AddressBook.h"
 
 UINavigationController *navigationController;
 
@@ -224,24 +225,28 @@ UINavigationController *navigationController;
 
 #pragma mark Search Logic
 - (void) searchContact{
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"phoneNumber CONTAINS[cd] %@", self.labelTypedNumber.text];
-    self.filteredContacts = [[NSMutableArray alloc] initWithArray:[self.listOfAllContactsInWidget filteredArrayUsingPredicate:predicate]];
-    
-    NSPredicate *notPredicate = [NSPredicate predicateWithFormat:@"NOT (phoneNumber CONTAINS[cd] %@)", self.labelTypedNumber.text];
-    NSArray *notArray = [self.listOfAllContactsInWidget filteredArrayUsingPredicate:notPredicate];
-    
-    
-    NSArray *arrayToTraversed = [[NSArray alloc] initWithArray:self.arrayOfSearchCombinationsFormed];
-    for(NSString *combination in arrayToTraversed){
-        NSPredicate *predicateInsideLoop = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", combination];
-        NSArray *filteredContactByName = [notArray filteredArrayUsingPredicate:predicateInsideLoop];
-        if([filteredContactByName count]>0){
-            [self.filteredContacts addObjectsFromArray:filteredContactByName];
+    NSMutableSet *keySet = [NSMutableSet set];
+    NSPredicate *intersectPredicate = [NSPredicate predicateWithBlock:^BOOL(AddressBook *evaluatedObject, NSDictionary *bindings) {
+        
+        NSRange phoneRange = [evaluatedObject.phoneNumber rangeOfString:self.labelTypedNumber.text options:NSCaseInsensitiveSearch];
+        if (phoneRange.location != NSNotFound) {
+            return true;
         }
-        else{
-            [self.arrayOfSearchCombinationsFormed removeObject:combination];
+        
+        for (NSString *str in self.arrayOfSearchCombinationsFormed) {
+            NSRange r = [evaluatedObject.name rangeOfString:str options:NSCaseInsensitiveSearch];
+            if (r.location != NSNotFound) {
+                [keySet addObject:str];
+                return true;
+            }
         }
-    }
+        return false;
+    }];
+    
+    NSArray *intersect = [self.listOfAllContactsInWidget filteredArrayUsingPredicate:intersectPredicate];
+    self.filteredContacts = [[NSMutableArray alloc] initWithArray:intersect];
+    
+    self.arrayOfSearchCombinationsFormed = [NSMutableArray arrayWithArray:[keySet allObjects]];
     
     //filling the dictionary for further reference when the user clicks on the backspace
     if(self.labelTypedNumber.text.length>0){
@@ -851,15 +856,19 @@ CGPoint originalCenter;
                    action:@selector(buyButtonClicked:)
          forControlEvents:UIControlEventTouchUpInside];
         
-        [button setTitle:@"Buy In App Dialer" forState:UIControlStateNormal];
+        
+        
+        
+        
+        [button setTitle:@"Buy In App Dialer!" forState:UIControlStateNormal];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         
         button.frame = CGRectMake(self.view.frame.size.width/2-100, self.view.frame.size.height/2-100, 200, 200);
         
-        button.layer.cornerRadius = button.bounds.size.width/2.0;
-        button.layer.borderWidth = 2.0;
-        button.layer.borderColor = [UIColor whiteColor].CGColor;
-        [button.layer setMasksToBounds:YES];
+//        button.layer.cornerRadius = button.bounds.size.width/2.0;
+//        button.layer.borderWidth = 2.0;
+//        button.layer.borderColor = [UIColor whiteColor].CGColor;
+//        [button.layer setMasksToBounds:YES];
 
         [self.view addSubview:button];
         
@@ -871,14 +880,104 @@ CGPoint originalCenter;
     else{
         
     }
-    
-    
-    
 }
 
 -(void)buyButtonClicked:(UIButton *)button{
-    
+    //    SKProduct
+    SKProductsRequest *request= [[SKProductsRequest alloc]
+                                 initWithProductIdentifiers: [NSSet setWithObject: @"Hachi.YoBu.InAppDialerPurchase"]];
+    request.delegate = self;
+    [request start];
 }
+
+
+-(NSString *) getLocalizedPrice {
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    [formatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+    [formatter setLocale:[NSLocale currentLocale]];
+    return [formatter stringFromNumber:[NSNumber numberWithFloat:0.99]];
+}
+
+
+#pragma mark In App Purchase Delegates
+///////////IN APP PURCHASE DELEGATES
+- (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response
+{
+    [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
+    
+    NSArray *myProduct = response.products;
+    NSLog(@"%@",[[myProduct objectAtIndex:0] productIdentifier]);
+    
+    //Since only one product, we do not need to choose from the array. Proceed directly to payment.
+    
+    SKPayment *newPayment = [SKPayment paymentWithProduct:[myProduct objectAtIndex:0]];
+    [[SKPaymentQueue defaultQueue] addPayment:newPayment];
+}
+
+- (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions
+{
+    for (SKPaymentTransaction *transaction in transactions)
+    {
+        switch (transaction.transactionState)
+        {
+            case SKPaymentTransactionStatePurchased:
+                [self completeTransaction:transaction];
+                break;
+            case SKPaymentTransactionStateFailed:
+                [self failedTransaction:transaction];
+                break;
+            case SKPaymentTransactionStateRestored:
+                [self restoreTransaction:transaction];
+            default:
+                break;
+        }
+    }
+}
+
+- (void) completeTransaction: (SKPaymentTransaction *)transaction
+{
+    NSLog(@"Transaction Completed");
+    // You can create a method to record the transaction.
+    // [self recordTransaction: transaction];
+    
+    // You should make the update to your app based on what was purchased and inform user.
+    // [self provideContent: transaction.payment.productIdentifier];
+    
+    // Finally, remove the transaction from the payment queue.
+    [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+}
+
+- (void) restoreTransaction: (SKPaymentTransaction *)transaction
+{
+    NSLog(@"Transaction Restored");
+    // You can create a method to record the transaction.
+    // [self recordTransaction: transaction];
+    
+    // You should make the update to your app based on what was purchased and inform user.
+    // [self provideContent: transaction.payment.productIdentifier];
+    
+    // Finally, remove the transaction from the payment queue.
+    [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+}
+
+- (void) failedTransaction: (SKPaymentTransaction *)transaction
+{
+    if (transaction.error.code != SKErrorPaymentCancelled)
+    {
+        // Display an error here.
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Purchase Unsuccessful"
+                                                        message:@"Your purchase failed. Please try again."
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+    
+    // Finally, remove the transaction from the payment queue.
+    [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+}
+
+
 
 
 

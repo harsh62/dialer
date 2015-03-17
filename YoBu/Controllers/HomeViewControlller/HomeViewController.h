@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import <AddressBookUI/AddressBookUI.h>
+#import <StoreKit/StoreKit.h>
 
 
-@interface HomeViewController : UIViewController<ABNewPersonViewControllerDelegate,UISearchBarDelegate>{
+@interface HomeViewController : UIViewController<ABNewPersonViewControllerDelegate,UISearchBarDelegate,SKProductsRequestDelegate,SKPaymentTransactionObserver>{
     CGRect rectImageViewCall;
     CGRect rectImageViewBlueCircle;
     CGRect rectOfDialerView;
@@ -79,5 +80,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *labelSevenAlphabets;
 @property (weak, nonatomic) IBOutlet UILabel *labelEightAlphabets;
 @property (weak, nonatomic) IBOutlet UILabel *labelNineAlphabets;
+
+
+//In App Purchase
+
+- (void) completeTransaction: (SKPaymentTransaction *)transaction;
+- (void) restoreTransaction: (SKPaymentTransaction *)transaction;
+- (void) failedTransaction: (SKPaymentTransaction *)transaction;
 
 @end

@@ -384,7 +384,7 @@ UINavigationController *navigationController;
 #pragma mark Open Custom View Controller
 
 - (void) openCustomAlphabetSettingViewController{
-    
+//    SKProduct
     SKProductsRequest *request= [[SKProductsRequest alloc]
                                  initWithProductIdentifiers: [NSSet setWithObject: @"Hachi.YoBu.InAppDialerPurchase"]];
     request.delegate = self;
