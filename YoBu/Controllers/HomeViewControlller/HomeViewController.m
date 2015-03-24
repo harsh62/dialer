@@ -50,21 +50,21 @@ UINavigationController *navigationController;
     });
     
     [DataAccessLayer checkAndUpdateTabelWithDefaultAlphabets];
-
-
     
-    [self makeRandomContacts];
     
-//    [self setAttributedTextWithString:@"1\n " onButton:self.buttonOne];
-//    [self setAttributedTextWithString:@"2\nABC" onButton:self.buttonTwo];
-//    [self setAttributedTextWithString:@"3\nDEF" onButton:self.buttonThree];
-//    [self setAttributedTextWithString:@"4\nGHI" onButton:self.buttonFour];
-//    [self setAttributedTextWithString:@"5\nJKL" onButton:self.buttonFive];
-//    [self setAttributedTextWithString:@"6\nMNO" onButton:self.buttonSix];
-//    [self setAttributedTextWithString:@"7\nPQRS" onButton:self.buttonSeven];
-//    [self setAttributedTextWithString:@"8\nTUV" onButton:self.buttonEight];
-//    [self setAttributedTextWithString:@"9\nWXYZ" onButton:self.buttonNine];
-//    [self setAttributedTextWithString:@"0\n+" onButton:self.buttonZero];
+    
+    //    [self makeRandomContacts];
+    
+    //    [self setAttributedTextWithString:@"1\n " onButton:self.buttonOne];
+    //    [self setAttributedTextWithString:@"2\nABC" onButton:self.buttonTwo];
+    //    [self setAttributedTextWithString:@"3\nDEF" onButton:self.buttonThree];
+    //    [self setAttributedTextWithString:@"4\nGHI" onButton:self.buttonFour];
+    //    [self setAttributedTextWithString:@"5\nJKL" onButton:self.buttonFive];
+    //    [self setAttributedTextWithString:@"6\nMNO" onButton:self.buttonSix];
+    //    [self setAttributedTextWithString:@"7\nPQRS" onButton:self.buttonSeven];
+    //    [self setAttributedTextWithString:@"8\nTUV" onButton:self.buttonEight];
+    //    [self setAttributedTextWithString:@"9\nWXYZ" onButton:self.buttonNine];
+    //    [self setAttributedTextWithString:@"0\n+" onButton:self.buttonZero];
     
     NSString *path = [[NSBundle mainBundle] pathForResource:@"MaterialDesignColors" ofType:@"plist"];
     self.materialDesignPalletArray = [[NSArray alloc] initWithContentsOfFile:path];
@@ -113,7 +113,7 @@ UINavigationController *navigationController;
         
         
         NSString *petPhoneNumber = [NSString stringWithFormat:@"000000%i", i];
-
+        
         ABMultiValueAddValueAndLabel(phoneNumbers, (__bridge CFStringRef)petPhoneNumber, kABPersonPhoneMainLabel, NULL);
         
         ABRecordSetValue(record, kABPersonPhoneProperty, phoneNumbers, nil);
@@ -136,7 +136,7 @@ UINavigationController *navigationController;
     int len = arc4random_uniform(7);
     
     NSMutableString *randomString = [NSMutableString stringWithCapacity: len];
-
+    
     for (int i=0; i<len; i++) {
         [randomString appendFormat: @"%C", [letters characterAtIndex: arc4random_uniform([letters length])]];
     }
@@ -147,7 +147,7 @@ UINavigationController *navigationController;
 -(void)viewWillAppear:(BOOL)animated{
     
     [self setCustomAlphabetsToUserInterfaceToAllTheLabels];
-
+    
     
     rectImageViewBlueCircle = self.imageViewForCircle.frame;
     rectImageViewCall = self.imageViewCall.frame;
@@ -155,13 +155,13 @@ UINavigationController *navigationController;
     rectImageViewRedCircle =self.imageViewRedCircle.frame;
     rectImageViewDialPad = self.imageViewDialPad.frame;
     
-
+    
     [self.dialerView setHidden:YES];
     [self.imageViewRedCircle setHidden:NO];
     [self.imageViewDialPad setHidden:NO];
     [self.dialPadMenuButton setHidden:NO];
-
-
+    
+    
     
     if(self.isCallFromWidget){
         [self openAddContactController];
@@ -184,7 +184,7 @@ UINavigationController *navigationController;
     [paragraphStyle setLineSpacing:0.0f];
     [paragraphStyle setMaximumLineHeight:7.0f];
     [stringText addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, string.length)];
-
+    
     
     [button setAttributedTitle:stringText forState:UIControlStateNormal];
     [button.titleLabel setNumberOfLines:0];
@@ -256,7 +256,7 @@ UINavigationController *navigationController;
     //Populate the table when there is nothing to search
     if(self.labelTypedNumber.text.length ==0)
         self.filteredContacts = self.listOfAllContactsInWidget;
-  
+    
     [self.tableViewForContactsSearched reloadData];
 }
 
@@ -303,7 +303,7 @@ UINavigationController *navigationController;
     if ([[UIApplication sharedApplication] canOpenURL:phoneUrl]) {
         [[UIApplication sharedApplication] openURL:phoneUrl];
     }
-
+    
 }
 
 #pragma mark Add Contact
@@ -352,12 +352,12 @@ UINavigationController *navigationController;
     
     if(retVal){
         if([[filteredContactForTableView valueForKey:@"hasProfilePicture"] isEqualToString:@"YES"]){
-//            UIImage *profilePicture = [filteredContactForTableView objectForKey:@"profilePicture"];
-//            cell.imageViewProfilePicture.image = profilePicture;
+            //            UIImage *profilePicture = [filteredContactForTableView objectForKey:@"profilePicture"];
+            //            cell.imageViewProfilePicture.image = profilePicture;
             [cell.labelImageTitle setHidden:YES];
         }else{
             [cell.labelImageTitle setHidden:NO];
-//            [cell.imageViewProfilePicture setHidden:YES];
+            //            [cell.imageViewProfilePicture setHidden:YES];
             
             NSInteger randomNumber = arc4random()%[self.materialDesignPalletArray count];
             
@@ -368,7 +368,7 @@ UINavigationController *navigationController;
     }
     else{
         [cell.labelImageTitle setHidden:NO];
-//        [cell.imageViewProfilePicture setHidden:YES];
+        //        [cell.imageViewProfilePicture setHidden:YES];
         
         NSInteger randomNumber = arc4random()%[self.materialDesignPalletArray count];
         
@@ -377,7 +377,7 @@ UINavigationController *navigationController;
         [cell.labelImageTitle setText:[name substringToIndex:1].uppercaseString];
     }
     
-//    cell.labelImageTitle.layer.cornerRadius = cell.imageViewProfilePicture.layer.bounds.size.width/2.0;
+    //    cell.labelImageTitle.layer.cornerRadius = cell.imageViewProfilePicture.layer.bounds.size.width/2.0;
     [cell.labelImageTitle.layer setMasksToBounds:YES];
     
     UIView *bgColorView = [[UIView alloc] init];
@@ -456,7 +456,6 @@ UINavigationController *navigationController;
     CFIndex numberOfPeople = ABAddressBookGetPersonCount(addressBook);
     ////////
     NSLog(@"Number of Contacts New Approach----->%ld",(long)numberOfPeople);
-    
     for (NSInteger i = 0; i < numberOfPeople; i++) {
         ABRecordRef person = CFArrayGetValueAtIndex(allPeople, i);
         
@@ -538,12 +537,14 @@ UINavigationController *navigationController;
             }
             CFRelease(phoneNumbers);
         }
+        
     }
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         self.filteredContacts = self.listOfAllContactsInWidget;
         [self.tableViewForContactsSearched reloadData];
     });
-
+    
 }
 
 
@@ -594,14 +595,14 @@ UINavigationController *navigationController;
         self.dialerView.frame =CGRectMake(0, self.view.frame.size.height - self.dialerView.frame.size.height -49, self.dialerView.frame.size.width, self.dialerView.frame.size.height);
         ///To Hide the table view search bar
         self.tableViewForContactsSearched.contentOffset = CGPointMake(0, 44);
-
+        
     } completion:^(BOOL finished){
     }];
     [self callButtonAppearAnimation];
     
     rectImageViewRedCircle =self.imageViewRedCircle.frame;
     rectImageViewDialPad =self.imageViewDialPad.frame;
-
+    
 }
 
 -(void) toggleVisibilityOfDialPad{
@@ -617,7 +618,7 @@ UINavigationController *navigationController;
     self.imageViewRedCircle.frame = CGRectMake(self.imageViewRedCircle.frame.origin.x +self.imageViewRedCircle.frame.size.width/2, self.imageViewRedCircle.frame.origin.y+self.imageViewRedCircle.frame.size.height/2,0,0);
     self.imageViewDialPad.frame = CGRectMake(self.imageViewDialPad.frame.origin.x +self.imageViewDialPad.frame.size.width/2, self.imageViewDialPad.frame.origin.y+self.imageViewDialPad.frame.size.height/2,0,0);
     [self dialPadButtonAppearAnimation];
-
+    
     [UIView animateWithDuration:0.4 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.dialerView.frame =CGRectMake(0, self.view.frame.size.height, rectOfDialerView.size.width, rectOfDialerView.size.height);
     } completion:^(BOOL finished){
@@ -723,7 +724,7 @@ UINavigationController *navigationController;
     [self.dialPadMenuButton setHidden:NO];
     searchBar.showsCancelButton = YES;
     
-
+    
 }
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
     searchBar.showsCancelButton = NO;
@@ -774,27 +775,27 @@ UINavigationController *navigationController;
     self.labelNineAlphabets.text = [DataAccessLayer fetchCustomAlphabetsForDigit:@"9"];
 }
 
-#pragma Mark TouchesBegins 
+#pragma Mark TouchesBegins
 
 - (void) touchesBegan:(NSSet *)touches
             withEvent:(UIEvent *)event {
     
-
-} 
+    
+}
 
 
 
 
 - (void) touchesMoved:(NSSet *)touches
             withEvent:(UIEvent *)event {
-   
+    
 }
 
 
 
 - (void) touchesEnded:(NSSet *)touches
             withEvent:(UIEvent *)event {
-   }
+}
 
 CGPoint originalCenter;
 -(void) initializeDragAndDrop{
@@ -816,11 +817,11 @@ CGPoint originalCenter;
             break;
         case UIGestureRecognizerStateChanged:{
             self.imageViewRedCircle.center = CGPointMake(self.imageViewRedCircle.center.x + translation.x,
-                                           self.imageViewRedCircle.center.y + translation.y);
+                                                         self.imageViewRedCircle.center.y + translation.y);
             self.dialPadMenuButton.center = CGPointMake(self.dialPadMenuButton.center.x + translation.x,
-                                                         self.dialPadMenuButton.center.y + translation.y);
+                                                        self.dialPadMenuButton.center.y + translation.y);
             self.imageViewDialPad.center = CGPointMake(self.imageViewDialPad.center.x + translation.x,
-                                                        self.imageViewDialPad.center.y + translation.y);
+                                                       self.imageViewDialPad.center.y + translation.y);
             
         }
             break;
@@ -846,11 +847,11 @@ CGPoint originalCenter;
     
     if(YES){
         UIView *translucentView = [[UIView alloc] initWithFrame:self.view.frame];
-//        translucentView.opaque = YES;
+        //        translucentView.opaque = YES;
         translucentView.alpha = 0.9;
         [translucentView setBackgroundColor:[UIColor darkGrayColor]];
         
-        //Add buy button to on the view        
+        //Add buy button to on the view
         UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         [button addTarget:self
                    action:@selector(buyButtonClicked:)
@@ -865,11 +866,11 @@ CGPoint originalCenter;
         
         button.frame = CGRectMake(self.view.frame.size.width/2-100, self.view.frame.size.height/2-100, 200, 200);
         
-//        button.layer.cornerRadius = button.bounds.size.width/2.0;
-//        button.layer.borderWidth = 2.0;
-//        button.layer.borderColor = [UIColor whiteColor].CGColor;
-//        [button.layer setMasksToBounds:YES];
-
+        //        button.layer.cornerRadius = button.bounds.size.width/2.0;
+        //        button.layer.borderWidth = 2.0;
+        //        button.layer.borderColor = [UIColor whiteColor].CGColor;
+        //        [button.layer setMasksToBounds:YES];
+        
         [self.view addSubview:button];
         
         

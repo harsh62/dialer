@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="uj0-PM-Mu6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14D87h" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="uj0-PM-Mu6">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -21,9 +21,43 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="A2X-yU-4tq">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="60" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="A2X-yU-4tq">
                                 <rect key="frame" x="-4" y="0.0" width="328" height="519"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CustomMenuCellWithSegmentControl" rowHeight="44" id="ken-y2-5Hw" customClass="CustomMenuCellWithSegmentControl">
+                                        <rect key="frame" x="0.0" y="0.0" width="328" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ken-y2-5Hw" id="qZY-aC-msj">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="48E-hS-4i1">
+                                                    <rect key="frame" x="8" y="8" width="312" height="29"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="48E-hS-4i1" secondAttribute="height" multiplier="78:7" id="Hf5-xc-XSP"/>
+                                                    </constraints>
+                                                    <segments>
+                                                        <segment title="Favorite"/>
+                                                        <segment title="Recent"/>
+                                                        <segment title="Frequent"/>
+                                                    </segments>
+                                                    <connections>
+                                                        <action selector="segmentControlValueChanged:" destination="ken-y2-5Hw" eventType="valueChanged" id="dgI-TH-V4i"/>
+                                                    </connections>
+                                                </segmentedControl>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="48E-hS-4i1" firstAttribute="leading" secondItem="qZY-aC-msj" secondAttribute="leadingMargin" id="QKG-fk-nmv"/>
+                                                <constraint firstItem="48E-hS-4i1" firstAttribute="trailing" secondItem="qZY-aC-msj" secondAttribute="trailingMargin" id="XUt-nC-wVr"/>
+                                                <constraint firstAttribute="centerX" secondItem="48E-hS-4i1" secondAttribute="centerX" id="qiv-KP-myg"/>
+                                                <constraint firstAttribute="centerY" secondItem="48E-hS-4i1" secondAttribute="centerY" id="r5b-W1-4HX"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="segmentControl" destination="48E-hS-4i1" id="rAK-lh-aCR"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="vXZ-lx-hvc" id="NKM-8S-4D6"/>
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="wUv-5a-wL0"/>
@@ -45,7 +79,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-738" y="-2041"/>
+            <point key="canvasLocation" x="-738" y="-2045"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="J4f-h6-4QW">

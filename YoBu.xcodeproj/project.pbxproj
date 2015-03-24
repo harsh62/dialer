@@ -109,6 +109,7 @@
 		988048E91A77FA90003E3E39 /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 988048C31A77FA90003E3E39 /* iTunesArtwork.png */; };
 		988048EB1A77FA90003E3E39 /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 988048C41A77FA90003E3E39 /* iTunesArtwork@2x.png */; };
 		989DDADA1AB88AAF009FB141 /* ic_arrow_back_24dp.png in Resources */ = {isa = PBXBuildFile; fileRef = 9880482B1A77EF81003E3E39 /* ic_arrow_back_24dp.png */; };
+		98BD18161AC1D6CA0086D92B /* CustomMenuCellWithSegmentControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 98BD18151AC1D6CA0086D92B /* CustomMenuCellWithSegmentControl.m */; };
 		98FAEC861AAAD8C20038B0D0 /* AddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 98FAEC851AAAD8C20038B0D0 /* AddressBook.m */; };
 		98FAEC871AAAD8C20038B0D0 /* AddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 98FAEC851AAAD8C20038B0D0 /* AddressBook.m */; };
 /* End PBXBuildFile section */
@@ -260,6 +261,8 @@
 		988048C21A77FA90003E3E39 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		988048C31A77FA90003E3E39 /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunesArtwork.png; sourceTree = "<group>"; };
 		988048C41A77FA90003E3E39 /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunesArtwork@2x.png"; sourceTree = "<group>"; };
+		98BD18141AC1D6CA0086D92B /* CustomMenuCellWithSegmentControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomMenuCellWithSegmentControl.h; path = CustomMenuCellWithSegmentControl/CustomMenuCellWithSegmentControl.h; sourceTree = "<group>"; };
+		98BD18151AC1D6CA0086D92B /* CustomMenuCellWithSegmentControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomMenuCellWithSegmentControl.m; path = CustomMenuCellWithSegmentControl/CustomMenuCellWithSegmentControl.m; sourceTree = "<group>"; };
 		98FAEC841AAAD8C20038B0D0 /* AddressBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddressBook.h; path = CoreData/CoreDataModels/AddressBook.h; sourceTree = SOURCE_ROOT; };
 		98FAEC851AAAD8C20038B0D0 /* AddressBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddressBook.m; path = CoreData/CoreDataModels/AddressBook.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -635,6 +638,7 @@
 		988048A11A77F4C2003E3E39 /* MenuViewController */ = {
 			isa = PBXGroup;
 			children = (
+				98BD18131AC1D6950086D92B /* CustomMenuCellWithSegmentControl */,
 				988048A21A77F4C2003E3E39 /* MenuViewController.h */,
 				988048A31A77F4C2003E3E39 /* MenuViewController.m */,
 			);
@@ -691,6 +695,15 @@
 				988048BB1A77FA90003E3E39 /* Icon-Small@3x.png */,
 			);
 			path = AppIcon.appiconset;
+			sourceTree = "<group>";
+		};
+		98BD18131AC1D6950086D92B /* CustomMenuCellWithSegmentControl */ = {
+			isa = PBXGroup;
+			children = (
+				98BD18141AC1D6CA0086D92B /* CustomMenuCellWithSegmentControl.h */,
+				98BD18151AC1D6CA0086D92B /* CustomMenuCellWithSegmentControl.m */,
+			);
+			name = CustomMenuCellWithSegmentControl;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -911,6 +924,7 @@
 				988048651A77EF81003E3E39 /* ContactsInstance.m in Sources */,
 				988047D51A77EAA2003E3E39 /* AppDelegate.m in Sources */,
 				3AE306721AA6C22100875340 /* UIColor+HexColor.m in Sources */,
+				98BD18161AC1D6CA0086D92B /* CustomMenuCellWithSegmentControl.m in Sources */,
 				988048A91A77F4C2003E3E39 /* HomeViewController.m in Sources */,
 				988048A81A77F4C2003E3E39 /* CustomAlphabetSettingViewController.m in Sources */,
 				9880484A1A77EF81003E3E39 /* DataAccessLayer.m in Sources */,

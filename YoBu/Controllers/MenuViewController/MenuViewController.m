@@ -12,18 +12,20 @@
 #import "DataAccessLayer.h"
 #import "ConsoleLogs.h"
 #import "CustomAlphabetSettingViewController.h"
+#import "CustomMenuCellWithSegmentControl.h"
 
 #define Application_ID 947452765
 #define Social_Sharing_Message @"I #UseYoBu for quickest calling on iOS. Download it:https://itunes.apple.com/in/app/yobu/id947452765?ls=1&mt=8"
 
 //NUMBER OF SECTIONS
-#define NUMBER_OF_SECTIONS  4
+#define NUMBER_OF_SECTIONS  5
 
 //SECTION POSITIONS
-#define SECTION_CUSTOM_SEARCH       0
-#define SECTION_SHARING             1
-#define SECTION_TUTORIALS           2
-#define SECTION_VERSION             3
+#define SECTION_OPTIONS             0
+#define SECTION_CUSTOM_SEARCH       1
+#define SECTION_SHARING             2
+#define SECTION_TUTORIALS           3
+#define SECTION_VERSION             4
 
 
 @interface MenuViewController ()
@@ -217,15 +219,30 @@ UINavigationController *navigationController;
     }
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 44.0;
+}
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *CellIdentifier = @"Cell";
+    
+    static NSString *CellIdentifier;
+    
+    if(indexPath.section == SECTION_OPTIONS){
+        CellIdentifier = @"CustomMenuCellWithSegmentControl";
+    }
+    else{
+        CellIdentifier = @"Cell";
+    }
+    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         switch (indexPath.section) {
             case SECTION_VERSION:
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
                 break;
-                
+            case SECTION_OPTIONS:
+                cell = [[CustomMenuCellWithSegmentControl alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CustomMenuCellWithSegmentControl"];
             default:
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
                 break;
@@ -277,7 +294,8 @@ UINavigationController *navigationController;
             
             break;
         default:
-            cell.textLabel.text = @"Testing the table view grouped cell";
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            cell.textLabel.text = @"";
             break;
     }
     
@@ -302,6 +320,9 @@ UINavigationController *navigationController;
             break;
         case SECTION_CUSTOM_SEARCH:
             return @"Custom Search Settings";
+            break;
+        case SECTION_OPTIONS:
+            return @"Widget list should contain?";
             break;
         default:
             return @"Default";
@@ -341,12 +362,11 @@ UINavigationController *navigationController;
                     [self sendFeedback];
                     break;
                 case 4:
-                    
                     if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"twitter:///user?screen_name=___harsh"]]){
                         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"twitter:///user?screen_name=___harsh"]];
                     }
                     else{
-                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"thttps://twitter.com/___harsh"]];
+                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://twitter.com/___harsh"]];
                     }
                     break;
             }
@@ -385,14 +405,14 @@ UINavigationController *navigationController;
 
 - (void) openCustomAlphabetSettingViewController{
 //    SKProduct
-    SKProductsRequest *request= [[SKProductsRequest alloc]
-                                 initWithProductIdentifiers: [NSSet setWithObject: @"Hachi.YoBu.InAppDialerPurchase"]];
-    request.delegate = self;
-    [request start];
-    /*
+//    SKProductsRequest *request= [[SKProductsRequest alloc]
+//                                 initWithProductIdentifiers: [NSSet setWithObject: @"Hachi.YoBu.InAppDialerPurchase"]];
+//    request.delegate = self;
+//    [request start];
+    
     CustomAlphabetSettingViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"CustomAlphabetSettingViewController"];
     [self presentViewController:controller animated:YES completion:nil];
-     */
+     
 }
 
 #pragma mark In App Purchase Delegates
