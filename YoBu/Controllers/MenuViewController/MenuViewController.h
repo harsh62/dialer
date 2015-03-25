@@ -14,9 +14,10 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import <AddressBookUI/AddressBookUI.h>
 #import <StoreKit/StoreKit.h>
+#import "ContactsInstance.h"
 
 
-@interface MenuViewController : UIViewController<MFMailComposeViewControllerDelegate,UIActionSheetDelegate,ABNewPersonViewControllerDelegate, UITableViewDataSource,UITableViewDelegate,SKProductsRequestDelegate,SKPaymentTransactionObserver>{
+@interface MenuViewController : UIViewController<MFMailComposeViewControllerDelegate,UIActionSheetDelegate,ABNewPersonViewControllerDelegate, UITableViewDataSource,UITableViewDelegate,SKProductsRequestDelegate,SKPaymentTransactionObserver,ContactsInstanceDelegate>{
 
     SLComposeViewController *mySLComposerSheet;
     MPMoviePlayerViewController * theMoviPlayer;

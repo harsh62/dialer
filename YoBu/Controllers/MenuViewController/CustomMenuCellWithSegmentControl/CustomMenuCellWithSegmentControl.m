@@ -20,6 +20,13 @@
     // Configure the view for the selected state
 }
 - (IBAction)segmentControlValueChanged:(id)sender {
+    UISegmentedControl *segmentControl = (UISegmentedControl *)sender;
+    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc]initWithSuiteName:@"group.YoBuDefaults"];
+    [sharedDefaults setValue:[NSString stringWithFormat:@"%ld",(long)segmentControl.selectedSegmentIndex] forKey:@"selectedSegmentControl"];
+    [sharedDefaults synchronize];
+    
+    
+    
 }
 
 @end

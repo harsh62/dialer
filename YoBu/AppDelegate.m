@@ -11,6 +11,7 @@
 #import "HomeViewController.h"
 #import "RecentContactsViewController.h"
 #import "ConsoleLogs.h"
+#import "ContactsInstance.h"
 
 
 @interface AppDelegate ()
@@ -32,6 +33,10 @@
     rootController.selectedIndex = 2;
     LogTrace(@"");
 
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [[ContactsInstance sharedInstance] requestInAppDialer];
+    });
     
     // Override point for customization after application launch.
     return YES;

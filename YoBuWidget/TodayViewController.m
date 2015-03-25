@@ -59,7 +59,11 @@
     self.listOfAllContactsInWidget = [[NSMutableArray alloc] init];
     self.arrayOfSearchCombinationsFormed = [[NSMutableArray alloc] init];
     self.dictionaryOfCombination = [[NSMutableDictionary alloc] init];
-    self.filteredContacts = [DataAccessLayer fetchFrequentContacts];
+    
+    
+    [self populateArrayForShowingInTableView];
+    
+    
     [self.tableViewContacts reloadData];
     [DataAccessLayer checkAndUpdateTabelWithDefaultAlphabets];
     
@@ -562,6 +566,25 @@
     [self deleteDigitFromLabelAndUpdateTable];
     NSString *newIntervalInString = [NSString stringWithFormat:@"%f", timeInString.doubleValue*0.70];
     [self performSelector:@selector(removeDigitOnLongPress:)  withObject:newIntervalInString afterDelay:newIntervalInString.doubleValue];
+}
+
+-(void) populateArrayForShowingInTableView{
+    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc]initWithSuiteName:@"group.YoBuDefaults"];
+    NSString *selectedSegmentControl = [sharedDefaults valueForKey:@"selectedSegmentControl"];
+        switch (selectedSegmentControl.integerValue) {
+            case 0:
+                self.filteredContacts = [[NSMutableArray alloc] initWithArray:[DataAccessLayer fetchAllFavoriteContacts]];
+                break;
+            case 1:
+                self.filteredContacts = [[NSMutableArray alloc] initWithArray:[DataAccessLayer fetchRecentlyDialedContacts]];
+                break;
+            case 2:
+                self.filteredContacts = [DataAccessLayer fetchFrequentContacts];
+                break;
+            default:
+                self.filteredContacts = [DataAccessLayer fetchFrequentContacts];
+                break;
+        }
 }
 
 @end

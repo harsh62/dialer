@@ -9,9 +9,11 @@
 #import <UIKit/UIKit.h>
 #import <AddressBookUI/AddressBookUI.h>
 #import <StoreKit/StoreKit.h>
+#import "ContactsInstance.h"
 
 
-@interface HomeViewController : UIViewController<ABNewPersonViewControllerDelegate,UISearchBarDelegate,SKProductsRequestDelegate,SKPaymentTransactionObserver>{
+
+@interface HomeViewController : UIViewController<ABNewPersonViewControllerDelegate,UISearchBarDelegate,UIAlertViewDelegate,ContactsInstanceDelegate>{
     CGRect rectImageViewCall;
     CGRect rectImageViewBlueCircle;
     CGRect rectOfDialerView;

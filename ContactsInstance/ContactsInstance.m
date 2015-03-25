@@ -10,8 +10,8 @@
 @import AddressBook;
 
 @implementation ContactsInstance
+@synthesize delegateOfThisClass; //synthesise  MyClassDelegate delegate
 
-@synthesize listOfAllContacts;
 
 + (id)sharedInstance
 {
@@ -24,112 +24,133 @@
     // executes a block object once and only once for the lifetime of an application
     dispatch_once(&p, ^{
         _sharedObject = [[self alloc] init];
-        [_sharedObject initializeContactList];
     });
     
     // returns the same object each time
     return _sharedObject;
 }
 
-- (void) initializeContactList{
-    self.listOfAllContacts = [[NSMutableArray alloc] init];
+- (void) setCustomDelegate:(id)delegate{
+    self.delegateOfThisClass = delegate;
 }
 
-- (void)requestContacts{
-    ABAuthorizationStatus status = ABAddressBookGetAuthorizationStatus();
-    
-    if (status == kABAuthorizationStatusDenied) {
-        // if you got here, user had previously denied/revoked permission for your
-        // app to access the contacts, and all you can do is handle this gracefully,
-        // perhaps telling the user that they have to go to settings to grant access
-        // to contacts
-        
-//        [[[UIAlertView alloc] initWithTitle:nil message:@"This app requires access to your contacts to function properly. Please visit to the \"Privacy\" section in the iPhone Settings app." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-        return;
-    }
-    
-    CFErrorRef error = NULL;
-    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, &error);
-    
-    if (error) {
-        NSLog(@"ABAddressBookCreateWithOptions error: %@", CFBridgingRelease(error));
-        if (addressBook) CFRelease(addressBook);
-        return;
-    }
-    
-    if (status == kABAuthorizationStatusNotDetermined) {
-        
-        // present the user the UI that requests permission to contacts ...
-        
-        ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
-            if (error) {
-                NSLog(@"ABAddressBookRequestAccessWithCompletion error: %@", CFBridgingRelease(error));
-            }
-            
-            if (granted) {
-                // if they gave you permission, then just carry on
-                
-                [self listPeopleInAddressBook:addressBook];
-            } else {
-                // however, if they didn't give you permission, handle it gracefully, for example...
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    // BTW, this is not on the main thread, so dispatch UI updates back to the main queue
-                    
-//                    [[[UIAlertView alloc] initWithTitle:nil message:@"This app requires access to your contacts to function properly. Please visit to the \"Privacy\" section in the iPhone Settings app." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-                });
-            }
-            
-            if (addressBook) CFRelease(addressBook);
-        });
-        
-    } else if (status == kABAuthorizationStatusAuthorized) {
-        [self listPeopleInAddressBook:addressBook];
-        if (addressBook) CFRelease(addressBook);
-    }
+
+
+- (void)requestInAppDialer{
+    LogTrace(@"");
+
+    //    SKProduct
+    SKProductsRequest *request= [[SKProductsRequest alloc]
+                                 initWithProductIdentifiers:[NSSet setWithObject: @"Hachi.YoBu.InAppDialerPurchase"]];
+    request.delegate = self;
+    [request start];
 }
 
-- (void)listPeopleInAddressBook:(ABAddressBookRef)addressBook
+#pragma mark In App Purchase Delegates
+///////////IN APP PURCHASE DELEGATES
+- (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response
 {
-    NSInteger numberOfPeople = ABAddressBookGetPersonCount(addressBook);
-    NSArray *allPeople = CFBridgingRelease(ABAddressBookCopyArrayOfAllPeople(addressBook));
-    
-    NSLog(@"Number of Contacts ----->%ld",(long)numberOfPeople);
-    
-    for (NSInteger i = 0; i < numberOfPeople; i++) {
-        ABRecordRef person = (__bridge ABRecordRef)allPeople[i];
-        
-        NSString *firstName = CFBridgingRelease(ABRecordCopyValue(person, kABPersonFirstNameProperty));
-        NSString *lastName  = CFBridgingRelease(ABRecordCopyValue(person, kABPersonLastNameProperty));
-        //        NSLog(@"Name:%@ %@", firstName, lastName);
-        NSString *firstNameAndLastName;
-        if(firstName != nil && ![firstName isEqualToString:@""] && ![firstName isEqualToString:@"(null)"]){
-            firstNameAndLastName = firstName;
-        }
-        if(lastName != nil && ![lastName isEqualToString:@""] && ![lastName isEqualToString:@"(null)"]){
-            firstNameAndLastName = [firstNameAndLastName stringByAppendingString:[NSString stringWithFormat:@" %@",lastName]];;
-        }
-        
-        if(![firstName isEqualToString:@"Identified As Spam"]){
-            ABMultiValueRef phoneNumbers = ABRecordCopyValue(person, kABPersonPhoneProperty);
-            
-            CFIndex numberOfPhoneNumbers = ABMultiValueGetCount(phoneNumbers);
-            for (CFIndex i = 0; i < numberOfPhoneNumbers; i++) {
-                NSString *phoneNumber = CFBridgingRelease(ABMultiValueCopyValueAtIndex(phoneNumbers, i));
-                //            NSLog(@"  phone:%@", phoneNumber);
-                
-                
-                NSMutableDictionary *contactDictionary = [[NSMutableDictionary alloc] init];
-                [contactDictionary setValue:firstNameAndLastName forKey:@"name"];
-                [contactDictionary setValue:phoneNumber forKey:@"phoneNumber"];
-                
-                [self.listOfAllContacts addObject:contactDictionary];
-            }
-            CFRelease(phoneNumbers);
-        }
-        //        NSLog(@"=============================================");
+    LogTrace(@"");
+
+    [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
+    NSArray *myProduct = response.products;
+    self.productInAppDialer = [myProduct objectAtIndex:0];
+    if(self.shouldPaymentProcessBeInititated){
+        [self startPaymentProcessForInAppDialer];
+        self.shouldPaymentProcessBeInititated = NO;
     }
 }
+
+
+-(void) startPaymentProcessForInAppDialer{
+    LogTrace(@"");
+
+    if(self.productInAppDialer){
+        SKPayment *newPayment = [SKPayment paymentWithProduct:self.productInAppDialer];
+        [[SKPaymentQueue defaultQueue] addPayment:newPayment];
+    }
+    else{
+        self.shouldPaymentProcessBeInititated = YES;
+        [self requestInAppDialer];
+    }
+}
+
+- (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions
+{
+    LogTrace(@"");
+    for (SKPaymentTransaction *transaction in transactions)
+    {
+        switch (transaction.transactionState)
+        {
+            case SKPaymentTransactionStatePurchased:
+                [self completeTransaction:transaction];
+                break;
+            case SKPaymentTransactionStateFailed:
+                [self failedTransaction:transaction];
+                break;
+            case SKPaymentTransactionStateRestored:
+                [self restoreTransaction:transaction];
+            default:
+                break;
+        }
+    }
+}
+
+- (void) completeTransaction: (SKPaymentTransaction *)transaction
+{
+    LogTrace(@"");
+    [self.delegateOfThisClass transactionCompleted];
+    
+    NSLog(@"Transaction Completed");
+    // You can create a method to record the transaction.
+    // [self recordTransaction: transaction];
+    
+    // You should make the update to your app based on what was purchased and inform user.
+    // [self provideContent: transaction.payment.productIdentifier];
+    
+    // Finally, remove the transaction from the payment queue.
+    [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+}
+
+- (void) restoreTransaction: (SKPaymentTransaction *)transaction
+{
+    LogTrace(@"");
+    [self.delegateOfThisClass transactionCompleted];
+
+    
+    NSLog(@"Transaction Restored");
+    // You can create a method to record the transaction.
+    // [self recordTransaction: transaction];
+    
+    // You should make the update to your app based on what was purchased and inform user.
+    // [self provideContent: transaction.payment.productIdentifier];
+    
+    // Finally, remove the transaction from the payment queue.
+    [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+}
+
+- (void) failedTransaction: (SKPaymentTransaction *)transaction
+{
+    LogTrace(@"");
+    [self.delegateOfThisClass transactionFailed];
+
+    
+    if (transaction.error.code != SKErrorPaymentCancelled)
+    {
+        // Display an error here.
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Purchase Unsuccessful"
+                                                        message:@"Your purchase failed. Please try again."
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+    
+    // Finally, remove the transaction from the payment queue.
+    [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+}
+
+
 
 
 

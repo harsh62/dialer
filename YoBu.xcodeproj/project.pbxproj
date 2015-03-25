@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A6712C71AC2A56000802310 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6712C61AC2A56000802310 /* Utility.m */; };
 		3AE306721AA6C22100875340 /* UIColor+HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE306711AA6C22100875340 /* UIColor+HexColor.m */; };
 		3AE306731AA6C22100875340 /* UIColor+HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE306711AA6C22100875340 /* UIColor+HexColor.m */; };
 		3AE306791AA6C2B300875340 /* ConsoleLogs.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE306771AA6C2B300875340 /* ConsoleLogs.m */; };
@@ -146,6 +147,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3A6712C51AC2A56000802310 /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utility.h; path = Utility/Utility.h; sourceTree = "<group>"; };
+		3A6712C61AC2A56000802310 /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Utility.m; path = Utility/Utility.m; sourceTree = "<group>"; };
 		3AE306701AA6C22100875340 /* UIColor+HexColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+HexColor.h"; sourceTree = "<group>"; };
 		3AE306711AA6C22100875340 /* UIColor+HexColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HexColor.m"; sourceTree = "<group>"; };
 		3AE306761AA6C2B300875340 /* ConsoleLogs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleLogs.h; sourceTree = "<group>"; };
@@ -301,9 +304,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3A6712C41AC2A53900802310 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				3A6712C51AC2A56000802310 /* Utility.h */,
+				3A6712C61AC2A56000802310 /* Utility.m */,
+			);
+			name = Utility;
+			sourceTree = "<group>";
+		};
 		3AE3066E1AA6C22100875340 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				3A6712C41AC2A53900802310 /* Utility */,
 				3AE306751AA6C2B300875340 /* Logger */,
 				3AE3066F1AA6C22100875340 /* Categories */,
 			);
@@ -909,6 +922,7 @@
 			files = (
 				98FAEC861AAAD8C20038B0D0 /* AddressBook.m in Sources */,
 				988048AB1A77F4C2003E3E39 /* CustomTableViewCell.m in Sources */,
+				3A6712C71AC2A56000802310 /* Utility.m in Sources */,
 				988047D81A77EAA2003E3E39 /* YoBu.xcdatamodeld in Sources */,
 				983DF8B61A98F97B0099B43D /* RecentContactsViewController.m in Sources */,
 				988048471A77EF81003E3E39 /* DialedNumbers.m in Sources */,

@@ -27,6 +27,17 @@
     self.textFieldSeven.text  = [DataAccessLayer fetchCustomAlphabetsForDigit:@"7"];
     self.textFieldEight.text  = [DataAccessLayer fetchCustomAlphabetsForDigit:@"8"];
     self.textFieldNine.text  = [DataAccessLayer fetchCustomAlphabetsForDigit:@"9"];
+    
+    
+    self.textFieldOne.delegate  = self;
+    self.textFieldTwo.delegate  = self;
+    self.textFieldThree.delegate  = self;
+    self.textFieldFour.delegate  = self;
+    self.textFieldFive.delegate  = self;
+    self.textFieldSix.delegate  = self;
+    self.textFieldSeven.delegate  = self;
+    self.textFieldEight.delegate  = self;
+    self.textFieldNine.delegate  = self;
 }
 
 - (IBAction)saveButtonPressed:(id)sender {
@@ -52,15 +63,18 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+#pragma mark Text Field Delegates
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    
+    if(textField.text.length<=3){
+        return YES;
+    }
+    else{
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Only four characters are allowed in the field" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil , nil];
+        [alert show];
+        return NO;
+    }
+    
 }
-*/
-
 @end

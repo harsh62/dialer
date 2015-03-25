@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CustomAlphabetSettingViewController : UIViewController
+@interface CustomAlphabetSettingViewController : UIViewController<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *textFieldOne;
 @property (weak, nonatomic) IBOutlet UITextField *textFieldTwo;
 @property (weak, nonatomic) IBOutlet UITextField *textFieldThree;
