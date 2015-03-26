@@ -35,11 +35,12 @@
 @end
 UINavigationController *navigationController;
 
-UIActivityIndicatorView *activityIndicator;
 
 @implementation MenuViewController
 
 @synthesize phoneNumber,isCallFromWidget;
+
+UIActivityIndicatorView *activityIndicator;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -252,6 +253,7 @@ UIActivityIndicatorView *activityIndicator;
 
     }
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
     activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     switch (indexPath.section) {
         case SECTION_SHARING:
@@ -295,8 +297,12 @@ UIActivityIndicatorView *activityIndicator;
 
             cell.textLabel.text = @"Customize Search!";
             [activityIndicator setFrame:CGRectMake(cell.frame.size.width-60, cell.frame.size.height/2 -activityIndicator.frame.size.height/2, activityIndicator.frame.size.width, activityIndicator.frame.size.height)];
-            [activityIndicator setHidden:YES];
-            [activityIndicator stopAnimating];
+            [activityIndicator setTintColor:[UIColor blackColor]];
+            [activityIndicator setColor:[UIColor blackColor]];
+            activityIndicator.tag = 1234;
+            [cell addSubview:activityIndicator];
+            [activityIndicator setHidden:NO];
+            [activityIndicator startAnimating];
 
 
             break;
@@ -352,7 +358,8 @@ UIActivityIndicatorView *activityIndicator;
 #pragma mark UITableView Delgates
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    activityIndicator = (UIActivityIndicatorView *)[cell viewWithTag:1234];
     switch (indexPath.section) {
         case SECTION_SHARING:
             switch (indexPath.row) {
@@ -382,6 +389,7 @@ UIActivityIndicatorView *activityIndicator;
             [self tutorialGroupClickedOnRow:indexPath.row];
             break;
         case SECTION_CUSTOM_SEARCH:
+            [activityIndicator stopAnimating];
             [self openCustomAlphabetSettingViewController];
             break;
             
@@ -411,17 +419,17 @@ UIActivityIndicatorView *activityIndicator;
 #pragma mark Open Custom View Controller
 
 - (void) openCustomAlphabetSettingViewController{
-    SKProductsRequest *request= [[SKProductsRequest alloc]
-                                 initWithProductIdentifiers: [NSSet setWithObject: @"Hachi.YoBu.InAppDialerPurchase"]];
-    request.delegate = self;
-    [request start];
+//    SKProductsRequest *request= [[SKProductsRequest alloc]
+//                                 initWithProductIdentifiers: [NSSet setWithObject: @"Hachi.YoBu.InAppDialerPurchase"]];
+//    request.delegate = self;
+//    [request start];
+//    
+//    CustomAlphabetSettingViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"CustomAlphabetSettingViewController"];
+//    [self presentViewController:controller animated:YES completion:nil];
     
-    CustomAlphabetSettingViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"CustomAlphabetSettingViewController"];
-    [self presentViewController:controller animated:YES completion:nil];
     
-    
-//    [activityIndicator setHidden:NO];
-//    [activityIndicator startAnimating];
+    [activityIndicator setHidden:YES];
+    [activityIndicator stopAnimating];
     
 }
 

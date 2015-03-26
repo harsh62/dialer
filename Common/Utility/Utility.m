@@ -99,4 +99,27 @@
     [view setUserInteractionEnabled:YES];
 }
 
+// Check whether the day will lie after 4pm friday and sunday
++(BOOL)isDateLyingInWeekend{
+    //For Week Day
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSRange weekdayRange = [calendar maximumRangeOfUnit:NSCalendarUnitWeekday];
+    NSDateComponents *components = [calendar components:NSCalendarUnitWeekday fromDate:[NSDate date]];
+    NSUInteger weekdayOfDate = [components weekday];
+    
+    //For Friday after 4 pm
+    NSDateComponents *componentsForHours = [[NSCalendar currentCalendar] components:NSCalendarUnitHour fromDate:[NSDate date]];
+    NSInteger hour = [componentsForHours hour];
+    
+    if (weekdayOfDate == weekdayRange.location || weekdayOfDate == weekdayRange.length) {
+        LogInfo(@"Weekend");
+        return YES;
+    }
+    if (weekdayOfDate == weekdayRange.length-1 && hour>=16) {
+        LogInfo(@"After 4 PM friday");
+        return YES;
+    }
+    
+    return NO;
+}
 @end
