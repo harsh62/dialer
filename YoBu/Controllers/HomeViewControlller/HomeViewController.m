@@ -40,6 +40,8 @@ SKPayment *newPayment;
     self.listOfAllContactsInWidget = [[NSMutableArray alloc] init];
     self.filteredContacts = [[NSMutableArray alloc] init];
     self.arrayOfSearchCombinationsFormed = [[NSMutableArray alloc] init];
+    self.dictionaryOfCombination = [[NSMutableDictionary alloc] init];
+
     
     //set delegates
     self.searchBarOnTableForContacts.delegate = self;
@@ -52,21 +54,6 @@ SKPayment *newPayment;
     });
     
     [DataAccessLayer checkAndUpdateTabelWithDefaultAlphabets];
-    
-    
-    
-    //    [self makeRandomContacts];
-    
-    //    [self setAttributedTextWithString:@"1\n " onButton:self.buttonOne];
-    //    [self setAttributedTextWithString:@"2\nABC" onButton:self.buttonTwo];
-    //    [self setAttributedTextWithString:@"3\nDEF" onButton:self.buttonThree];
-    //    [self setAttributedTextWithString:@"4\nGHI" onButton:self.buttonFour];
-    //    [self setAttributedTextWithString:@"5\nJKL" onButton:self.buttonFive];
-    //    [self setAttributedTextWithString:@"6\nMNO" onButton:self.buttonSix];
-    //    [self setAttributedTextWithString:@"7\nPQRS" onButton:self.buttonSeven];
-    //    [self setAttributedTextWithString:@"8\nTUV" onButton:self.buttonEight];
-    //    [self setAttributedTextWithString:@"9\nWXYZ" onButton:self.buttonNine];
-    //    [self setAttributedTextWithString:@"0\n+" onButton:self.buttonZero];
     
     NSString *path = [[NSBundle mainBundle] pathForResource:@"MaterialDesignColors" ofType:@"plist"];
     self.materialDesignPalletArray = [[NSArray alloc] initWithContentsOfFile:path];
@@ -83,68 +70,69 @@ SKPayment *newPayment;
     
     [self checkInAppPurchase];
     
+    
 }
 
--(void) makeRandomContacts{
-    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, nil);
-    
-    // create 200 random contacts
-    for (int i = 0; i < 8000; i++)
-    {
-        // create an ABRecordRef
-        ABRecordRef record = ABPersonCreate();
-        
-        ABMutableMultiValueRef multi = ABMultiValueCreateMutable(kABStringPropertyType);
-        
-        NSString *email = [NSString stringWithFormat:@"%i@%ifoo.com", i, i];
-        ABMultiValueAddValueAndLabel(multi, (__bridge CFTypeRef)(email), kABHomeLabel, NULL);
-        
-        NSString *fname = [self randomStringWithLength];
-        NSString *lname = [self randomStringWithLength];
-        
-        // add the first name
-        ABRecordSetValue(record, kABPersonFirstNameProperty, (__bridge CFTypeRef)(fname), NULL);
-        
-        // add the last name
-        ABRecordSetValue(record, kABPersonLastNameProperty, (__bridge CFTypeRef)(lname), NULL);
-        
-        // add the home email
-        ABRecordSetValue(record, kABPersonEmailProperty, multi, NULL);
-        
-        ABMutableMultiValueRef phoneNumbers = ABMultiValueCreateMutable(kABMultiStringPropertyType);
-        
-        
-        NSString *petPhoneNumber = [NSString stringWithFormat:@"000000%i", i];
-        
-        ABMultiValueAddValueAndLabel(phoneNumbers, (__bridge CFStringRef)petPhoneNumber, kABPersonPhoneMainLabel, NULL);
-        
-        ABRecordSetValue(record, kABPersonPhoneProperty, phoneNumbers, nil);
-        
-        // add the record
-        ABAddressBookAddRecord(addressBookRef, record, NULL);
-    }
-    
-    // save the address book
-    ABAddressBookSave(addressBookRef, NULL);
-    
-    // release
-    CFRelease(addressBookRef);
-}
+//-(void) makeRandomContacts{
+//    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, nil);
+//    
+//    // create 200 random contacts
+//    for (int i = 0; i < 8000; i++)
+//    {
+//        // create an ABRecordRef
+//        ABRecordRef record = ABPersonCreate();
+//        
+//        ABMutableMultiValueRef multi = ABMultiValueCreateMutable(kABStringPropertyType);
+//        
+//        NSString *email = [NSString stringWithFormat:@"%i@%ifoo.com", i, i];
+//        ABMultiValueAddValueAndLabel(multi, (__bridge CFTypeRef)(email), kABHomeLabel, NULL);
+//        
+////        NSString *fname = [self randomStringWithLength];
+////        NSString *lname = [self randomStringWithLength];
+////        
+//        // add the first name
+//        ABRecordSetValue(record, kABPersonFirstNameProperty, (__bridge CFTypeRef)(fname), NULL);
+//        
+//        // add the last name
+//        ABRecordSetValue(record, kABPersonLastNameProperty, (__bridge CFTypeRef)(lname), NULL);
+//        
+//        // add the home email
+//        ABRecordSetValue(record, kABPersonEmailProperty, multi, NULL);
+//        
+//        ABMutableMultiValueRef phoneNumbers = ABMultiValueCreateMutable(kABMultiStringPropertyType);
+//        
+//        
+//        NSString *petPhoneNumber = [NSString stringWithFormat:@"000000%i", i];
+//        
+//        ABMultiValueAddValueAndLabel(phoneNumbers, (__bridge CFStringRef)petPhoneNumber, kABPersonPhoneMainLabel, NULL);
+//        
+//        ABRecordSetValue(record, kABPersonPhoneProperty, phoneNumbers, nil);
+//        
+//        // add the record
+//        ABAddressBookAddRecord(addressBookRef, record, NULL);
+//    }
+//    
+//    // save the address book
+//    ABAddressBookSave(addressBookRef, NULL);
+//    
+//    // release
+//    CFRelease(addressBookRef);
+//}
 
 
--(NSString *) randomStringWithLength {
-    
-    NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    int len = arc4random_uniform(7);
-    
-    NSMutableString *randomString = [NSMutableString stringWithCapacity: len];
-    
-    for (int i=0; i<len; i++) {
-        [randomString appendFormat: @"%C", [letters characterAtIndex: arc4random_uniform([letters length])]];
-    }
-    
-    return randomString;
-}
+//-(NSString *) randomStringWithLength {
+//    
+//    NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+//    int len = arc4random_uniform(7);
+//    
+//    NSMutableString *randomString = [NSMutableString stringWithCapacity: len];
+//    
+//    for (int i=0; i<len; i++) {
+//        [randomString appendFormat: @"%C", [letters characterAtIndex: arc4random_uniform([letters length])]];
+//    }
+//    
+//    return randomString;
+//}
 
 -(void)viewWillAppear:(BOOL)animated{
     
@@ -173,6 +161,9 @@ SKPayment *newPayment;
     
     
     self.tableViewForContactsSearched.contentOffset = CGPointMake(0, 44);
+    
+    [self didRecieveProductData];
+
 }
 
 
@@ -227,16 +218,16 @@ SKPayment *newPayment;
 
 #pragma mark Search Logic
 - (void) searchContact{
+    
     NSMutableSet *keySet = [NSMutableSet set];
-    NSPredicate *intersectPredicate = [NSPredicate predicateWithBlock:^BOOL(AddressBook *evaluatedObject, NSDictionary *bindings) {
-        
-        NSRange phoneRange = [evaluatedObject.phoneNumber rangeOfString:self.labelTypedNumber.text options:NSCaseInsensitiveSearch];
+    NSPredicate *intersectPredicate = [NSPredicate predicateWithBlock:^BOOL(NSDictionary *evaluatedObject, NSDictionary *bindings) {
+        NSRange phoneRange = [[evaluatedObject valueForKey:@"phoneNumber"] rangeOfString:self.labelTypedNumber.text options:NSCaseInsensitiveSearch];
         if (phoneRange.location != NSNotFound) {
             return true;
         }
         
         for (NSString *str in self.arrayOfSearchCombinationsFormed) {
-            NSRange r = [evaluatedObject.name rangeOfString:str options:NSCaseInsensitiveSearch];
+            NSRange r = [[evaluatedObject valueForKey:@"name"] rangeOfString:str options:NSCaseInsensitiveSearch];
             if (r.location != NSNotFound) {
                 [keySet addObject:str];
                 return true;
@@ -846,55 +837,80 @@ CGPoint originalCenter;
 #pragma mark In App Purchase
 
 -(void) checkInAppPurchase{
-    
-    if(YES){
-        UIView *translucentView = [[UIView alloc] initWithFrame:self.view.frame];
-        translucentView.alpha = 0.9;
-        [translucentView setBackgroundColor:[UIColor darkGrayColor]];
-        
-        //Add buy button to on the view
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [button addTarget:self
-                   action:@selector(buyButtonClicked:)
-         forControlEvents:UIControlEventTouchUpInside];
-        
-        [button setTitle:@"Buy In App Dialer!" forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [button setBackgroundColor:[UIColor darkGrayColor]];
-        
-        button.frame = CGRectMake(self.view.frame.size.width/2-100, self.view.frame.size.height/2-100, 200, 50);
-        
-        button.layer.cornerRadius = 6.0;
-        button.layer.borderWidth = 1.0;
-        button.layer.borderColor = [UIColor whiteColor].CGColor;
-        
-        [self.view addSubview:button];
-        [self.view addSubview:translucentView];
-        [self.view addSubview:button];
-        
+    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc]initWithSuiteName:@"group.YoBuDefaults"];
+
+    if([[sharedDefaults valueForKey:@"Hachi.YoBu.InAppDialerPurchase"] isEqualToString:@"YES"]){
+        [self.viewInAppDialerPurchase setHidden:YES];
+
     }
     else{
+        [self.viewInAppDialerPurchase setHidden:NO];
         
+        [self.buyButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+        [self.buyButton setBackgroundColor:[UIColor whiteColor]];
+        self.buyButton.layer.cornerRadius = 6.0;
+        self.buyButton.titleLabel.numberOfLines = 0;
+        [self performSelector:@selector(menuButtonClicked:) withObject:self afterDelay:3.0];
     }
 }
-
--(void)buyButtonClicked:(UIButton *)button{
+- (IBAction)buyButtonClicked:(id)sender {
+    [self.buyButton setHidden:YES];
+    [self.activityIndicator startAnimating];
+    
     [[ContactsInstance sharedInstance] setCustomDelegate:self];
-    [[ContactsInstance sharedInstance] startPaymentProcessForInAppDialer];
-    [Utility showActivityIndicatorOnView:self.view withCenter:self.view.frame withText:@"Transaction in progress.."];
+    [[ContactsInstance sharedInstance] startPaymentProcessForProductIdentifier:@"Hachi.YoBu.InAppDialerPurchase"];
 }
-
 
 -(void)transactionCompleted{
     LogTrace(@"");
-    [Utility stopActivityIndicatorOnView:self.view];
+    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc]initWithSuiteName:@"group.YoBuDefaults"];
+    [sharedDefaults setValue:@"YES" forKey:@"Hachi.YoBu.InAppDialerPurchase"];
+    [sharedDefaults synchronize];
+    
+    [self.buyButton setHidden:YES];
+    [self.activityIndicator stopAnimating];
+    
+    [self checkInAppPurchase];
+    
 }
 
 -(void)transactionFailed{
     LogTrace(@"");
-    [Utility stopActivityIndicatorOnView:self.view];
+    
+    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc]initWithSuiteName:@"group.YoBuDefaults"];
+    [sharedDefaults setValue:@"NO" forKey:@"Hachi.YoBu.InAppDialerPurchase"];
+    [sharedDefaults synchronize];
+    
+    [self.buyButton setHidden:NO];
+    [self.activityIndicator stopAnimating];
+    
+    [self checkInAppPurchase];
 }
 
+-(void)didRecieveProductData{
+    LogTrace(@"");
+    NSAttributedString *attributedString = self.buyButton.titleLabel.attributedText;
+    NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithAttributedString:attributedString];
+    NSDictionary *dictionary = [attributedString attributesAtIndex:attributedString.length-3 effectiveRange:NULL];
+    NSAttributedString *stringToBereplace = [[NSAttributedString alloc] initWithString:[self getPriceOfProduct] attributes:dictionary];
+
+    [mutableAttributedString replaceCharactersInRange:NSMakeRange(28, mutableAttributedString.length-28) withAttributedString:stringToBereplace];
+    
+    [self.buyButton setAttributedTitle:mutableAttributedString forState:UIControlStateNormal];
+}
+
+-(NSString *)getPriceOfProduct{
+    SKProduct *product = [[ContactsInstance sharedInstance] productInAppDialer];
+    if(product){
+        NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init] ;
+        [formatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+        [formatter setLocale:product.priceLocale];
+        return [formatter stringFromNumber:product.price];
+    }
+    else{
+        return @"$0.99";
+    }
+}
 
 
 

@@ -6,22 +6,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "YoBu/AppDelegate.m"
-            timestampString = "447405975.60341"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "147"
-            endingLineNumber = "147"
-            landmarkName = "-saveContext"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -42,13 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YoBu/Controllers/MenuViewController/MenuViewController.m"
-            timestampString = "448913358.605065"
+            timestampString = "449307493.244592"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "467"
-            endingLineNumber = "467"
-            landmarkName = "-restoreTransaction:"
-            landmarkType = "5">
+            startingLineNumber = "444"
+            endingLineNumber = "444">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -63,7 +45,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "180"
             endingLineNumber = "180"
-            landmarkName = "-makeCombinationsWithNumberPressed:"
+            landmarkName = "-searchContact"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -95,6 +77,118 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "139"
             endingLineNumber = "139"
+            landmarkName = "-numberPadButtonPressed:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YoBu/Controllers/MenuViewController/CustomMenuCellWithSegmentControl/CustomMenuCellWithSegmentControl.m"
+            timestampString = "449294245.936996"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "-segmentControlValueChanged:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YoBu/Controllers/MenuViewController/CustomMenuCellWithSegmentControl/CustomMenuCellWithSegmentControl.m"
+            timestampString = "449294245.936996"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "16"
+            endingLineNumber = "16"
+            landmarkName = "-awakeFromNib"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YoBu/Controllers/CustomAlphabetSetting/CustomAlphabetSettingViewController.m"
+            timestampString = "449308199.705344"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "158"
+            endingLineNumber = "158"
+            landmarkName = "-checkInAppPurchase"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YoBu/Controllers/HomeViewControlller/HomeViewController.m"
+            timestampString = "449309224.700637"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "258"
+            endingLineNumber = "258"
+            landmarkName = "-makeCombinationsWithNumberPressed:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YoBu/Controllers/HomeViewControlller/HomeViewController.m"
+            timestampString = "449309224.700637"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "278"
+            endingLineNumber = "278"
+            landmarkName = "-traverseToMakeCombinationsWithArray:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YoBu/Controllers/HomeViewControlller/HomeViewController.m"
+            timestampString = "449309470.117987"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
+            landmarkName = "-viewDidLoad"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YoBu/Controllers/HomeViewControlller/HomeViewController.m"
+            timestampString = "449309820.665943"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "243"
+            endingLineNumber = "243"
             landmarkName = "-searchContact"
             landmarkType = "5">
          </BreakpointContent>
@@ -105,13 +199,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "YoBu/Controllers/MenuViewController/MenuViewController.m"
-            timestampString = "448913358.605065"
+            filePath = "YoBu/Controllers/HomeViewControlller/HomeViewController.m"
+            timestampString = "449309483.529974"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "421"
-            endingLineNumber = "421"
-            landmarkName = "-productsRequest:didReceiveResponse:"
+            startingLineNumber = "630"
+            endingLineNumber = "630"
+            landmarkName = "-deleteDigitFromLabelAndUpdateTable"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -121,13 +215,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "YoBu/Controllers/MenuViewController/CustomMenuCellWithSegmentControl/CustomMenuCellWithSegmentControl.m"
-            timestampString = "448912028.224901"
+            filePath = "YoBu/Controllers/HomeViewControlller/HomeViewController.m"
+            timestampString = "449309731.047488"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "23"
-            endingLineNumber = "23"
-            landmarkName = "-segmentControlValueChanged:"
+            startingLineNumber = "221"
+            endingLineNumber = "221"
+            landmarkName = "-searchContact"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YoBu/Controllers/HomeViewControlller/HomeViewController.m"
+            timestampString = "449309963.774782"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "199"
+            endingLineNumber = "199"
+            landmarkName = "-numberPadPressed:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

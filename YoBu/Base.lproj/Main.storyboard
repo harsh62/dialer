@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="uj0-PM-Mu6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14D113c" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="uj0-PM-Mu6">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -23,7 +23,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="60" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="A2X-yU-4tq">
                                 <rect key="frame" x="-4" y="0.0" width="328" height="519"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CustomMenuCellWithSegmentControl" rowHeight="44" id="ken-y2-5Hw" customClass="CustomMenuCellWithSegmentControl">
                                         <rect key="frame" x="0.0" y="0.0" width="328" height="44"/>
@@ -56,24 +56,6 @@
                                         <connections>
                                             <outlet property="segmentControl" destination="48E-hS-4i1" id="rAK-lh-aCR"/>
                                         </connections>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="44" id="Asg-ni-hss">
-                                        <rect key="frame" x="0.0" y="0.0" width="328" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Asg-ni-hss" id="IzN-vx-9Q9">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="mVI-nj-2WZ">
-                                                    <rect key="frame" x="262" y="12" width="20" height="20"/>
-                                                </activityIndicatorView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Buy searching in different languages" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z4U-d5-28z">
-                                                    <rect key="frame" x="8" y="0.0" width="197" height="44"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -438,7 +420,6 @@
                                                 </state>
                                                 <connections>
                                                     <action selector="backspaceButtonPressed:" destination="TFs-CT-pDu" eventType="touchUpInside" id="9Ce-bz-4Ay"/>
-                                                    <action selector="numberPadPressed:" destination="TFs-CT-pDu" eventType="touchUpInside" id="iJk-sB-iof"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="drz-BF-Kkp">
@@ -615,18 +596,234 @@
                                     <action selector="menuButtonClicked:" destination="TFs-CT-pDu" eventType="touchUpInside" id="Oz7-EO-eVR"/>
                                 </connections>
                             </button>
+                            <view alpha="0.94999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qHj-y4-I70">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NhK-mD-ic1">
+                                        <rect key="frame" x="50" y="391" width="220" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="NhK-mD-ic1" secondAttribute="height" multiplier="22:5" id="2xU-Os-YwG"/>
+                                        </constraints>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="Buy In App Dialer ">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.29803922772407532" green="0.29803922772407532" blue="0.29803922772407532" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <font key="NSFont" size="17" name="CourierNewPS-BoldMT"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                                <fragment content=" Just for $0.99">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.29803922772407532" green="0.29803922772407532" blue="0.29803922772407532" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <font key="NSFont" size="16" name="CourierNewPSMT"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
+                                        <connections>
+                                            <action selector="buyButtonClicked:" destination="TFs-CT-pDu" eventType="touchUpInside" id="2bs-C4-Sdv"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Nr-n1-eVT">
+                                        <rect key="frame" x="10" y="28" width="300" height="109"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="5Nr-n1-eVT" secondAttribute="height" multiplier="300:109" id="QLc-sK-nC1"/>
+                                        </constraints>
+                                        <attributedString key="attributedText">
+                                            <fragment>
+                                                <string key="content">In App YoBu Dialer is an iPhone dialer that replaces your old, slow and boring dialer for the quickest and most convenient way to find your contacts. It gives you instant access to relevant information about people you are about to call,</string>
+                                                <attributes>
+                                                    <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <font key="NSFont" size="12" name="CenturyGothic"/>
+                                                    <real key="NSKern" value="0.0"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
+                                                    <color key="NSStrokeColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                                                    <real key="NSStrokeWidth" value="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YZo-3b-0wH">
+                                        <rect key="frame" x="10" y="170" width="300" height="160"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="YZo-3b-0wH" secondAttribute="height" multiplier="15:8" id="7Kq-87-pjQ"/>
+                                        </constraints>
+                                        <attributedString key="attributedText">
+                                            <fragment content="•">
+                                                <attributes>
+                                                    <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <font key="NSFont" size="13" name="CenturyGothic"/>
+                                                    <real key="NSKern" value="0.0"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
+                                                    <color key="NSStrokeColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                                                    <real key="NSStrokeWidth" value="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content=" Fast, accurate, and easy to use  ">
+                                                <attributes>
+                                                    <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <font key="NSFont" size="11" name="CenturyGothic"/>
+                                                    <real key="NSKern" value="0.0"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
+                                                    <color key="NSStrokeColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                                                    <real key="NSStrokeWidth" value="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content="•">
+                                                <attributes>
+                                                    <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <font key="NSFont" size="13" name="CenturyGothic"/>
+                                                    <real key="NSKern" value="0.0"/>
+                                                    <font key="NSOriginalFont" size="13" name="CenturyGothic"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
+                                                    <color key="NSStrokeColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content=" ">
+                                                <attributes>
+                                                    <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <font key="NSFont" size="11" name="CenturyGothic"/>
+                                                    <real key="NSKern" value="0.0"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
+                                                    <color key="NSStrokeColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content="Automatically search for information about a number you are dialing  ">
+                                                <attributes>
+                                                    <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <font key="NSFont" size="11" name="CenturyGothic"/>
+                                                    <real key="NSKern" value="0.0"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
+                                                    <color key="NSStrokeColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                                                    <real key="NSStrokeWidth" value="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content="•">
+                                                <attributes>
+                                                    <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <font key="NSFont" size="13" name="CenturyGothic"/>
+                                                    <real key="NSKern" value="0.0"/>
+                                                    <font key="NSOriginalFont" size="13" name="CenturyGothic"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content=" ">
+                                                <attributes>
+                                                    <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <font key="NSFont" size="11" name="CenturyGothic"/>
+                                                    <real key="NSKern" value="0.0"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment>
+                                                <string key="content">Quick dial for calling favorite contacts with T9 search (predictive text) 
+</string>
+                                                <attributes>
+                                                    <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <font key="NSFont" size="11" name="CenturyGothic"/>
+                                                    <real key="NSKern" value="0.0"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
+                                                    <color key="NSStrokeColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                                                    <real key="NSStrokeWidth" value="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content="•">
+                                                <attributes>
+                                                    <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <font key="NSFont" size="13" name="CenturyGothic"/>
+                                                    <real key="NSKern" value="0.0"/>
+                                                    <font key="NSOriginalFont" size="13" name="CenturyGothic"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content=" ">
+                                                <attributes>
+                                                    <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <font key="NSFont" size="11" name="CenturyGothic"/>
+                                                    <real key="NSKern" value="0.0"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content="Manage your contacts directly through YoBu ">
+                                                <attributes>
+                                                    <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <font key="NSFont" size="11" name="CenturyGothic"/>
+                                                    <real key="NSKern" value="0.0"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
+                                                    <color key="NSStrokeColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                                                    <real key="NSStrokeWidth" value="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="GuX-YY-3wZ">
+                                        <rect key="frame" x="142" y="397" width="37" height="37"/>
+                                        <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="YZo-3b-0wH" secondAttribute="trailing" constant="10" id="6Yi-6x-rbd"/>
+                                    <constraint firstItem="5Nr-n1-eVT" firstAttribute="top" secondItem="qHj-y4-I70" secondAttribute="top" constant="28" id="AiX-oW-jNS"/>
+                                    <constraint firstItem="YZo-3b-0wH" firstAttribute="top" secondItem="5Nr-n1-eVT" secondAttribute="bottom" constant="33" id="CPu-N9-CKP"/>
+                                    <constraint firstAttribute="centerX" secondItem="YZo-3b-0wH" secondAttribute="centerX" id="DZQ-OP-fh0"/>
+                                    <constraint firstAttribute="centerX" secondItem="NhK-mD-ic1" secondAttribute="centerX" id="Fmf-do-Q8l"/>
+                                    <constraint firstAttribute="centerX" secondItem="GuX-YY-3wZ" secondAttribute="centerX" id="GSg-dZ-9e6"/>
+                                    <constraint firstAttribute="trailing" secondItem="5Nr-n1-eVT" secondAttribute="trailing" constant="10" id="Jot-cM-MkM"/>
+                                    <constraint firstAttribute="centerX" secondItem="5Nr-n1-eVT" secondAttribute="centerX" id="KKb-iw-f7b"/>
+                                    <constraint firstItem="5Nr-n1-eVT" firstAttribute="leading" secondItem="qHj-y4-I70" secondAttribute="leading" constant="10" id="Kp8-Fi-L6f"/>
+                                    <constraint firstItem="NhK-mD-ic1" firstAttribute="centerX" secondItem="GuX-YY-3wZ" secondAttribute="centerX" id="Lll-dz-Cjj"/>
+                                    <constraint firstAttribute="trailing" secondItem="NhK-mD-ic1" secondAttribute="trailing" constant="50" id="Qcc-jJ-OpN"/>
+                                    <constraint firstItem="NhK-mD-ic1" firstAttribute="top" secondItem="YZo-3b-0wH" secondAttribute="bottom" constant="61" id="TIq-vk-9Y2"/>
+                                    <constraint firstItem="YZo-3b-0wH" firstAttribute="leading" secondItem="qHj-y4-I70" secondAttribute="leading" constant="10" id="cPL-7J-Upn"/>
+                                    <constraint firstItem="NhK-mD-ic1" firstAttribute="centerY" secondItem="GuX-YY-3wZ" secondAttribute="centerY" id="fIL-Hr-TOR"/>
+                                    <constraint firstItem="NhK-mD-ic1" firstAttribute="leading" secondItem="qHj-y4-I70" secondAttribute="leading" constant="50" id="mN9-Zf-FLy"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="qHj-y4-I70" secondAttribute="trailing" constant="-16" id="2ps-mE-pOK"/>
                             <constraint firstAttribute="trailingMargin" secondItem="iTi-Or-eMg" secondAttribute="trailing" constant="-16" id="4fb-ox-Qyw"/>
                             <constraint firstItem="XhE-G0-oxF" firstAttribute="leading" secondItem="7bP-hI-Cwm" secondAttribute="leadingMargin" constant="-16" id="7SW-6w-dYJ"/>
                             <constraint firstItem="Tbp-qf-6yd" firstAttribute="width" secondItem="AlT-89-fgV" secondAttribute="width" id="8ca-uY-Zdx"/>
                             <constraint firstItem="Tbp-qf-6yd" firstAttribute="centerX" secondItem="pcv-i2-0gT" secondAttribute="centerX" id="BET-I5-PCx"/>
                             <constraint firstItem="50l-Ig-yjd" firstAttribute="top" secondItem="XhE-G0-oxF" secondAttribute="bottom" id="C7T-Vc-mGk"/>
+                            <constraint firstItem="qHj-y4-I70" firstAttribute="leading" secondItem="7bP-hI-Cwm" secondAttribute="leadingMargin" constant="-16" id="Dc3-3j-Odp"/>
                             <constraint firstItem="Tbp-qf-6yd" firstAttribute="width" secondItem="pcv-i2-0gT" secondAttribute="width" multiplier="1.4" constant="1" id="EC1-nb-aPh"/>
+                            <constraint firstItem="qHj-y4-I70" firstAttribute="top" secondItem="3v0-qb-hyt" secondAttribute="bottom" id="FAd-Qr-mPU"/>
                             <constraint firstItem="Tbp-qf-6yd" firstAttribute="centerY" secondItem="pcv-i2-0gT" secondAttribute="centerY" id="LUO-l0-Ctu"/>
                             <constraint firstItem="iTi-Or-eMg" firstAttribute="leading" secondItem="7bP-hI-Cwm" secondAttribute="leadingMargin" constant="-16" id="MKY-FQ-zFc"/>
                             <constraint firstAttribute="centerX" secondItem="pcv-i2-0gT" secondAttribute="centerX" id="Pkk-M9-KuF"/>
+                            <constraint firstItem="qHj-y4-I70" firstAttribute="bottom" secondItem="7bP-hI-Cwm" secondAttribute="bottomMargin" id="TJ2-ns-3AE"/>
                             <constraint firstItem="50l-Ig-yjd" firstAttribute="top" secondItem="Tbp-qf-6yd" secondAttribute="bottom" constant="9" id="hkc-n5-v1j"/>
                             <constraint firstItem="iTi-Or-eMg" firstAttribute="top" secondItem="3v0-qb-hyt" secondAttribute="bottom" id="hsE-40-ZVQ"/>
                             <constraint firstAttribute="centerX" secondItem="Tbp-qf-6yd" secondAttribute="centerX" id="iEb-HG-pzu"/>
@@ -646,6 +843,7 @@
                     </navigationItem>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="GuX-YY-3wZ" id="0qo-UT-q7y"/>
                         <outlet property="buttonAsterik" destination="djQ-lW-zNX" id="8G4-LS-acd"/>
                         <outlet property="buttonBackSppace" destination="WE5-OK-0Zq" id="axZ-gj-cdw"/>
                         <outlet property="buttonCall" destination="1i9-sv-vuH" id="aRD-oA-uPe"/>
@@ -660,6 +858,7 @@
                         <outlet property="buttonThree" destination="EVt-xe-sd3" id="XMy-6V-mZo"/>
                         <outlet property="buttonTwo" destination="AQF-Fe-gFM" id="iJg-dH-fWO"/>
                         <outlet property="buttonZero" destination="Ura-66-aeP" id="2ST-P4-mNL"/>
+                        <outlet property="buyButton" destination="NhK-mD-ic1" id="5lW-ZW-7tA"/>
                         <outlet property="containerForPhoneNumberLabel" destination="T8I-3f-Hrx" id="zDt-JP-7vi"/>
                         <outlet property="dialPadMenuButton" destination="wym-RE-vqT" id="5KB-dB-3zR"/>
                         <outlet property="dialerView" destination="XhE-G0-oxF" id="67V-ER-UAv"/>
@@ -680,6 +879,7 @@
                         <outlet property="labelTypedNumber" destination="xEK-Ka-56W" id="WBl-sf-fLq"/>
                         <outlet property="searchBarOnTableForContacts" destination="dPA-X4-k9y" id="R1u-LC-eSi"/>
                         <outlet property="tableViewForContactsSearched" destination="iTi-Or-eMg" id="pqK-jm-rZ3"/>
+                        <outlet property="viewInAppDialerPurchase" destination="qHj-y4-I70" id="07F-iy-aXt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bHj-oY-Yku" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1224,15 +1424,82 @@
                                             <constraint firstItem="im9-C2-2Qa" firstAttribute="bottom" secondItem="5HC-pi-t6h" secondAttribute="bottom" id="y67-uT-eDA"/>
                                         </constraints>
                                     </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Change the text in the fields above to custom characters which you want to use in your search." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="di7-OD-wTr">
+                                        <rect key="frame" x="0.0" y="312" width="320" height="72"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="di7-OD-wTr" secondAttribute="height" multiplier="40:9" id="kgh-Vu-JsG"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="CourierNewPS-BoldMT" family="Courier New" pointSize="16"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dDM-0S-Ali">
+                                        <rect key="frame" x="50" y="490" width="220" height="40"/>
+                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="dDM-0S-Ali" secondAttribute="height" multiplier="11:2" id="oF9-LR-V2n"/>
+                                        </constraints>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="Buy for $1.99">
+                                                    <attributes>
+                                                        <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <font key="NSFont" size="18" name="CourierNewPS-BoldMT"/>
+                                                        <font key="NSOriginalFont" size="18" name="CourierNewPS-BoldMT"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
+                                        <connections>
+                                            <action selector="buyButtonClicked:" destination="TFs-CT-pDu" eventType="touchUpInside" id="5v2-Xk-bhv"/>
+                                            <action selector="buyButtonClicked:" destination="50T-xX-9jf" eventType="touchUpInside" id="DLB-Rn-Kq7"/>
+                                        </connections>
+                                    </button>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="xbF-vY-Udb">
+                                        <rect key="frame" x="141" y="492" width="37" height="37"/>
+                                        <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    </activityIndicatorView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tal-L4-8iE">
+                                        <rect key="frame" x="10" y="392" width="300" height="67"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="Tal-L4-8iE" secondAttribute="height" multiplier="300:67" id="BlE-pM-h3J"/>
+                                        </constraints>
+                                        <attributedString key="attributedText">
+                                            <fragment content="• The search supports all characters in all languages. • In each field only upto 4 characters are allowed.">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <font key="NSFont" size="14" name="CourierNewPSMT"/>
+                                                    <real key="NSKern" value="0.0"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="justified" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
+                                                    <color key="NSStrokeColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="vCM-jo-oCK" firstAttribute="leading" secondItem="kqA-wT-2RH" secondAttribute="leading" id="3rq-7i-XeE"/>
+                                    <constraint firstItem="xbF-vY-Udb" firstAttribute="centerX" secondItem="dDM-0S-Ali" secondAttribute="centerX" id="6T6-iu-P8f"/>
                                     <constraint firstItem="vCM-jo-oCK" firstAttribute="top" secondItem="WGl-VF-HJx" secondAttribute="bottom" id="8zu-W4-gEU"/>
                                     <constraint firstItem="WGl-VF-HJx" firstAttribute="leading" secondItem="kqA-wT-2RH" secondAttribute="leading" id="9gq-Mg-RYa"/>
+                                    <constraint firstAttribute="trailing" secondItem="dDM-0S-Ali" secondAttribute="trailing" constant="50" id="Bib-EC-O4H"/>
+                                    <constraint firstItem="xbF-vY-Udb" firstAttribute="centerY" secondItem="dDM-0S-Ali" secondAttribute="centerY" id="Jiy-lu-rgF"/>
+                                    <constraint firstItem="dDM-0S-Ali" firstAttribute="leading" secondItem="kqA-wT-2RH" secondAttribute="leading" constant="50" id="QUi-Du-kw1"/>
                                     <constraint firstAttribute="trailing" secondItem="vCM-jo-oCK" secondAttribute="trailing" id="afm-35-pgD"/>
+                                    <constraint firstItem="dDM-0S-Ali" firstAttribute="top" secondItem="Tal-L4-8iE" secondAttribute="bottom" constant="31" id="dRd-2B-nhZ"/>
+                                    <constraint firstAttribute="trailing" secondItem="Tal-L4-8iE" secondAttribute="trailing" constant="10" id="fq1-T9-dEp"/>
                                     <constraint firstAttribute="trailing" secondItem="WGl-VF-HJx" secondAttribute="trailing" id="jrC-2X-p25"/>
+                                    <constraint firstAttribute="trailing" secondItem="di7-OD-wTr" secondAttribute="trailing" id="kSU-4N-4dH"/>
+                                    <constraint firstItem="di7-OD-wTr" firstAttribute="leading" secondItem="kqA-wT-2RH" secondAttribute="leading" id="kgQ-8c-coJ"/>
                                     <constraint firstItem="WGl-VF-HJx" firstAttribute="top" secondItem="kqA-wT-2RH" secondAttribute="top" constant="20" id="oAV-N0-CbT"/>
+                                    <constraint firstItem="di7-OD-wTr" firstAttribute="top" secondItem="vCM-jo-oCK" secondAttribute="bottom" constant="8" id="p4I-pl-rpc"/>
+                                    <constraint firstItem="Tal-L4-8iE" firstAttribute="leading" secondItem="kqA-wT-2RH" secondAttribute="leading" constant="10" id="sOy-gc-Bq3"/>
+                                    <constraint firstItem="Tal-L4-8iE" firstAttribute="top" secondItem="di7-OD-wTr" secondAttribute="bottom" constant="8" id="zSJ-Oz-qal"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -1246,6 +1513,8 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="BSq-HC-byT"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="xbF-vY-Udb" id="LS8-ss-70R"/>
+                        <outlet property="buyButton" destination="dDM-0S-Ali" id="BWU-Fz-Z4N"/>
                         <outlet property="textFieldEight" destination="7ME-Su-t4w" id="vYG-Hg-Hgq"/>
                         <outlet property="textFieldFive" destination="MyY-cx-efd" id="Foh-rq-CUl"/>
                         <outlet property="textFieldFour" destination="9YY-Km-ZtO" id="0Nk-CZ-hcG"/>
@@ -1259,7 +1528,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8FB-Wd-yxh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-115" y="-2041"/>
+            <point key="canvasLocation" x="-317" y="-2071"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="nKe-mg-yEp">

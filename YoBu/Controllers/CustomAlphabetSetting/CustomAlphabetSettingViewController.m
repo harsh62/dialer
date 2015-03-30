@@ -38,6 +38,8 @@
     self.textFieldSeven.delegate  = self;
     self.textFieldEight.delegate  = self;
     self.textFieldNine.delegate  = self;
+    
+    [self checkInAppPurchase];
 }
 
 - (IBAction)saveButtonPressed:(id)sender {
@@ -77,4 +79,109 @@
     }
     
 }
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc]initWithSuiteName:@"group.YoBuDefaults"];
+    if([[sharedDefaults valueForKey:@"Hachi.YoBu.CustomizeSearch"] isEqualToString:@"YES"]){
+        return YES;
+    }
+    else{
+        NSString *productPrice = [self getPriceOfProduct];
+        [Utility showAlertWithTitle:@"Buy search customization feature!" message:[NSString stringWithFormat:@"Setting custom characters to T9 search is a paid feature. Do you want to buy this feature for %@",productPrice] button1Title:@"Cancel" button2Title:@"Buy" alertTag:12 onContext:self];
+        return NO;
+    }
+}
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    
+    [textField resignFirstResponder];
+    return YES;
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if(buttonIndex == 1){
+        [self.buyButton setHidden:YES];
+        [self.activityIndicator setHidden:NO];
+        [self.activityIndicator startAnimating];
+        [[ContactsInstance sharedInstance] setCustomDelegate:self];
+        [[ContactsInstance sharedInstance] startPaymentProcessForProductIdentifier:@"Hachi.YoBu.CustomizeSearch"];
+    }
+}
+
+-(NSString *)getPriceOfProduct{
+    SKProduct *product = [[ContactsInstance sharedInstance] productInSearchCustomize];
+    if(product){
+        NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init] ;
+        [formatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+        [formatter setLocale:product.priceLocale];
+        return [formatter stringFromNumber:product.price];
+    }
+    else{
+        return @"$1.99";
+    }
+}
+
+- (IBAction)buyButtonClicked:(id)sender {
+    [self.buyButton setHidden:YES];
+    [self.activityIndicator setHidden:NO];
+    [self.activityIndicator startAnimating];
+    
+    [[ContactsInstance sharedInstance] setCustomDelegate:self];
+    [[ContactsInstance sharedInstance] startPaymentProcessForProductIdentifier:@"Hachi.YoBu.CustomizeSearch"];
+}
+
+-(void)transactionCompleted{
+    LogTrace(@"");
+    [self.buyButton setHidden:YES];
+    [self.activityIndicator setHidden:YES];
+    
+    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc]initWithSuiteName:@"group.YoBuDefaults"];
+    [sharedDefaults setValue:@"YES" forKey:@"Hachi.YoBu.CustomizeSearch"];
+    [sharedDefaults synchronize];
+    
+}
+
+-(void)transactionFailed{
+    LogTrace(@"");
+    [self.buyButton setHidden:NO];
+    [self.activityIndicator setHidden:YES];
+    
+    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc]initWithSuiteName:@"group.YoBuDefaults"];
+    [sharedDefaults setValue:@"NO" forKey:@"Hachi.YoBu.CustomizeSearch"];
+    [sharedDefaults synchronize];
+}
+
+-(void)didRecieveProductData{
+    [self setTextForTheButButton];
+}
+
+-(void) checkInAppPurchase{
+    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc]initWithSuiteName:@"group.YoBuDefaults"];
+    
+    if([[sharedDefaults valueForKey:@"Hachi.YoBu.CustomizeSearch"] isEqualToString:@"YES"]){
+        [self.buyButton setHidden:YES];
+        [self.activityIndicator setHidden:YES];
+    }
+    else{
+        [self setTextForTheButButton];
+        [self.buyButton setHidden:NO];
+        [self.activityIndicator setHidden:YES];
+        [self.buyButton setBackgroundColor:[UIColor darkGrayColor]];
+        self.buyButton.layer.cornerRadius = 8.0;
+        self.buyButton.titleLabel.numberOfLines = 0;
+    }
+}
+
+- (void)setTextForTheButButton{
+    LogTrace(@"");
+    NSAttributedString *attributedString = self.buyButton.titleLabel.attributedText;
+    NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithAttributedString:attributedString];
+    NSDictionary *dictionary = [attributedString attributesAtIndex:attributedString.length-3 effectiveRange:NULL];
+    NSAttributedString *stringToBereplace = [[NSAttributedString alloc] initWithString:[self getPriceOfProduct] attributes:dictionary];
+    
+    [mutableAttributedString replaceCharactersInRange:NSMakeRange(8, mutableAttributedString.length-8) withAttributedString:stringToBereplace];
+    
+    [self.buyButton setAttributedTitle:mutableAttributedString forState:UIControlStateNormal];
+}
+
+
 @end

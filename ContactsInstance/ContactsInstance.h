@@ -8,12 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import <StoreKit/StoreKit.h>
+#import "AppDelegate.h"
 
 
 @protocol ContactsInstanceDelegate <NSObject>
 @required
 - (void) transactionCompleted;
 - (void) transactionFailed;
+- (void) didRecieveProductData;
+
 
 @end
 
@@ -26,13 +29,17 @@
 @property (strong,nonatomic) id delegateOfThisClass; //define MyClassDelegate as delegate
 -(void)setCustomDelegate:(id)delegate;
 
+@property BOOL shouldPaymentProcessBeInititated;
+@property (strong,atomic) NSString *productIdentifier;;
+
+
+-(void)requestAllProducts;
+-(void) startPaymentProcessForProductIdentifier:(NSString *)productIdentifier;
+
+
 //InApp Dialer Methods
 @property (strong,atomic) SKProduct *productInAppDialer;
-@property BOOL shouldPaymentProcessBeInititated;
-
-- (void)requestInAppDialer;
-- (void)startPaymentProcessForInAppDialer;
-
+@property (strong,atomic) SKProduct *productInSearchCustomize;
 
 
 @end

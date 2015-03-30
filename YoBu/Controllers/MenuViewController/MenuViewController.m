@@ -253,8 +253,9 @@ UIActivityIndicatorView *activityIndicator;
 
     }
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    
     activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    
+    
     switch (indexPath.section) {
         case SECTION_SHARING:
             switch (indexPath.row) {
@@ -294,17 +295,11 @@ UIActivityIndicatorView *activityIndicator;
 
             break;
         case SECTION_CUSTOM_SEARCH:
-
-            cell.textLabel.text = @"Customize Search!";
-            [activityIndicator setFrame:CGRectMake(cell.frame.size.width-60, cell.frame.size.height/2 -activityIndicator.frame.size.height/2, activityIndicator.frame.size.width, activityIndicator.frame.size.height)];
-            [activityIndicator setTintColor:[UIColor blackColor]];
-            [activityIndicator setColor:[UIColor blackColor]];
-            activityIndicator.tag = 1234;
-            [cell addSubview:activityIndicator];
-            [activityIndicator setHidden:NO];
-            [activityIndicator startAnimating];
-
-
+            cell.textLabel.text = @"Customize T9 (Predictive) Search!";
+            break;
+        case SECTION_OPTIONS:
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            cell.textLabel.text = @"";
             break;
         default:
             cell.accessoryType = UITableViewCellAccessoryNone;
@@ -332,7 +327,7 @@ UIActivityIndicatorView *activityIndicator;
             return @"";
             break;
         case SECTION_CUSTOM_SEARCH:
-            return @"Custom Search Settings";
+            return @"T9 (Predictive) Search settings! Supports all languages.";
             break;
         case SECTION_OPTIONS:
             return @"Widget list should contain?";
@@ -389,7 +384,6 @@ UIActivityIndicatorView *activityIndicator;
             [self tutorialGroupClickedOnRow:indexPath.row];
             break;
         case SECTION_CUSTOM_SEARCH:
-            [activityIndicator stopAnimating];
             [self openCustomAlphabetSettingViewController];
             break;
             
@@ -419,34 +413,9 @@ UIActivityIndicatorView *activityIndicator;
 #pragma mark Open Custom View Controller
 
 - (void) openCustomAlphabetSettingViewController{
-//    SKProductsRequest *request= [[SKProductsRequest alloc]
-//                                 initWithProductIdentifiers: [NSSet setWithObject: @"Hachi.YoBu.InAppDialerPurchase"]];
-//    request.delegate = self;
-//    [request start];
-//    
-//    CustomAlphabetSettingViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"CustomAlphabetSettingViewController"];
-//    [self presentViewController:controller animated:YES completion:nil];
-    
-    
-    [activityIndicator setHidden:YES];
-    [activityIndicator stopAnimating];
-    
+    CustomAlphabetSettingViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"CustomAlphabetSettingViewController"];
+    [self presentViewController:controller animated:YES completion:nil];
 }
-
--(void)transactionCompleted{
-    LogTrace(@"");
-    [Utility stopActivityIndicatorOnView:self.view];
-}
-
--(void)transactionFailed{
-    LogTrace(@"");
-    [Utility stopActivityIndicatorOnView:self.view];
-}
-
-
-
-
-
 
 
 @end

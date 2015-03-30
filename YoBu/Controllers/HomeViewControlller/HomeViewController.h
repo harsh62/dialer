@@ -83,11 +83,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *labelEightAlphabets;
 @property (weak, nonatomic) IBOutlet UILabel *labelNineAlphabets;
 
+@property (weak, nonatomic) IBOutlet UIButton *buyButton;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (weak, nonatomic) IBOutlet UIView *viewInAppDialerPurchase;
 
-//In App Purchase
 
-- (void) completeTransaction: (SKPaymentTransaction *)transaction;
-- (void) restoreTransaction: (SKPaymentTransaction *)transaction;
-- (void) failedTransaction: (SKPaymentTransaction *)transaction;
 
 @end

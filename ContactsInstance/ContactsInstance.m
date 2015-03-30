@@ -36,12 +36,11 @@
 
 
 
-- (void)requestInAppDialer{
+- (void)requestAllProducts{
     LogTrace(@"");
-
     //    SKProduct
     SKProductsRequest *request= [[SKProductsRequest alloc]
-                                 initWithProductIdentifiers:[NSSet setWithObject: @"Hachi.YoBu.InAppDialerPurchase"]];
+                                 initWithProductIdentifiers:[NSSet setWithArray:@[@"Hachi.YoBu.InAppDialerPurchase", @"Hachi.YoBu.CustomizeSearch"]]];
     request.delegate = self;
     [request start];
 }
@@ -51,27 +50,51 @@
 - (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response
 {
     LogTrace(@"");
-
+    
+    
     [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
-    NSArray *myProduct = response.products;
-    self.productInAppDialer = [myProduct objectAtIndex:0];
-    if(self.shouldPaymentProcessBeInititated){
-        [self startPaymentProcessForInAppDialer];
-        self.shouldPaymentProcessBeInititated = NO;
+    NSArray *allProducts = response.products;
+    
+    for(SKProduct *product in allProducts){
+        if([product.productIdentifier isEqualToString:@"Hachi.YoBu.InAppDialerPurchase"]){
+            self.productInAppDialer = product;
+        }
+        else if([product.productIdentifier isEqualToString:@"Hachi.YoBu.CustomizeSearch"]){
+            self.productInSearchCustomize = product;
+        }
     }
+    
+    if(self.shouldPaymentProcessBeInititated){
+        [self startPaymentProcessForProductIdentifier:self.productIdentifier];
+        self.shouldPaymentProcessBeInititated = NO;
+        self.productIdentifier = nil;
+    }
+    else{
+        UITabBarController *rootController=(UITabBarController *)((AppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController;
+        self.delegateOfThisClass = rootController.selectedViewController;
+        [self.delegateOfThisClass didRecieveProductData];
+    }
+
 }
 
 
--(void) startPaymentProcessForInAppDialer{
+-(void) startPaymentProcessForProductIdentifier:(NSString *)productIdentifier{
     LogTrace(@"");
-
-    if(self.productInAppDialer){
-        SKPayment *newPayment = [SKPayment paymentWithProduct:self.productInAppDialer];
+    SKPayment *newPayment;
+    
+    if(self.productInAppDialer || self.productInSearchCustomize){
+        if([productIdentifier isEqualToString:@"Hachi.YoBu.InAppDialerPurchase"]){
+            newPayment = [SKPayment paymentWithProduct:self.productInAppDialer];
+        }
+        else if([productIdentifier isEqualToString:@"Hachi.YoBu.CustomizeSearch"]){
+            newPayment = [SKPayment paymentWithProduct:self.productInSearchCustomize];
+        }
         [[SKPaymentQueue defaultQueue] addPayment:newPayment];
     }
     else{
+        [self requestAllProducts];
         self.shouldPaymentProcessBeInititated = YES;
-        [self requestInAppDialer];
+        self.productIdentifier = productIdentifier;
     }
 }
 

@@ -12,6 +12,12 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc]initWithSuiteName:@"group.YoBuDefaults"];
+    
+    
+    NSString *selectedSegment = [sharedDefaults valueForKey:@"selectedSegmentControl"];
+    [self.segmentControl setSelectedSegmentIndex:selectedSegment.intValue];
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
