@@ -68,6 +68,9 @@
 #pragma mark Text Field Delegates
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    if([string isEqualToString:@""])
+        return YES;
+    
     
     if(textField.text.length<=3){
         return YES;

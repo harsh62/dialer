@@ -8,6 +8,7 @@
 
 #import "ContactsInstance.h"
 @import AddressBook;
+#import "CustomAlphabetSettingViewController.h"
 
 @implementation ContactsInstance
 @synthesize delegateOfThisClass; //synthesise  MyClassDelegate delegate
@@ -72,7 +73,8 @@
     else{
         UITabBarController *rootController=(UITabBarController *)((AppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController;
         self.delegateOfThisClass = rootController.selectedViewController;
-        [self.delegateOfThisClass didRecieveProductData];
+        if([self.delegateOfThisClass respondsToSelector:@selector(didRecieveProductData)])
+            [self.delegateOfThisClass didRecieveProductData];
     }
 
 }
@@ -122,7 +124,8 @@
 - (void) completeTransaction: (SKPaymentTransaction *)transaction
 {
     LogTrace(@"");
-    [self.delegateOfThisClass transactionCompleted];
+    if([self.delegateOfThisClass respondsToSelector:@selector(transactionCompleted)])
+        [self.delegateOfThisClass transactionCompleted];
     
     NSLog(@"Transaction Completed");
     // You can create a method to record the transaction.
@@ -138,7 +141,8 @@
 - (void) restoreTransaction: (SKPaymentTransaction *)transaction
 {
     LogTrace(@"");
-    [self.delegateOfThisClass transactionCompleted];
+    if([self.delegateOfThisClass respondsToSelector:@selector(transactionCompleted)])
+        [self.delegateOfThisClass transactionCompleted];
 
     
     NSLog(@"Transaction Restored");
@@ -155,7 +159,8 @@
 - (void) failedTransaction: (SKPaymentTransaction *)transaction
 {
     LogTrace(@"");
-    [self.delegateOfThisClass transactionFailed];
+    if([self.delegateOfThisClass respondsToSelector:@selector(transactionFailed)])
+        [self.delegateOfThisClass transactionFailed];
 
     
     if (transaction.error.code != SKErrorPaymentCancelled)
@@ -174,6 +179,74 @@
 }
 
 
+-(void)showNotification{
+    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc]initWithSuiteName:@"group.YoBuDefaults"];
+    if(![[sharedDefaults valueForKey:@"Hachi.YoBu.CustomizeSearch"] isEqualToString:@"YES"]){
+        [self performSelector:@selector(showCustomViewFromAboveLikeNotification) withObject:nil afterDelay:2.0];
+    }
+}
+
+-(void)showCustomViewFromAboveLikeNotification{
+    UITabBarController *rootController=(UITabBarController *)((AppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController;
+    UIViewController *controller = rootController.selectedViewController;
+    
+    self.notificationView = [[UIView alloc ] initWithFrame:CGRectMake(0, -75, controller.view.frame.size.width, 75)];
+    [self.notificationView setBackgroundColor:[UIColor greenColor]];
+    
+    UILabel *labelOfTitle = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, self.notificationView.frame.size.width-10, 75)];
+    [labelOfTitle setText:@"Search phone numbers in your native language or customize it in your own way. Go to MORE tab and press customize T9 search or just Tap!"];
+    [labelOfTitle setFont:[UIFont fontWithName:@"Helvetica Neue" size:13.0]];
+    labelOfTitle.numberOfLines = 0;
+    
+    [self.notificationView addSubview:labelOfTitle];
+    
+    [controller.view addSubview:self.notificationView];
+    
+    self.notificationView.opaque = YES;
+    self.notificationView.alpha = 0.9;
+    
+    ///Add gesture to the view
+    UITapGestureRecognizer *getureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(notificationViewtapped)];
+    getureRecognizer.numberOfTapsRequired = 1;
+    [self.notificationView addGestureRecognizer:getureRecognizer];
+    
+    
+    //Animate the view down
+    [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+        [self.notificationView setFrame:CGRectMake(0, 0, controller.view.frame.size.width, 75)];
+    } completion:^(BOOL finished){
+        [self performSelector:@selector(removeNotificationViewFromController:) withObject:controller afterDelay:10.0];
+    }];
+    
+
+    
+}
+
+-(void) removeNotificationViewFromController:(UIViewController *)controller{
+    [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+        [self.notificationView setFrame:CGRectMake(0, -75, controller.view.frame.size.width, 75)];
+    } completion:^(BOOL finished){
+        [self.notificationView removeFromSuperview];
+        self.notificationView = nil;
+    }];
+}
+
+-(void) notificationViewtapped {
+    
+    UITabBarController *rootController=(UITabBarController *)((AppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController;
+    UIViewController *controller = rootController.selectedViewController;
+    
+    CustomAlphabetSettingViewController *settingsController = [controller.storyboard instantiateViewControllerWithIdentifier:@"CustomAlphabetSettingViewController"];
+    [controller presentViewController:settingsController animated:YES completion:nil];
+    
+    [self removeNotificationViewFromController:controller];
+    
+    //Cancel the previous perform selector with delay..
+    [NSObject cancelPreviousPerformRequestsWithTarget:self
+                                             selector:@selector(removeNotificationViewFromController:)
+                                               object:controller];
+
+}
 
 
 

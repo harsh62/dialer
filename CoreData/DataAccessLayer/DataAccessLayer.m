@@ -333,8 +333,11 @@
 }
 
 + (void)deleteModel:(id)modelToBeDeleted{
+    NSError *error;
     NSManagedObjectContext *managedObjectContext = [[DataManager sharedInstance] managedObjectContext];
     [managedObjectContext deleteObject:modelToBeDeleted];
+    [managedObjectContext save:&error];
+
 }
 
 @end

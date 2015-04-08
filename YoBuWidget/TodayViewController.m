@@ -174,8 +174,9 @@
     }
     
     //Populate the table when there is nothing to search
-    if(self.callLabel.text.length ==0)
-        self.filteredContacts = [DataAccessLayer fetchFrequentContacts];
+    if(self.callLabel.text.length ==0){
+        [self populateArrayForShowingInTableView];
+    }
 
     [self.contactsTableView reloadData];
 }

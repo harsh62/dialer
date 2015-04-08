@@ -45,7 +45,7 @@
     }
     [sharedDefaults synchronize];
     
-    
+    [[ContactsInstance sharedInstance] showNotification];
     
     // Override point for customization after application launch.
     return YES;

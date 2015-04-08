@@ -42,4 +42,9 @@
 @property (strong,atomic) SKProduct *productInSearchCustomize;
 
 
+-(void)showNotification;
+@property (strong,atomic) UIView *notificationView;
+
+
+
 @end
