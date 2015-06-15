@@ -67,10 +67,6 @@ SKPayment *newPayment;
     [self.dialerView addGestureRecognizer:recognizer];
     
     [self initializeDragAndDrop];
-    
-    [self checkInAppPurchase];
-    
-    
 }
 
 //-(void) makeRandomContacts{
@@ -163,6 +159,8 @@ SKPayment *newPayment;
     self.tableViewForContactsSearched.contentOffset = CGPointMake(0, 44);
     
     [self didRecieveProductData];
+    
+    [self checkInAppPurchase];
 
 }
 

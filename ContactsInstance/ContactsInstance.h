@@ -12,10 +12,16 @@
 
 
 @protocol ContactsInstanceDelegate <NSObject>
-@required
+
+
+@optional
 - (void) transactionCompleted;
 - (void) transactionFailed;
 - (void) didRecieveProductData;
+
+- (void) restoreCompleted;
+- (void) restoreFailed;
+
 
 
 @end
@@ -44,6 +50,12 @@
 
 -(void)showNotification;
 @property (strong,atomic) UIView *notificationView;
+
+///Restore Transaction
+-(void)restoreInAppPurchases;
+@property BOOL IsRestoreInitiated;
+
+
 
 
 

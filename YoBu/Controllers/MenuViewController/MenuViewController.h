@@ -17,7 +17,7 @@
 #import "ContactsInstance.h"
 
 
-@interface MenuViewController : UIViewController<MFMailComposeViewControllerDelegate,UIActionSheetDelegate,ABNewPersonViewControllerDelegate, UITableViewDataSource,UITableViewDelegate>{
+@interface MenuViewController : UIViewController<MFMailComposeViewControllerDelegate,UIActionSheetDelegate,ABNewPersonViewControllerDelegate, UITableViewDataSource,UITableViewDelegate,ContactsInstanceDelegate>{
 
     SLComposeViewController *mySLComposerSheet;
     MPMoviePlayerViewController * theMoviPlayer;

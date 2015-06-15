@@ -8,7 +8,6 @@
 
 #import "MenuViewController.h"
 @import AddressBook;
-#import "ContactsInstance.h"
 #import "DataAccessLayer.h"
 #import "ConsoleLogs.h"
 #import "CustomAlphabetSettingViewController.h"
@@ -18,14 +17,15 @@
 #define Social_Sharing_Message @"I #UseYoBu for quickest calling on iOS. Download it:https://itunes.apple.com/in/app/yobu/id947452765?ls=1&mt=8"
 
 //NUMBER OF SECTIONS
-#define NUMBER_OF_SECTIONS  5
+#define NUMBER_OF_SECTIONS  6
 
 //SECTION POSITIONS
 #define SECTION_OPTIONS             0
 #define SECTION_CUSTOM_SEARCH       1
-#define SECTION_SHARING             2
-#define SECTION_TUTORIALS           3
-#define SECTION_VERSION             4
+#define SECTION_RESTORE_PURCHASE    2
+#define SECTION_SHARING             3
+#define SECTION_TUTORIALS           4
+#define SECTION_VERSION             5
 
 
 @interface MenuViewController ()
@@ -254,6 +254,10 @@ UIActivityIndicatorView *activityIndicator;
     }
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [activityIndicator hidesWhenStopped];
+    [activityIndicator setFrame:CGRectMake(cell.frame.size.width-activityIndicator.frame.size.width*2, cell.frame.size.height/2-activityIndicator.frame.size.height/2, activityIndicator.frame.size.width, activityIndicator.frame.size.height)];
+    activityIndicator.tag = 1234;
+    [activityIndicator setTintColor:[UIColor blackColor]];
     
     
     switch (indexPath.section) {
@@ -287,12 +291,10 @@ UIActivityIndicatorView *activityIndicator;
                     break;
             }
             break;
-            
         case SECTION_VERSION:
             cell.accessoryType = UITableViewCellAccessoryNone;
             cell.textLabel.text = @"Version";
             cell.detailTextLabel.text = @"1.4";
-
             break;
         case SECTION_CUSTOM_SEARCH:
             cell.textLabel.text = @"Customize T9 (Predictive) Search!";
@@ -301,15 +303,18 @@ UIActivityIndicatorView *activityIndicator;
             cell.accessoryType = UITableViewCellAccessoryNone;
             cell.textLabel.text = @"";
             break;
+        case SECTION_RESTORE_PURCHASE:
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            cell.textLabel.text = @"Restore In App Purchases!";
+            [cell addSubview:activityIndicator];
+            break;
         default:
             cell.accessoryType = UITableViewCellAccessoryNone;
             cell.textLabel.text = @"";
             break;
     }
-    
     return cell;
 }
-
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return NUMBER_OF_SECTIONS;
@@ -331,6 +336,9 @@ UIActivityIndicatorView *activityIndicator;
             break;
         case SECTION_OPTIONS:
             return @"Widget list should contain?";
+            break;
+        case SECTION_RESTORE_PURCHASE:
+            return @"Restore already bought products.";
             break;
         default:
             return @"Default";
@@ -386,6 +394,9 @@ UIActivityIndicatorView *activityIndicator;
         case SECTION_CUSTOM_SEARCH:
             [self openCustomAlphabetSettingViewController];
             break;
+        case SECTION_RESTORE_PURCHASE:
+            [self restorePurchases];
+            break;
             
     }
     
@@ -415,6 +426,20 @@ UIActivityIndicatorView *activityIndicator;
 - (void) openCustomAlphabetSettingViewController{
     CustomAlphabetSettingViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"CustomAlphabetSettingViewController"];
     [self presentViewController:controller animated:YES completion:nil];
+}
+
+-(void)restorePurchases{
+    [activityIndicator startAnimating];
+    [[ContactsInstance sharedInstance] setCustomDelegate:self];
+    [[ContactsInstance sharedInstance] restoreInAppPurchases];
+}
+
+-(void)restoreCompleted{
+    [activityIndicator stopAnimating];
+}
+
+-(void)restoreFailed{
+    [activityIndicator stopAnimating];
 }
 
 

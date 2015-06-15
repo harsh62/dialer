@@ -100,6 +100,8 @@
     }
 }
 
+
+
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions
 {
     LogTrace(@"");
@@ -246,6 +248,69 @@
                                              selector:@selector(removeNotificationViewFromController:)
                                                object:controller];
 
+}
+
+#pragma mark InApp Restore Functions
+
+-(void)restoreInAppPurchases{
+    if(!self.IsRestoreInitiated){
+        self.IsRestoreInitiated = YES;
+        [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
+        [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
+    }
+}
+
+// Then this is called
+- (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue {
+    NSLog(@"%@",queue );
+    NSLog(@"Restored Transactions are once again in Queue for purchasing %@",[queue transactions]);
+    
+    NSMutableArray *purchasedItemIDs = [[NSMutableArray alloc] init];
+    NSLog(@"received restored transactions: %lu", (unsigned long)queue.transactions.count);
+    
+    for (SKPaymentTransaction *transaction in queue.transactions) {
+        NSString *productID = transaction.payment.productIdentifier;
+        [purchasedItemIDs addObject:productID];
+        
+        if([productID isEqualToString:@"Hachi.YoBu.InAppDialerPurchase"]){
+            NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc]initWithSuiteName:@"group.YoBuDefaults"];
+            [sharedDefaults setValue:@"YES" forKey:@"Hachi.YoBu.InAppDialerPurchase"];
+            [sharedDefaults synchronize];
+        }
+        else if([productID isEqualToString:@"Hachi.YoBu.CustomizeSearch"]){
+            NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc]initWithSuiteName:@"group.YoBuDefaults"];
+            [sharedDefaults setValue:@"YES" forKey:@"Hachi.YoBu.CustomizeSearch"];
+            [sharedDefaults synchronize];
+        }
+        
+        NSLog (@"product id is %@" , productID);
+    }
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Restore Successful"
+                                                    message:@"All In App Purchases of the application have been restored!"
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+    
+    self.IsRestoreInitiated = NO;
+    if([self.delegateOfThisClass respondsToSelector:@selector(restoreCompleted)])
+        [self.delegateOfThisClass restoreCompleted];
+}
+
+- (void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error{
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Restore Unsuccessful"
+                                                    message:error.description
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+    
+    self.IsRestoreInitiated = NO;
+    if([self.delegateOfThisClass respondsToSelector:@selector(restoreFailed)])
+        [self.delegateOfThisClass restoreFailed];
+    
 }
 
 
