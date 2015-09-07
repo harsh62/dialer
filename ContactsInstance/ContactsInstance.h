@@ -15,9 +15,11 @@
 
 
 @optional
+
 - (void) transactionCompleted;
 - (void) transactionFailed;
 - (void) didRecieveProductData;
+
 
 - (void) restoreCompleted;
 - (void) restoreFailed;

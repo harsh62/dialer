@@ -50,6 +50,7 @@ UIActivityIndicatorView *activityIndicator;
 }
 
 -(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
 }
 
 
@@ -74,13 +75,10 @@ UIActivityIndicatorView *activityIndicator;
         [alert show];
     }
     [mySLComposerSheet setCompletionHandler:^(SLComposeViewControllerResult result) {
-        NSString *output;
         switch (result) {
             case SLComposeViewControllerResultCancelled:
-                output = @"Action Cancelled";
                 break;
             case SLComposeViewControllerResultDone:
-                output = @"Post Successfull";
                 break;
             default:
                 break;
@@ -110,13 +108,10 @@ UIActivityIndicatorView *activityIndicator;
         [alert show];
     }
     [mySLComposerSheet setCompletionHandler:^(SLComposeViewControllerResult result) {
-        NSString *output;
         switch (result) {
             case SLComposeViewControllerResultCancelled:
-                output = @"Action Cancelled";
                 break;
             case SLComposeViewControllerResultDone:
-                output = @"Post Successfull";
                 break;
             default:
                 break;

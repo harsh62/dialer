@@ -22,6 +22,7 @@ UINavigationController *navigationController;
 SKPayment *newPayment;
 
 -(void)viewDidLoad{
+    [super viewDidLoad];
     [self.navigationController.navigationBar setHidden:YES];
     
     self.dialerView.layer.shadowColor = [UIColor blackColor].CGColor;
@@ -131,7 +132,7 @@ SKPayment *newPayment;
 //}
 
 -(void)viewWillAppear:(BOOL)animated{
-    
+    [super viewWillAppear:animated];
     [self setCustomAlphabetsToUserInterfaceToAllTheLabels];
     
     
@@ -883,6 +884,10 @@ CGPoint originalCenter;
     [self.activityIndicator stopAnimating];
     
     [self checkInAppPurchase];
+    
+    if([[UIApplication sharedApplication] applicationState] == UIApplicationStateBackground ||[[UIApplication sharedApplication] applicationState] == UIApplicationStateInactive) {
+    }
+
 }
 
 -(void)didRecieveProductData{
