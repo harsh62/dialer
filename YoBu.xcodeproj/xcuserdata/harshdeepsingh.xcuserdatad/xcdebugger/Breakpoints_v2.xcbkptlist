@@ -111,6 +111,38 @@
             endingLineNumber = "222"
             landmarkName = "-searchContact"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HomeViewController searchContact]"
+                  moduleName = "YoBu"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/harshdeepsingh/Desktop/Desktop%20March/SVNYoBu/Testing%202/dialer/branches/trunk/YoBu/Controllers/HomeViewControlller/HomeViewController.m"
+                  timestampString = "467755850.292269"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "222"
+                  endingLineNumber = "222"
+                  offsetFromSymbolStart = "86">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__35-[HomeViewController searchContact]_block_invoke"
+                  moduleName = "YoBu"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/harshdeepsingh/Desktop/Desktop%20March/SVNYoBu/Testing%202/dialer/branches/trunk/YoBu/Controllers/HomeViewControlller/HomeViewController.m"
+                  timestampString = "467755850.292551"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "222"
+                  endingLineNumber = "222"
+                  offsetFromSymbolStart = "115">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
