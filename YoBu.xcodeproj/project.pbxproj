@@ -1,0 +1,617 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		48740AEC2AB94FBB008F9205 /* YoBuApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48740AEB2AB94FBB008F9205 /* YoBuApp.swift */; };
+		48740AEE2AB94FBB008F9205 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48740AED2AB94FBB008F9205 /* ContentView.swift */; };
+		48740AF02AB94FBD008F9205 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 48740AEF2AB94FBD008F9205 /* Assets.xcassets */; };
+		48740AF42AB94FBD008F9205 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 48740AF32AB94FBD008F9205 /* Preview Assets.xcassets */; };
+		48740AFE2AB94FBD008F9205 /* YoBuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48740AFD2AB94FBD008F9205 /* YoBuTests.swift */; };
+		48740B082AB94FBD008F9205 /* YoBuUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48740B072AB94FBD008F9205 /* YoBuUITests.swift */; };
+		48740B0A2AB94FBD008F9205 /* YoBuUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48740B092AB94FBD008F9205 /* YoBuUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		48740AFA2AB94FBD008F9205 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 48740AE02AB94FBB008F9205 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 48740AE72AB94FBB008F9205;
+			remoteInfo = YoBu;
+		};
+		48740B042AB94FBD008F9205 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 48740AE02AB94FBB008F9205 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 48740AE72AB94FBB008F9205;
+			remoteInfo = YoBu;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		48740AE82AB94FBB008F9205 /* YoBu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YoBu.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		48740AEB2AB94FBB008F9205 /* YoBuApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoBuApp.swift; sourceTree = "<group>"; };
+		48740AED2AB94FBB008F9205 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		48740AEF2AB94FBD008F9205 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		48740AF12AB94FBD008F9205 /* YoBu.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = YoBu.entitlements; sourceTree = "<group>"; };
+		48740AF32AB94FBD008F9205 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		48740AF92AB94FBD008F9205 /* YoBuTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YoBuTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		48740AFD2AB94FBD008F9205 /* YoBuTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoBuTests.swift; sourceTree = "<group>"; };
+		48740B032AB94FBD008F9205 /* YoBuUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YoBuUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		48740B072AB94FBD008F9205 /* YoBuUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoBuUITests.swift; sourceTree = "<group>"; };
+		48740B092AB94FBD008F9205 /* YoBuUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoBuUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		48740AE52AB94FBB008F9205 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		48740AF62AB94FBD008F9205 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		48740B002AB94FBD008F9205 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		48740ADF2AB94FBB008F9205 = {
+			isa = PBXGroup;
+			children = (
+				48740AEA2AB94FBB008F9205 /* YoBu */,
+				48740AFC2AB94FBD008F9205 /* YoBuTests */,
+				48740B062AB94FBD008F9205 /* YoBuUITests */,
+				48740AE92AB94FBB008F9205 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		48740AE92AB94FBB008F9205 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				48740AE82AB94FBB008F9205 /* YoBu.app */,
+				48740AF92AB94FBD008F9205 /* YoBuTests.xctest */,
+				48740B032AB94FBD008F9205 /* YoBuUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		48740AEA2AB94FBB008F9205 /* YoBu */ = {
+			isa = PBXGroup;
+			children = (
+				48740AEB2AB94FBB008F9205 /* YoBuApp.swift */,
+				48740AED2AB94FBB008F9205 /* ContentView.swift */,
+				48740AEF2AB94FBD008F9205 /* Assets.xcassets */,
+				48740AF12AB94FBD008F9205 /* YoBu.entitlements */,
+				48740AF22AB94FBD008F9205 /* Preview Content */,
+			);
+			path = YoBu;
+			sourceTree = "<group>";
+		};
+		48740AF22AB94FBD008F9205 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				48740AF32AB94FBD008F9205 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		48740AFC2AB94FBD008F9205 /* YoBuTests */ = {
+			isa = PBXGroup;
+			children = (
+				48740AFD2AB94FBD008F9205 /* YoBuTests.swift */,
+			);
+			path = YoBuTests;
+			sourceTree = "<group>";
+		};
+		48740B062AB94FBD008F9205 /* YoBuUITests */ = {
+			isa = PBXGroup;
+			children = (
+				48740B072AB94FBD008F9205 /* YoBuUITests.swift */,
+				48740B092AB94FBD008F9205 /* YoBuUITestsLaunchTests.swift */,
+			);
+			path = YoBuUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		48740AE72AB94FBB008F9205 /* YoBu */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 48740B0D2AB94FBD008F9205 /* Build configuration list for PBXNativeTarget "YoBu" */;
+			buildPhases = (
+				48740AE42AB94FBB008F9205 /* Sources */,
+				48740AE52AB94FBB008F9205 /* Frameworks */,
+				48740AE62AB94FBB008F9205 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = YoBu;
+			productName = YoBu;
+			productReference = 48740AE82AB94FBB008F9205 /* YoBu.app */;
+			productType = "com.apple.product-type.application";
+		};
+		48740AF82AB94FBD008F9205 /* YoBuTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 48740B102AB94FBD008F9205 /* Build configuration list for PBXNativeTarget "YoBuTests" */;
+			buildPhases = (
+				48740AF52AB94FBD008F9205 /* Sources */,
+				48740AF62AB94FBD008F9205 /* Frameworks */,
+				48740AF72AB94FBD008F9205 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				48740AFB2AB94FBD008F9205 /* PBXTargetDependency */,
+			);
+			name = YoBuTests;
+			productName = YoBuTests;
+			productReference = 48740AF92AB94FBD008F9205 /* YoBuTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		48740B022AB94FBD008F9205 /* YoBuUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 48740B132AB94FBD008F9205 /* Build configuration list for PBXNativeTarget "YoBuUITests" */;
+			buildPhases = (
+				48740AFF2AB94FBD008F9205 /* Sources */,
+				48740B002AB94FBD008F9205 /* Frameworks */,
+				48740B012AB94FBD008F9205 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				48740B052AB94FBD008F9205 /* PBXTargetDependency */,
+			);
+			name = YoBuUITests;
+			productName = YoBuUITests;
+			productReference = 48740B032AB94FBD008F9205 /* YoBuUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		48740AE02AB94FBB008F9205 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					48740AE72AB94FBB008F9205 = {
+						CreatedOnToolsVersion = 14.3;
+					};
+					48740AF82AB94FBD008F9205 = {
+						CreatedOnToolsVersion = 14.3;
+						TestTargetID = 48740AE72AB94FBB008F9205;
+					};
+					48740B022AB94FBD008F9205 = {
+						CreatedOnToolsVersion = 14.3;
+						TestTargetID = 48740AE72AB94FBB008F9205;
+					};
+				};
+			};
+			buildConfigurationList = 48740AE32AB94FBB008F9205 /* Build configuration list for PBXProject "YoBu" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 48740ADF2AB94FBB008F9205;
+			productRefGroup = 48740AE92AB94FBB008F9205 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				48740AE72AB94FBB008F9205 /* YoBu */,
+				48740AF82AB94FBD008F9205 /* YoBuTests */,
+				48740B022AB94FBD008F9205 /* YoBuUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		48740AE62AB94FBB008F9205 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				48740AF42AB94FBD008F9205 /* Preview Assets.xcassets in Resources */,
+				48740AF02AB94FBD008F9205 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		48740AF72AB94FBD008F9205 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		48740B012AB94FBD008F9205 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		48740AE42AB94FBB008F9205 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				48740AEE2AB94FBB008F9205 /* ContentView.swift in Sources */,
+				48740AEC2AB94FBB008F9205 /* YoBuApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		48740AF52AB94FBD008F9205 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				48740AFE2AB94FBD008F9205 /* YoBuTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		48740AFF2AB94FBD008F9205 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				48740B082AB94FBD008F9205 /* YoBuUITests.swift in Sources */,
+				48740B0A2AB94FBD008F9205 /* YoBuUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		48740AFB2AB94FBD008F9205 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 48740AE72AB94FBB008F9205 /* YoBu */;
+			targetProxy = 48740AFA2AB94FBD008F9205 /* PBXContainerItemProxy */;
+		};
+		48740B052AB94FBD008F9205 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 48740AE72AB94FBB008F9205 /* YoBu */;
+			targetProxy = 48740B042AB94FBD008F9205 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		48740B0B2AB94FBD008F9205 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		48740B0C2AB94FBD008F9205 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		48740B0E2AB94FBD008F9205 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = YoBu/YoBu.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"YoBu/Preview Content\"";
+				DEVELOPMENT_TEAM = FW7F9SP7S7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Hachi.YoBu;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		48740B0F2AB94FBD008F9205 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = YoBu/YoBu.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"YoBu/Preview Content\"";
+				DEVELOPMENT_TEAM = FW7F9SP7S7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Hachi.YoBu;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		48740B112AB94FBD008F9205 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = FW7F9SP7S7;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Hachi.YoBuTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YoBu.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/YoBu";
+			};
+			name = Debug;
+		};
+		48740B122AB94FBD008F9205 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = FW7F9SP7S7;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Hachi.YoBuTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YoBu.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/YoBu";
+			};
+			name = Release;
+		};
+		48740B142AB94FBD008F9205 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = FW7F9SP7S7;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Hachi.YoBuUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = YoBu;
+			};
+			name = Debug;
+		};
+		48740B152AB94FBD008F9205 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = FW7F9SP7S7;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Hachi.YoBuUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = YoBu;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		48740AE32AB94FBB008F9205 /* Build configuration list for PBXProject "YoBu" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				48740B0B2AB94FBD008F9205 /* Debug */,
+				48740B0C2AB94FBD008F9205 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		48740B0D2AB94FBD008F9205 /* Build configuration list for PBXNativeTarget "YoBu" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				48740B0E2AB94FBD008F9205 /* Debug */,
+				48740B0F2AB94FBD008F9205 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		48740B102AB94FBD008F9205 /* Build configuration list for PBXNativeTarget "YoBuTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				48740B112AB94FBD008F9205 /* Debug */,
+				48740B122AB94FBD008F9205 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		48740B132AB94FBD008F9205 /* Build configuration list for PBXNativeTarget "YoBuUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				48740B142AB94FBD008F9205 /* Debug */,
+				48740B152AB94FBD008F9205 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 48740AE02AB94FBB008F9205 /* Project object */;
+}
