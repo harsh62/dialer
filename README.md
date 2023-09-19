@@ -1,2 +1,0 @@
-# dialer
-Dialer Demo
