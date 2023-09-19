@@ -17,7 +17,7 @@
 @implementation ConsoleLogs
 @synthesize logLevelsDictionary;
 
-#define COUNT_OF_LOG_FILES 3
+#define COUNT_OF_LOG_FILES 1
 
 + (ConsoleLogs *)sharedInstance {
     

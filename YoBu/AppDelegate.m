@@ -11,6 +11,7 @@
 #import "HomeViewController.h"
 #import "RecentContactsViewController.h"
 #import "ConsoleLogs.h"
+#import "ContactsInstance.h"
 
 
 @interface AppDelegate ()
@@ -22,11 +23,29 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-//#if !(TARGET_IPHONE_SIMULATOR)
-//    [[ConsoleLogs sharedInstance] turnOnLoggingToFileForApp:YES];
-//#endif
+#if !(TARGET_IPHONE_SIMULATOR)
+    [[ConsoleLogs sharedInstance] turnOnLoggingToFileForApp:YES];
+#endif
+    
+    //set contacts as an initial controller
+    UITabBarController *rootController=(UITabBarController *)((AppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController;
+    
+    rootController.selectedIndex = 2;
     LogTrace(@"");
 
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [[ContactsInstance sharedInstance] requestAllProducts];
+    });
+    
+    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc]initWithSuiteName:@"group.YoBuDefaults"];
+    if([sharedDefaults valueForKey:@"Hachi.YoBu.CustomizeSearch"]==nil){
+        [sharedDefaults setValue:@"NO" forKey:@"Hachi.YoBu.CustomizeSearch"];
+        [sharedDefaults setValue:@"NO" forKey:@"Hachi.YoBu.InAppDialerPurchase"];
+    }
+    [sharedDefaults synchronize];
+    
+    [[ContactsInstance sharedInstance] showNotification];
     
     // Override point for customization after application launch.
     return YES;

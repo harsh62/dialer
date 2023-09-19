@@ -16,6 +16,7 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import "Logging.h"
+#import "Utility.h"
 #endif
 
 #endif

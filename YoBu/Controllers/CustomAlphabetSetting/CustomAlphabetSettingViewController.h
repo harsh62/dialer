@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ContactsInstance.h"
 
-@interface CustomAlphabetSettingViewController : UIViewController
+
+@interface CustomAlphabetSettingViewController : UIViewController<UITextFieldDelegate,ContactsInstanceDelegate>
+
 @property (weak, nonatomic) IBOutlet UITextField *textFieldOne;
 @property (weak, nonatomic) IBOutlet UITextField *textFieldTwo;
 @property (weak, nonatomic) IBOutlet UITextField *textFieldThree;
@@ -18,5 +21,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *textFieldSeven;
 @property (weak, nonatomic) IBOutlet UITextField *textFieldEight;
 @property (weak, nonatomic) IBOutlet UITextField *textFieldNine;
+
+@property (weak, nonatomic) IBOutlet UIButton *buyButton;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @end

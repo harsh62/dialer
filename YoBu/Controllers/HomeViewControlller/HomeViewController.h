@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import <AddressBookUI/AddressBookUI.h>
+#import <StoreKit/StoreKit.h>
+#import "ContactsInstance.h"
 
 
-@interface HomeViewController : UIViewController<ABNewPersonViewControllerDelegate,UISearchBarDelegate>{
+
+@interface HomeViewController : UIViewController<ABNewPersonViewControllerDelegate,UISearchBarDelegate,UIAlertViewDelegate,ContactsInstanceDelegate>{
     CGRect rectImageViewCall;
     CGRect rectImageViewBlueCircle;
     CGRect rectOfDialerView;
@@ -66,5 +69,24 @@
 - (void) openAddContactController;
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBarOnTableForContacts;
+
+
+
+//custom alphabets
+@property (weak, nonatomic) IBOutlet UILabel *labelOneAlphabets;
+@property (weak, nonatomic) IBOutlet UILabel *labelTwoAlphabets;
+@property (weak, nonatomic) IBOutlet UILabel *labelThreeAlphabets;
+@property (weak, nonatomic) IBOutlet UILabel *labelFourAlphabets;
+@property (weak, nonatomic) IBOutlet UILabel *labelFiveAlphabets;
+@property (weak, nonatomic) IBOutlet UILabel *labelSixAlphabets;
+@property (weak, nonatomic) IBOutlet UILabel *labelSevenAlphabets;
+@property (weak, nonatomic) IBOutlet UILabel *labelEightAlphabets;
+@property (weak, nonatomic) IBOutlet UILabel *labelNineAlphabets;
+
+@property (weak, nonatomic) IBOutlet UIButton *buyButton;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (weak, nonatomic) IBOutlet UIView *viewInAppDialerPurchase;
+
+
 
 @end

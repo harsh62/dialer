@@ -14,6 +14,7 @@
 #import "UIColor+HexColor.h"
 #import "DataAccessLayer.h"
 #import "ConsoleLogs.h"
+#import "AddressBook.h"
 
 #define FONT_SIZE 24
 
@@ -29,7 +30,7 @@
 
 }
 -(void)viewWillAppear:(BOOL)animated{
-    
+    [super viewWillAppear:YES];
     if([[NSUserDefaults standardUserDefaults] valueForKey:@"height"] == nil)
         [[NSUserDefaults standardUserDefaults] setValue:[NSString stringWithFormat:@"%f",self.containerView.frame.size.height] forKey:@"height"];
     
@@ -58,13 +59,21 @@
     self.listOfAllContactsInWidget = [[NSMutableArray alloc] init];
     self.arrayOfSearchCombinationsFormed = [[NSMutableArray alloc] init];
     self.dictionaryOfCombination = [[NSMutableDictionary alloc] init];
-    self.filteredContacts = [DataAccessLayer fetchFrequentContacts];
+    
+    
+    [self populateArrayForShowingInTableView];
+    
+    
     [self.tableViewContacts reloadData];
     [DataAccessLayer checkAndUpdateTabelWithDefaultAlphabets];
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self requestContacts];
-    });
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        [self requestContacts];
+//    });
+    
+    self.listOfAllContactsInWidget = [DataAccessLayer fetchAllContacts];
+    
+    
 
     [UIColor colorWithHexString:@""];
     
@@ -75,6 +84,8 @@
     
     //Add LongPress Gesture on backspace
     [self addGestureToBackSpaceForLongPress];
+    
+    NSLog(@"App Has started");
 }
 
 
@@ -82,14 +93,12 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
+    NSLog(@"*********************MEMORY WARNING*************");
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator{
 //    animateAlongsideTransition:completion:
-    NSLog(@"%f",size.height);
-
-//        self.preferredContentSize = CGSizeMake(320, self.containerView.frame.size.height+2);
 }
 
 
@@ -113,7 +122,6 @@
 }
 
 - (IBAction)numberPadButtonPressed:(id)sender {
-    
     UIButton *buttonPressed = (UIButton *)sender;
     
     if(buttonPressed.tag<10){
@@ -125,31 +133,40 @@
     }
     else{
         [self.arrayOfSearchCombinationsFormed removeAllObjects];
+        self.arrayOfSearchCombinationsFormed = nil;
     }
-    
-    [self searchContact];
+        [self searchContact];
+
 }
 
 #pragma mark Search Logic
 - (void) searchContact{
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"phoneNumber CONTAINS[cd] %@", self.callLabel.text];
-    self.filteredContacts = [[NSMutableArray alloc] initWithArray:[self.listOfAllContactsInWidget filteredArrayUsingPredicate:predicate]];
-    
-    NSPredicate *notPredicate = [NSPredicate predicateWithFormat:@"NOT (phoneNumber CONTAINS[cd] %@)", self.callLabel.text];
-    NSArray *notArray = [self.listOfAllContactsInWidget filteredArrayUsingPredicate:notPredicate];
-    
-    
-    NSArray *arrayToTraversed = [[NSArray alloc] initWithArray:self.arrayOfSearchCombinationsFormed];
-    for(NSString *combination in arrayToTraversed){
-        NSPredicate *predicateInsideLoop = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", combination];
-        NSArray *filteredContactByName = [notArray filteredArrayUsingPredicate:predicateInsideLoop];
-        if([filteredContactByName count]>0){
-            [self.filteredContacts addObjectsFromArray:filteredContactByName];
+    NSMutableSet *keySet = [NSMutableSet set];
+    NSPredicate *intersectPredicate = [NSPredicate predicateWithBlock:^BOOL(AddressBook *evaluatedObject, NSDictionary *bindings) {
+        
+        NSRange phoneRange = [evaluatedObject.phoneNumber rangeOfString:self.callLabel.text options:NSCaseInsensitiveSearch];
+        if (phoneRange.location != NSNotFound) {
+            return true;
         }
-        else{
-            [self.arrayOfSearchCombinationsFormed removeObject:combination];
+        
+        for (NSString *str in self.arrayOfSearchCombinationsFormed) {
+            NSRange r = [evaluatedObject.name rangeOfString:str options:NSCaseInsensitiveSearch];
+            if (r.location != NSNotFound) {
+                [keySet addObject:str];
+                return true;
+            }
+
         }
-    }
+        return false;
+    }];
+
+    NSArray *intersect = [self.listOfAllContactsInWidget filteredArrayUsingPredicate:intersectPredicate];
+    self.filteredContacts = [[NSMutableArray alloc] initWithArray:intersect];
+
+    
+    self.arrayOfSearchCombinationsFormed = [NSMutableArray arrayWithArray:[keySet allObjects]];
+
+    
     
     //filling the dictionary for further reference when the user clicks on the backspace
     if(self.callLabel.text.length>0){
@@ -157,8 +174,9 @@
     }
     
     //Populate the table when there is nothing to search
-    if(self.callLabel.text.length ==0)
-        self.filteredContacts = [DataAccessLayer fetchFrequentContacts];
+    if(self.callLabel.text.length ==0){
+        [self populateArrayForShowingInTableView];
+    }
 
     [self.contactsTableView reloadData];
 }
@@ -174,6 +192,8 @@
                                           [characters addObject:substring];
                                       }];
         arrayOfLetters = [NSArray arrayWithArray:characters];
+        alphabetData = nil;
+        characters = nil;
     }
     else if(numberPressed==0){
         arrayOfLetters = @[@" "]; 
@@ -197,6 +217,7 @@
                     [self.arrayOfSearchCombinationsFormed addObject:[combination stringByAppendingString:combinationWithLetter]];
                 }
             }
+            copiedArrayForEnumeration =nil;
         }
 }
 
@@ -226,50 +247,27 @@
     if(name.length > 0)
         cell.name.text = name;
     else
-        cell.name.text = @"Unknown name";
+        cell.name.text = @"No name";
     
     if(number.length > 0)
         cell.phoneNumber.text = number;
     else
         cell.phoneNumber.text = @"No Phone Number";
     
-    BOOL retVal = 0;
-    NSArray *allKeys = [filteredContactForTableView allKeys];
-    retVal = [allKeys containsObject:@"hasProfilePicture"];
 
-    if(retVal){
-        if([[filteredContactForTableView valueForKey:@"hasProfilePicture"] isEqualToString:@"YES"]){
-            UIImage *profilePicture = [filteredContactForTableView objectForKey:@"profilePicture"];
-            cell.imageViewProfilePicture.image = profilePicture;
-            [cell.labelImageTitle setHidden:YES];
-        }else{
-            [cell.labelImageTitle setHidden:NO];
-            [cell.imageViewProfilePicture setHidden:YES];
-            
-            NSInteger randomNumber = arc4random()%[self.materialDesignPalletArray count];
-            
-            cell.labelImageTitle.backgroundColor = [UIColor colorWithHexString:[self.materialDesignPalletArray objectAtIndex:randomNumber]];
-            cell.labelImageTitle.layer.cornerRadius = cell.labelImageTitle.bounds.size.width/2.0;
-            [cell.labelImageTitle setText:[name substringToIndex:1].uppercaseString];
-        }
-    }
-    else{
-        [cell.labelImageTitle setHidden:NO];
-        [cell.imageViewProfilePicture setHidden:YES];
-        
-        NSInteger randomNumber = arc4random()%[self.materialDesignPalletArray count];
-        
-        cell.labelImageTitle.backgroundColor = [UIColor colorWithHexString:[self.materialDesignPalletArray objectAtIndex:randomNumber]];
-        cell.labelImageTitle.layer.cornerRadius = cell.labelImageTitle.bounds.size.width/2.0;
-        [cell.labelImageTitle setText:[name substringToIndex:1].uppercaseString];
-    }
+    [cell.labelImageTitle setHidden:NO];
+    [cell.imageViewProfilePicture setHidden:YES];
     
-    cell.labelImageTitle.layer.cornerRadius = cell.imageViewProfilePicture.layer.bounds.size.width/2.0;
-     [cell.labelImageTitle.layer setMasksToBounds:YES];
+    NSInteger randomNumber = arc4random()%[self.materialDesignPalletArray count];
     
-    UIView *bgColorView = [[UIView alloc] init];
-    bgColorView.backgroundColor = [UIColor darkGrayColor];
-    [cell setSelectedBackgroundView:bgColorView];
+    cell.labelImageTitle.backgroundColor = [UIColor colorWithHexString:[self.materialDesignPalletArray objectAtIndex:randomNumber]];
+    cell.labelImageTitle.layer.cornerRadius = cell.labelImageTitle.bounds.size.width/2.0;
+    [cell.labelImageTitle setText:[name substringToIndex:1].uppercaseString];
+    [cell.labelImageTitle.layer setMasksToBounds:YES];
+    
+//    UIView *bgColorView = [[UIView alloc] init];
+//    bgColorView.backgroundColor = [UIColor darkGrayColor];
+//    [cell setSelectedBackgroundView:bgColorView];
     return cell;
 }
 
@@ -334,73 +332,65 @@
 
 - (void)listPeopleInAddressBook:(ABAddressBookRef)addressBook
 {
-    NSInteger numberOfPeopleTest = ABAddressBookGetPersonCount(addressBook);
-//
-    NSLog(@"Number of Contacts OLD Approach----->%ld",(long)numberOfPeopleTest);
-//    NSArray *allPeople = CFBridgingRelease(ABAddressBookCopyArrayOfAllPeople(addressBook));
-    
-////////New Approach to Fetch Contacts where it was crashing in certain locations
-    CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(addressBook, nil, kABPersonSortByLastName);
+    CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeople(addressBook);
     CFIndex numberOfPeople = ABAddressBookGetPersonCount(addressBook);
-////////
-    NSLog(@"Number of Contacts New Approach----->%ld",(long)numberOfPeople);
     
     for (NSInteger i = 0; i < numberOfPeople; i++) {
         ABRecordRef person = CFArrayGetValueAtIndex(allPeople, i);
-//        ABRecordRef person = (__bridge ABRecordRef)allPeople[i];
-        
         NSString *firstName = CFBridgingRelease(ABRecordCopyValue(person, kABPersonFirstNameProperty));
         NSString *lastName  = CFBridgingRelease(ABRecordCopyValue(person, kABPersonLastNameProperty));
-        NSString *firstNameAndLastName;
+        NSString *middleName  = CFBridgingRelease(ABRecordCopyValue(person, kABPersonMiddleNameProperty));
+        NSString *nickName  = CFBridgingRelease(ABRecordCopyValue(person, kABPersonNicknameProperty));
+        NSString *organizationName = CFBridgingRelease(ABRecordCopyValue(person, kABPersonOrganizationProperty));
+        NSString *jobTitle = CFBridgingRelease(ABRecordCopyValue(person, kABPersonJobTitleProperty));
+        NSString *departmentName = CFBridgingRelease(ABRecordCopyValue(person, kABPersonDepartmentProperty));
+//
+        NSString *firstNameAndLastName = @"";
+        
         if(firstName != nil && ![firstName isEqualToString:@""] && ![firstName isEqualToString:@"(null)"]){
             firstNameAndLastName = firstName;
         }
-        if(lastName != nil && ![lastName isEqualToString:@""] && ![lastName isEqualToString:@"(null)"]){
-            firstNameAndLastName = [firstNameAndLastName stringByAppendingString:[NSString stringWithFormat:@" %@",lastName]];;
-        }
-////        CFDataRef imageData = ABPersonCopyImageData(person);
-////        UIImage *image = [UIImage imageWithData:(__bridge_transfer NSData *)imageData];
-//////        CFRelease(imageData);
-//        
-        UIImage *img = nil;
-//        if (person != nil && ABPersonHasImageData(person)) {
-//            if ( &ABPersonCopyImageDataWithFormat != nil ) {
-//                // iOS >= 4.1
-//                img= [UIImage imageWithData:(__bridge NSData *)ABPersonCopyImageDataWithFormat(person, kABPersonImageFormatThumbnail)];
-//            }
-//        } else {
-//            img= nil;
-//        }
-//
-        if(![firstName isEqualToString:@"Identified As Spam"]){
-            ABMultiValueRef phoneNumbers = ABRecordCopyValue(person, kABPersonPhoneProperty);
-            
-            CFIndex numberOfPhoneNumbers = ABMultiValueGetCount(phoneNumbers);
-            for (CFIndex i = 0; i < numberOfPhoneNumbers; i++) {
-                NSString *phoneNumber = CFBridgingRelease(ABMultiValueCopyValueAtIndex(phoneNumbers, i));
-                
-                //Remove Special Characters
-                NSArray *arrayOfSpecialCharacters = @[@"(",@")",@"-",@" "];
-                for(NSString *character in arrayOfSpecialCharacters)
-                    phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:character withString:@""];
-                //Add Dictionary into the array
-                NSMutableDictionary *contactDictionary = [[NSMutableDictionary alloc] init];
-                [contactDictionary setValue:firstNameAndLastName forKey:@"name"];
-                [contactDictionary setValue:phoneNumber forKey:@"phoneNumber"];
-                [contactDictionary setValue:@"YES" forKey:@"hasProfilePicture"];
-                if(img != nil){
-                    [contactDictionary setObject:img forKey:@"profilePicture"];
-                }
-                else{
-                    [contactDictionary setValue:@"NO" forKey:@"hasProfilePicture"];
 
-                }
-                
-                [self.listOfAllContactsInWidget addObject:contactDictionary];
-            }
-            CFRelease(phoneNumbers);
+        if(middleName != nil && ![middleName isEqualToString:@""] && ![middleName isEqualToString:@"(null)"]){
+            firstNameAndLastName = [firstNameAndLastName stringByAppendingString:firstNameAndLastName.length>0?[NSString stringWithFormat:@" %@",middleName]:middleName];;
         }
+        
+        if(lastName != nil && ![lastName isEqualToString:@""] && ![lastName isEqualToString:@"(null)"]){
+            firstNameAndLastName = [firstNameAndLastName stringByAppendingString:firstNameAndLastName.length>0?[NSString stringWithFormat:@" %@",lastName]:lastName];
+        }
+        if(firstNameAndLastName.length == 0 && nickName != nil && ![nickName isEqualToString:@""] && ![nickName isEqualToString:@"(null)"]){
+            firstNameAndLastName = [firstNameAndLastName stringByAppendingString:nickName];
+        }
+        if(firstNameAndLastName.length == 0 && organizationName != nil && ![organizationName isEqualToString:@""] && ![organizationName isEqualToString:@"(null)"]){
+            firstNameAndLastName = [firstNameAndLastName stringByAppendingString:organizationName];
+        }
+        if(firstNameAndLastName.length == 0 && departmentName != nil && ![departmentName isEqualToString:@""] && ![departmentName isEqualToString:@"(null)"]){
+            firstNameAndLastName = [firstNameAndLastName stringByAppendingString:departmentName];
+        }
+        if(firstNameAndLastName.length == 0 && jobTitle != nil && ![jobTitle isEqualToString:@""] && ![jobTitle isEqualToString:@"(null)"]){
+            firstNameAndLastName = [firstNameAndLastName stringByAppendingString:jobTitle];
+        }
+        
+        ABMultiValueRef phoneNumbers = ABRecordCopyValue(person, kABPersonPhoneProperty);
+        
+        CFIndex numberOfPhoneNumbers = ABMultiValueGetCount(phoneNumbers);
+        for (CFIndex i = 0; i < numberOfPhoneNumbers; i++) {
+            NSString *phoneNumber = CFBridgingRelease(ABMultiValueCopyValueAtIndex(phoneNumbers, i));
+
+            //Remove Special Characters
+            NSCharacterSet *characterSet = [[NSCharacterSet characterSetWithCharactersInString:@"+1234567890"] invertedSet];
+            phoneNumber = [[phoneNumber componentsSeparatedByCharactersInSet:characterSet] componentsJoinedByString:@""];
+            
+            //Add Dictionary into the array
+            NSMutableDictionary *contactDictionary = [[NSMutableDictionary alloc] init];
+            [contactDictionary setValue:firstNameAndLastName forKey:@"name"];
+            [contactDictionary setValue:phoneNumber forKey:@"phoneNumber"];
+            [contactDictionary setValue:@"NO" forKey:@"hasProfilePicture"];
+//            [self.listOfAllContactsInWidget addObject:contactDictionary];
+        }
+        CFRelease(phoneNumbers);
     }
+    CFRelease(allPeople);
 }
 #pragma mark Call Phone
 - (void) callOnNumber:(NSString *)phoneNumber{
@@ -577,6 +567,25 @@
     [self deleteDigitFromLabelAndUpdateTable];
     NSString *newIntervalInString = [NSString stringWithFormat:@"%f", timeInString.doubleValue*0.70];
     [self performSelector:@selector(removeDigitOnLongPress:)  withObject:newIntervalInString afterDelay:newIntervalInString.doubleValue];
+}
+
+-(void) populateArrayForShowingInTableView{
+    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc]initWithSuiteName:@"group.YoBuDefaults"];
+    NSString *selectedSegmentControl = [sharedDefaults valueForKey:@"selectedSegmentControl"];
+        switch (selectedSegmentControl.integerValue) {
+            case 0:
+                self.filteredContacts = [[NSMutableArray alloc] initWithArray:[DataAccessLayer fetchAllFavoriteContacts]];
+                break;
+            case 1:
+                self.filteredContacts = [[NSMutableArray alloc] initWithArray:[DataAccessLayer fetchRecentlyDialedContacts]];
+                break;
+            case 2:
+                self.filteredContacts = [DataAccessLayer fetchFrequentContacts];
+                break;
+            default:
+                self.filteredContacts = [DataAccessLayer fetchFrequentContacts];
+                break;
+        }
 }
 
 @end

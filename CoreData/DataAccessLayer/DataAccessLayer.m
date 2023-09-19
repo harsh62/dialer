@@ -12,11 +12,14 @@
 #import "FrequentContacts.h"
 #import "FavoriteContacts.h"
 #import "CustomSearchAlphabets.h"
+#import "AddressBook.h"
 
 #define ENTITY_DIALED_NUMBERS       @"DialedNumbers"
 #define ENTITY_FAVORITE_CONTACTS    @"FavoriteContacts"
 #define ENTITY_FREQUENT_CONTACTS    @"FrequentContacts"
 #define ENTITY_CUSTOM_SEARCH        @"CustomSearchAlphabets"
+#define ENTITY_ADDRESS_BOOK         @"AddressBook"
+
 
 
 
@@ -175,6 +178,36 @@
     }
 }
 
++ (void)saveContactWithName:(NSString*)name andPhoneNumber:(NSString*)phoneNumber havingRecordIdAs:(NSString *)recordId{
+    NSManagedObjectContext *managedObjectContext = [[DataManager sharedInstance] managedObjectContext];
+    NSError *error;
+    @try {
+        //Making an entry in order to priorotize the favorite contact
+        NSFetchRequest *fetchRequest=[[NSFetchRequest alloc] init];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITY_ADDRESS_BOOK
+                                                  inManagedObjectContext:managedObjectContext];
+        [fetchRequest setEntity:entity];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@ AND phoneNumber == %@ AND recordId == %@",name,phoneNumber,recordId];
+        [fetchRequest setPredicate:predicate];
+        NSArray * contactsArray = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
+        if([contactsArray count]>0){
+        }
+        else{
+            AddressBook *contact = (AddressBook*)[NSEntityDescription insertNewObjectForEntityForName:ENTITY_ADDRESS_BOOK inManagedObjectContext:managedObjectContext];
+            contact.name = name;
+            contact.phoneNumber = phoneNumber;
+            contact.recordId = recordId;
+        }
+        [managedObjectContext save:&error];
+    }
+    @catch (NSException *exception) {
+        
+        NSLog(@"Exception Name: %@ ---> Reason of exception:%@",exception.name,exception.reason);
+    }
+}
+
+
+
 + (NSString *)fetchCustomAlphabetsForDigit:(NSString*)digit
 {
     NSManagedObjectContext *managedObjectContext = [[DataManager sharedInstance] managedObjectContext];
@@ -279,14 +312,32 @@
         return frequentContactsArray;
     }
     @catch (NSException *exception) {
-        
+        NSLog(@"Exception Name: %@ ---> Reason of exception:%@",exception.name,exception.reason);
+    }
+}
+
++ (NSArray *)fetchAllContacts{
+    NSManagedObjectContext *managedObjectContext = [[DataManager sharedInstance] managedObjectContext];
+    NSError *error;
+    @try {
+        //Making an entry in order to priorotize the favorite contact
+        NSFetchRequest *fetchRequest=[[NSFetchRequest alloc] init];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITY_ADDRESS_BOOK
+                                                  inManagedObjectContext:managedObjectContext];
+        [fetchRequest setEntity:entity];
+        return [managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    }
+    @catch (NSException *exception) {
         NSLog(@"Exception Name: %@ ---> Reason of exception:%@",exception.name,exception.reason);
     }
 }
 
 + (void)deleteModel:(id)modelToBeDeleted{
+    NSError *error;
     NSManagedObjectContext *managedObjectContext = [[DataManager sharedInstance] managedObjectContext];
     [managedObjectContext deleteObject:modelToBeDeleted];
+    [managedObjectContext save:&error];
+
 }
 
 @end

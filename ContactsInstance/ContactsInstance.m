@@ -8,10 +8,11 @@
 
 #import "ContactsInstance.h"
 @import AddressBook;
+#import "CustomAlphabetSettingViewController.h"
 
 @implementation ContactsInstance
+@synthesize delegateOfThisClass; //synthesise  MyClassDelegate delegate
 
-@synthesize listOfAllContacts;
 
 + (id)sharedInstance
 {
@@ -24,111 +25,292 @@
     // executes a block object once and only once for the lifetime of an application
     dispatch_once(&p, ^{
         _sharedObject = [[self alloc] init];
-        [_sharedObject initializeContactList];
     });
     
     // returns the same object each time
     return _sharedObject;
 }
 
-- (void) initializeContactList{
-    self.listOfAllContacts = [[NSMutableArray alloc] init];
+- (void) setCustomDelegate:(id)delegate{
+    self.delegateOfThisClass = delegate;
 }
 
-- (void)requestContacts{
-    ABAuthorizationStatus status = ABAddressBookGetAuthorizationStatus();
-    
-    if (status == kABAuthorizationStatusDenied) {
-        // if you got here, user had previously denied/revoked permission for your
-        // app to access the contacts, and all you can do is handle this gracefully,
-        // perhaps telling the user that they have to go to settings to grant access
-        // to contacts
-        
-//        [[[UIAlertView alloc] initWithTitle:nil message:@"This app requires access to your contacts to function properly. Please visit to the \"Privacy\" section in the iPhone Settings app." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-        return;
-    }
-    
-    CFErrorRef error = NULL;
-    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, &error);
-    
-    if (error) {
-        NSLog(@"ABAddressBookCreateWithOptions error: %@", CFBridgingRelease(error));
-        if (addressBook) CFRelease(addressBook);
-        return;
-    }
-    
-    if (status == kABAuthorizationStatusNotDetermined) {
-        
-        // present the user the UI that requests permission to contacts ...
-        
-        ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
-            if (error) {
-                NSLog(@"ABAddressBookRequestAccessWithCompletion error: %@", CFBridgingRelease(error));
-            }
-            
-            if (granted) {
-                // if they gave you permission, then just carry on
-                
-                [self listPeopleInAddressBook:addressBook];
-            } else {
-                // however, if they didn't give you permission, handle it gracefully, for example...
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    // BTW, this is not on the main thread, so dispatch UI updates back to the main queue
-                    
-//                    [[[UIAlertView alloc] initWithTitle:nil message:@"This app requires access to your contacts to function properly. Please visit to the \"Privacy\" section in the iPhone Settings app." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-                });
-            }
-            
-            if (addressBook) CFRelease(addressBook);
-        });
-        
-    } else if (status == kABAuthorizationStatusAuthorized) {
-        [self listPeopleInAddressBook:addressBook];
-        if (addressBook) CFRelease(addressBook);
-    }
+
+
+- (void)requestAllProducts{
+    LogTrace(@"");
+    //    SKProduct
+    SKProductsRequest *request= [[SKProductsRequest alloc]
+                                 initWithProductIdentifiers:[NSSet setWithArray:@[@"Hachi.YoBu.InAppDialerPurchase", @"Hachi.YoBu.CustomizeSearch"]]];
+    request.delegate = self;
+    [request start];
 }
 
-- (void)listPeopleInAddressBook:(ABAddressBookRef)addressBook
+#pragma mark In App Purchase Delegates
+///////////IN APP PURCHASE DELEGATES
+- (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response
 {
-    NSInteger numberOfPeople = ABAddressBookGetPersonCount(addressBook);
-    NSArray *allPeople = CFBridgingRelease(ABAddressBookCopyArrayOfAllPeople(addressBook));
+    LogTrace(@"");
     
-    NSLog(@"Number of Contacts ----->%ld",(long)numberOfPeople);
     
-    for (NSInteger i = 0; i < numberOfPeople; i++) {
-        ABRecordRef person = (__bridge ABRecordRef)allPeople[i];
-        
-        NSString *firstName = CFBridgingRelease(ABRecordCopyValue(person, kABPersonFirstNameProperty));
-        NSString *lastName  = CFBridgingRelease(ABRecordCopyValue(person, kABPersonLastNameProperty));
-        //        NSLog(@"Name:%@ %@", firstName, lastName);
-        NSString *firstNameAndLastName;
-        if(firstName != nil && ![firstName isEqualToString:@""] && ![firstName isEqualToString:@"(null)"]){
-            firstNameAndLastName = firstName;
+    [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
+    NSArray *allProducts = response.products;
+    
+    for(SKProduct *product in allProducts){
+        if([product.productIdentifier isEqualToString:@"Hachi.YoBu.InAppDialerPurchase"]){
+            self.productInAppDialer = product;
         }
-        if(lastName != nil && ![lastName isEqualToString:@""] && ![lastName isEqualToString:@"(null)"]){
-            firstNameAndLastName = [firstNameAndLastName stringByAppendingString:[NSString stringWithFormat:@" %@",lastName]];;
+        else if([product.productIdentifier isEqualToString:@"Hachi.YoBu.CustomizeSearch"]){
+            self.productInSearchCustomize = product;
         }
-        
-        if(![firstName isEqualToString:@"Identified As Spam"]){
-            ABMultiValueRef phoneNumbers = ABRecordCopyValue(person, kABPersonPhoneProperty);
-            
-            CFIndex numberOfPhoneNumbers = ABMultiValueGetCount(phoneNumbers);
-            for (CFIndex i = 0; i < numberOfPhoneNumbers; i++) {
-                NSString *phoneNumber = CFBridgingRelease(ABMultiValueCopyValueAtIndex(phoneNumbers, i));
-                //            NSLog(@"  phone:%@", phoneNumber);
-                
-                
-                NSMutableDictionary *contactDictionary = [[NSMutableDictionary alloc] init];
-                [contactDictionary setValue:firstNameAndLastName forKey:@"name"];
-                [contactDictionary setValue:phoneNumber forKey:@"phoneNumber"];
-                
-                [self.listOfAllContacts addObject:contactDictionary];
-            }
-            CFRelease(phoneNumbers);
-        }
-        //        NSLog(@"=============================================");
     }
+    
+    if(self.shouldPaymentProcessBeInititated){
+        [self startPaymentProcessForProductIdentifier:self.productIdentifier];
+        self.shouldPaymentProcessBeInititated = NO;
+        self.productIdentifier = nil;
+    }
+    else{
+        UITabBarController *rootController=(UITabBarController *)((AppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController;
+        self.delegateOfThisClass = rootController.selectedViewController;
+        if([self.delegateOfThisClass respondsToSelector:@selector(didRecieveProductData)])
+            [self.delegateOfThisClass didRecieveProductData];
+    }
+
+}
+
+
+-(void) startPaymentProcessForProductIdentifier:(NSString *)productIdentifier{
+    LogTrace(@"");
+    SKPayment *newPayment;
+    
+    if(self.productInAppDialer || self.productInSearchCustomize){
+        if([productIdentifier isEqualToString:@"Hachi.YoBu.InAppDialerPurchase"]){
+            newPayment = [SKPayment paymentWithProduct:self.productInAppDialer];
+        }
+        else if([productIdentifier isEqualToString:@"Hachi.YoBu.CustomizeSearch"]){
+            newPayment = [SKPayment paymentWithProduct:self.productInSearchCustomize];
+        }
+        [[SKPaymentQueue defaultQueue] addPayment:newPayment];
+    }
+    else{
+        [self requestAllProducts];
+        self.shouldPaymentProcessBeInititated = YES;
+        self.productIdentifier = productIdentifier;
+    }
+}
+
+
+
+- (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions
+{
+    LogTrace(@"");
+    for (SKPaymentTransaction *transaction in transactions)
+    {
+        switch (transaction.transactionState)
+        {
+            case SKPaymentTransactionStatePurchased:
+                [self completeTransaction:transaction];
+                break;
+            case SKPaymentTransactionStateFailed:
+                [self failedTransaction:transaction];
+                break;
+            case SKPaymentTransactionStateRestored:
+                [self restoreTransaction:transaction];
+            default:
+                break;
+        }
+    }
+}
+
+- (void) completeTransaction: (SKPaymentTransaction *)transaction
+{
+    LogTrace(@"");
+    if([self.delegateOfThisClass respondsToSelector:@selector(transactionCompleted)])
+        [self.delegateOfThisClass transactionCompleted];
+    
+    NSLog(@"Transaction Completed");
+    // You can create a method to record the transaction.
+    // [self recordTransaction: transaction];
+    
+    // You should make the update to your app based on what was purchased and inform user.
+    // [self provideContent: transaction.payment.productIdentifier];
+    
+    // Finally, remove the transaction from the payment queue.
+    [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+}
+
+- (void) restoreTransaction: (SKPaymentTransaction *)transaction
+{
+    LogTrace(@"");
+    if([self.delegateOfThisClass respondsToSelector:@selector(transactionCompleted)])
+        [self.delegateOfThisClass transactionCompleted];
+
+    
+    NSLog(@"Transaction Restored");
+    // You can create a method to record the transaction.
+    // [self recordTransaction: transaction];
+    
+    // You should make the update to your app based on what was purchased and inform user.
+    // [self provideContent: transaction.payment.productIdentifier];
+    
+    // Finally, remove the transaction from the payment queue.
+    [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+}
+
+- (void) failedTransaction: (SKPaymentTransaction *)transaction
+{
+    LogTrace(@"");
+    if([self.delegateOfThisClass respondsToSelector:@selector(transactionFailed)])
+        [self.delegateOfThisClass transactionFailed];
+
+    
+    if (transaction.error.code != SKErrorPaymentCancelled)
+    {
+        // Display an error here.
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Purchase Unsuccessful"
+                                                        message:@"Your purchase failed. Please try again."
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+    
+    // Finally, remove the transaction from the payment queue.
+    [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+}
+
+
+-(void)showNotification{
+    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc]initWithSuiteName:@"group.YoBuDefaults"];
+    if(![[sharedDefaults valueForKey:@"Hachi.YoBu.CustomizeSearch"] isEqualToString:@"YES"]){
+        [self performSelector:@selector(showCustomViewFromAboveLikeNotification) withObject:nil afterDelay:2.0];
+    }
+}
+
+-(void)showCustomViewFromAboveLikeNotification{
+    UITabBarController *rootController=(UITabBarController *)((AppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController;
+    UIViewController *controller = rootController.selectedViewController;
+    
+    self.notificationView = [[UIView alloc ] initWithFrame:CGRectMake(0, -75, controller.view.frame.size.width, 75)];
+    [self.notificationView setBackgroundColor:[UIColor greenColor]];
+    
+    UILabel *labelOfTitle = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, self.notificationView.frame.size.width-10, 75)];
+    [labelOfTitle setText:@"Search phone numbers in your native language or customize it in your own way. Go to MORE tab and press customize T9 search or just Tap!"];
+    [labelOfTitle setFont:[UIFont fontWithName:@"Helvetica Neue" size:13.0]];
+    labelOfTitle.numberOfLines = 0;
+    
+    [self.notificationView addSubview:labelOfTitle];
+    
+    [controller.view addSubview:self.notificationView];
+    
+    self.notificationView.opaque = YES;
+    self.notificationView.alpha = 0.9;
+    
+    ///Add gesture to the view
+    UITapGestureRecognizer *getureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(notificationViewtapped)];
+    getureRecognizer.numberOfTapsRequired = 1;
+    [self.notificationView addGestureRecognizer:getureRecognizer];
+    
+    
+    //Animate the view down
+    [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+        [self.notificationView setFrame:CGRectMake(0, 0, controller.view.frame.size.width, 75)];
+    } completion:^(BOOL finished){
+        [self performSelector:@selector(removeNotificationViewFromController:) withObject:controller afterDelay:10.0];
+    }];
+    
+
+    
+}
+
+-(void) removeNotificationViewFromController:(UIViewController *)controller{
+    [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+        [self.notificationView setFrame:CGRectMake(0, -75, controller.view.frame.size.width, 75)];
+    } completion:^(BOOL finished){
+        [self.notificationView removeFromSuperview];
+        self.notificationView = nil;
+    }];
+}
+
+-(void) notificationViewtapped {
+    
+    UITabBarController *rootController=(UITabBarController *)((AppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController;
+    UIViewController *controller = rootController.selectedViewController;
+    
+    CustomAlphabetSettingViewController *settingsController = [controller.storyboard instantiateViewControllerWithIdentifier:@"CustomAlphabetSettingViewController"];
+    [controller presentViewController:settingsController animated:YES completion:nil];
+    
+    [self removeNotificationViewFromController:controller];
+    
+    //Cancel the previous perform selector with delay..
+    [NSObject cancelPreviousPerformRequestsWithTarget:self
+                                             selector:@selector(removeNotificationViewFromController:)
+                                               object:controller];
+
+}
+
+#pragma mark InApp Restore Functions
+
+-(void)restoreInAppPurchases{
+    if(!self.IsRestoreInitiated){
+        self.IsRestoreInitiated = YES;
+        [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
+        [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
+    }
+}
+
+// Then this is called
+- (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue {
+    NSLog(@"%@",queue );
+    NSLog(@"Restored Transactions are once again in Queue for purchasing %@",[queue transactions]);
+    
+    NSMutableArray *purchasedItemIDs = [[NSMutableArray alloc] init];
+    NSLog(@"received restored transactions: %lu", (unsigned long)queue.transactions.count);
+    
+    for (SKPaymentTransaction *transaction in queue.transactions) {
+        NSString *productID = transaction.payment.productIdentifier;
+        [purchasedItemIDs addObject:productID];
+        
+        if([productID isEqualToString:@"Hachi.YoBu.InAppDialerPurchase"]){
+            NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc]initWithSuiteName:@"group.YoBuDefaults"];
+            [sharedDefaults setValue:@"YES" forKey:@"Hachi.YoBu.InAppDialerPurchase"];
+            [sharedDefaults synchronize];
+        }
+        else if([productID isEqualToString:@"Hachi.YoBu.CustomizeSearch"]){
+            NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc]initWithSuiteName:@"group.YoBuDefaults"];
+            [sharedDefaults setValue:@"YES" forKey:@"Hachi.YoBu.CustomizeSearch"];
+            [sharedDefaults synchronize];
+        }
+        
+        NSLog (@"product id is %@" , productID);
+    }
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Restore Successful"
+                                                    message:@"All In App Purchases of the application have been restored!"
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+    
+    self.IsRestoreInitiated = NO;
+    if([self.delegateOfThisClass respondsToSelector:@selector(restoreCompleted)])
+        [self.delegateOfThisClass restoreCompleted];
+}
+
+- (void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error{
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Restore Unsuccessful"
+                                                    message:error.description
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+    
+    self.IsRestoreInitiated = NO;
+    if([self.delegateOfThisClass respondsToSelector:@selector(restoreFailed)])
+        [self.delegateOfThisClass restoreFailed];
+    
 }
 
 

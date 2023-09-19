@@ -8,20 +8,24 @@
 
 #import "MenuViewController.h"
 @import AddressBook;
-#import "ContactsInstance.h"
 #import "DataAccessLayer.h"
 #import "ConsoleLogs.h"
+#import "CustomAlphabetSettingViewController.h"
+#import "CustomMenuCellWithSegmentControl.h"
 
 #define Application_ID 947452765
 #define Social_Sharing_Message @"I #UseYoBu for quickest calling on iOS. Download it:https://itunes.apple.com/in/app/yobu/id947452765?ls=1&mt=8"
 
 //NUMBER OF SECTIONS
-#define NUMBER_OF_SECTIONS  3
+#define NUMBER_OF_SECTIONS  6
 
 //SECTION POSITIONS
-#define SECTION_SHARING     0
-#define SECTION_TUTORIALS   1
-#define SECTION_VERSION     2
+#define SECTION_OPTIONS             0
+#define SECTION_CUSTOM_SEARCH       1
+#define SECTION_RESTORE_PURCHASE    2
+#define SECTION_SHARING             3
+#define SECTION_TUTORIALS           4
+#define SECTION_VERSION             5
 
 
 @interface MenuViewController ()
@@ -31,26 +35,22 @@
 @end
 UINavigationController *navigationController;
 
+
 @implementation MenuViewController
 
 @synthesize phoneNumber,isCallFromWidget;
 
+UIActivityIndicatorView *activityIndicator;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
-    
-//    [[ContactsInstance sharedInstance] requestContacts];
     [DataAccessLayer checkAndUpdateTabelWithDefaultAlphabets];
 
 
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    if(self.isCallFromWidget){
-        [self openAddContactController];
-    }
-    
-    self.isApplicationAlreadyOpen = YES;
+    [super viewDidAppear:animated];
 }
 
 
@@ -75,13 +75,10 @@ UINavigationController *navigationController;
         [alert show];
     }
     [mySLComposerSheet setCompletionHandler:^(SLComposeViewControllerResult result) {
-        NSString *output;
         switch (result) {
             case SLComposeViewControllerResultCancelled:
-                output = @"Action Cancelled";
                 break;
             case SLComposeViewControllerResultDone:
-                output = @"Post Successfull";
                 break;
             default:
                 break;
@@ -111,13 +108,10 @@ UINavigationController *navigationController;
         [alert show];
     }
     [mySLComposerSheet setCompletionHandler:^(SLComposeViewControllerResult result) {
-        NSString *output;
         switch (result) {
             case SLComposeViewControllerResultCancelled:
-                output = @"Action Cancelled";
                 break;
             case SLComposeViewControllerResultDone:
-                output = @"Post Successfull";
                 break;
             default:
                 break;
@@ -202,43 +196,6 @@ UINavigationController *navigationController;
     
 }
 
-- (void) openAddContactController{
-    ABNewPersonViewController *picker = [[ABNewPersonViewController alloc] init];
-    picker.newPersonViewDelegate = self;
-    
-    ABRecordRef record = ABPersonCreate();
-    
-    ABMutableMultiValueRef multi = ABMultiValueCreateMutable(kABStringPropertyType);
-    
-    // add the home email
-    ABRecordSetValue(record, kABPersonEmailProperty, multi, NULL);
-    
-    ABMutableMultiValueRef phoneNumbers = ABMultiValueCreateMutable(kABMultiStringPropertyType);
-    
-    
-    NSString *petPhoneNumber = self.phoneNumber;
-    
-    ABMultiValueAddValueAndLabel(phoneNumbers, (__bridge CFStringRef)petPhoneNumber, kABPersonPhoneMainLabel, NULL);
-    
-    ABRecordSetValue(record, kABPersonPhoneProperty, phoneNumbers, nil);
-    
-    // add the record
-    picker.displayedPerson = record;
-    //    picker.navigationItem.title=@"edit contact";
-    [picker.navigationController.navigationBar setHidden:NO];
-    
-    picker.displayedPerson = record;
-    //    picker.navigationItem.title=@"edit contact";
-    [picker.navigationController.navigationBar setHidden:NO];
-    
-    
-    navigationController = [[UINavigationController alloc] initWithRootViewController:picker];
-    [self presentViewController:navigationController animated:YES completion:nil];
-    self.isCallFromWidget = NO;
-    //    [self.navigationController pushViewController:picker animated:YES];
-}
-
-
 #pragma mark UITableView DataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     switch (section) {
@@ -251,21 +208,39 @@ UINavigationController *navigationController;
         case SECTION_VERSION:
             return 1;
             break;
+        case SECTION_CUSTOM_SEARCH:
+            return 1;
+            break;
         default:
-            return 2;
+            return 1;
             break;
     }
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 44.0;
+}
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *CellIdentifier = @"Cell";
+    
+    static NSString *CellIdentifier;
+    
+    if(indexPath.section == SECTION_OPTIONS){
+        CellIdentifier = @"CustomMenuCellWithSegmentControl";
+    }
+    else{
+        CellIdentifier = @"Cell";
+    }
+    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         switch (indexPath.section) {
             case SECTION_VERSION:
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
                 break;
-                
+            case SECTION_OPTIONS:
+                cell = [[CustomMenuCellWithSegmentControl alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CustomMenuCellWithSegmentControl"];
             default:
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
                 break;
@@ -273,7 +248,13 @@ UINavigationController *navigationController;
 
     }
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-
+    activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [activityIndicator hidesWhenStopped];
+    [activityIndicator setFrame:CGRectMake(cell.frame.size.width-activityIndicator.frame.size.width*2, cell.frame.size.height/2-activityIndicator.frame.size.height/2, activityIndicator.frame.size.width, activityIndicator.frame.size.height)];
+    activityIndicator.tag = 1234;
+    [activityIndicator setTintColor:[UIColor blackColor]];
+    
+    
     switch (indexPath.section) {
         case SECTION_SHARING:
             switch (indexPath.row) {
@@ -305,21 +286,30 @@ UINavigationController *navigationController;
                     break;
             }
             break;
-            
         case SECTION_VERSION:
             cell.accessoryType = UITableViewCellAccessoryNone;
             cell.textLabel.text = @"Version";
             cell.detailTextLabel.text = @"1.4";
-
+            break;
+        case SECTION_CUSTOM_SEARCH:
+            cell.textLabel.text = @"Customize T9 (Predictive) Search!";
+            break;
+        case SECTION_OPTIONS:
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            cell.textLabel.text = @"";
+            break;
+        case SECTION_RESTORE_PURCHASE:
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            cell.textLabel.text = @"Restore In App Purchases!";
+            [cell addSubview:activityIndicator];
             break;
         default:
-            cell.textLabel.text = @"Testing the table view grouped cell";
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            cell.textLabel.text = @"";
             break;
     }
-    
     return cell;
 }
-
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return NUMBER_OF_SECTIONS;
@@ -336,7 +326,15 @@ UINavigationController *navigationController;
         case SECTION_VERSION:
             return @"";
             break;
-
+        case SECTION_CUSTOM_SEARCH:
+            return @"T9 (Predictive) Search settings! Supports all languages.";
+            break;
+        case SECTION_OPTIONS:
+            return @"Widget list should contain?";
+            break;
+        case SECTION_RESTORE_PURCHASE:
+            return @"Restore already bought products.";
+            break;
         default:
             return @"Default";
             break;
@@ -358,7 +356,8 @@ UINavigationController *navigationController;
 #pragma mark UITableView Delgates
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    activityIndicator = (UIActivityIndicatorView *)[cell viewWithTag:1234];
     switch (indexPath.section) {
         case SECTION_SHARING:
             switch (indexPath.row) {
@@ -375,18 +374,25 @@ UINavigationController *navigationController;
                     [self sendFeedback];
                     break;
                 case 4:
-                    
                     if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"twitter:///user?screen_name=___harsh"]]){
                         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"twitter:///user?screen_name=___harsh"]];
                     }
                     else{
-                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"thttps://twitter.com/___harsh"]];
+                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://twitter.com/___harsh"]];
                     }
                     break;
             }
             break;
         case SECTION_TUTORIALS:
             [self tutorialGroupClickedOnRow:indexPath.row];
+            break;
+        case SECTION_CUSTOM_SEARCH:
+            [self openCustomAlphabetSettingViewController];
+            break;
+        case SECTION_RESTORE_PURCHASE:
+            [self restorePurchases];
+            break;
+            
     }
     
 }
@@ -410,7 +416,26 @@ UINavigationController *navigationController;
     }
 }
 
+#pragma mark Open Custom View Controller
 
+- (void) openCustomAlphabetSettingViewController{
+    CustomAlphabetSettingViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"CustomAlphabetSettingViewController"];
+    [self presentViewController:controller animated:YES completion:nil];
+}
+
+-(void)restorePurchases{
+    [activityIndicator startAnimating];
+    [[ContactsInstance sharedInstance] setCustomDelegate:self];
+    [[ContactsInstance sharedInstance] restoreInAppPurchases];
+}
+
+-(void)restoreCompleted{
+    [activityIndicator stopAnimating];
+}
+
+-(void)restoreFailed{
+    [activityIndicator stopAnimating];
+}
 
 
 @end
